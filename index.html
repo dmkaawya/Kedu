@@ -11,11 +11,58 @@
             box-sizing: border-box;
         }
 
-       body {
+        body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
             color: #333;
             background-color: #fff;
+        }
+
+        /* Loading Animation Styles */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #2a5298;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(248, 249, 250, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        .skeleton-loader {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        .skeleton-video {
+            height: 80px;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         /* Header */
@@ -61,6 +108,12 @@
         .auth-section {
             display: flex;
             gap: 1rem;
+            align-items: center;
+        }
+
+        .user-info {
+            color: white;
+            font-size: 0.9rem;
         }
 
         .btn {
@@ -70,6 +123,14 @@
             cursor: pointer;
             font-weight: 500;
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .btn-primary {
@@ -83,7 +144,7 @@
             border: 2px solid white;
         }
 
-        .btn:hover {
+        .btn:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
@@ -126,6 +187,9 @@
             padding: 1rem 1.5rem;
             cursor: pointer;
             font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         /* Main Content */
@@ -170,6 +234,7 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
+            position: relative;
         }
 
         .category-card {
@@ -178,6 +243,7 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             overflow: hidden;
             transition: transform 0.3s ease;
+            position: relative;
         }
 
         .category-card:hover {
@@ -198,6 +264,7 @@
 
         .videos-container {
             padding: 1.5rem;
+            position: relative;
         }
 
         .video-item {
@@ -206,19 +273,71 @@
             background: #f8f9fa;
             border-radius: 8px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .video-item:hover {
             background-color: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .video-content {
+            flex: 1;
         }
 
         .video-item h4 {
             color: #2a5298;
             margin-bottom: 0.5rem;
+            font-size: 1.1rem;
         }
 
-        /* Modal */
+        .video-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .video-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .privacy-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .privacy-public {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .privacy-private {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .video-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            border-radius: 4px;
+        }
+
+        /* Enhanced Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -227,32 +346,96 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.8);
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .modal-content {
             background-color: white;
-            margin: 5% auto;
-            padding: 2rem;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 800px;
+            margin: 2% auto;
+            padding: 0;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 900px;
             position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
         }
 
         .close {
-            position: absolute;
-            right: 1rem;
-            top: 1rem;
-            color: #aaa;
-            float: right;
+            color: white;
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
+            transition: color 0.3s ease;
+            background: none;
+            border: none;
         }
 
         .close:hover {
             color: #ff4757;
+            transform: scale(1.1);
+        }
+
+        .modal-body {
+            padding: 0;
+        }
+
+        .video-player-container {
+            position: relative;
+            background: #000;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+
+        .video-info {
+            padding: 2rem;
+        }
+
+        .video-description-full {
+            color: #666;
+            line-height: 1.6;
+            margin-top: 1rem;
         }
 
         /* Admin Panel */
@@ -261,6 +444,7 @@
             padding: 2rem;
             border-radius: 10px;
             margin-bottom: 2rem;
+            border-left: 4px solid #ff4757;
         }
 
         .admin-form {
@@ -286,6 +470,50 @@
             border: 1px solid #ddd;
             border-radius: 5px;
             font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 0 5px rgba(42, 82, 152, 0.3);
+        }
+
+        .privacy-toggle {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background-color: #ccc;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background-color: #4CAF50;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(26px);
         }
 
         /* About Section */
@@ -357,12 +585,57 @@
 
             .modal-content {
                 width: 95%;
-                margin: 10% auto;
+                margin: 5% auto;
+            }
+
+            .video-iframe {
+                height: 300px;
+            }
+
+            .video-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .video-actions {
+                flex-direction: row;
+                width: 100%;
             }
         }
 
         .hidden {
             display: none !important;
+        }
+
+        /* Notification styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem 1.5rem;
+            border-radius: 5px;
+            color: white;
+            font-weight: 500;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background-color: #28a745;
+        }
+
+        .notification.error {
+            background-color: #dc3545;
+        }
+
+        .notification.info {
+            background-color: #17a2b8;
         }
     </style>
 </head>
@@ -380,6 +653,7 @@
                 </ul>
             </nav>
             <div class="auth-section">
+                <div id="userInfo" class="user-info hidden"></div>
                 <button class="btn btn-secondary" id="loginBtn" onclick="showLogin()">Login</button>
                 <button class="btn btn-primary hidden" id="logoutBtn" onclick="logout()">Logout</button>
             </div>
@@ -391,7 +665,10 @@
         <div class="search-container">
             <div class="search-box">
                 <input type="text" class="search-input" id="searchInput" placeholder="Search for videos...">
-                <button class="search-btn" onclick="searchVideos()">Search</button>
+                <button class="search-btn" id="searchBtn" onclick="searchVideos()">
+                    <span id="searchText">Search</span>
+                    <div class="loading-spinner hidden" id="searchSpinner"></div>
+                </button>
             </div>
         </div>
     </section>
@@ -406,12 +683,16 @@
             </div>
 
             <div id="categoriesContainer" class="categories-grid">
-                <!-- Categories will be dynamically loaded here -->
+                <!-- Loading skeleton will appear here initially -->
+                <div id="categoriesLoading" class="loading-overlay">
+                    <div class="loading-spinner"></div>
+                    <p style="margin-top: 1rem; color: #666;">Loading categories...</p>
+                </div>
             </div>
 
             <!-- Admin Panel (only visible when logged in) -->
             <div id="adminPanel" class="admin-panel hidden">
-                <h2>Admin Panel</h2>
+                <h2>👨‍💼 Admin Panel</h2>
                 <div class="admin-form">
                     <h3>Add New Category</h3>
                     <div class="form-group">
@@ -422,7 +703,10 @@
                         <label for="categoryDesc">Category Description:</label>
                         <textarea id="categoryDesc" placeholder="Brief description of the category"></textarea>
                     </div>
-                    <button class="btn btn-primary" onclick="addCategory()">Add Category</button>
+                    <button class="btn btn-primary" onclick="addCategory()">
+                        <span id="addCategoryText">Add Category</span>
+                        <div class="loading-spinner hidden" id="addCategorySpinner"></div>
+                    </button>
                 </div>
 
                 <div class="admin-form" style="margin-top: 2rem;">
@@ -445,7 +729,21 @@
                         <label for="videoDesc">Video Description:</label>
                         <textarea id="videoDesc" placeholder="Brief description of the video"></textarea>
                     </div>
-                    <button class="btn btn-primary" onclick="addVideo()">Add Video</button>
+                    <div class="form-group">
+                        <label>Video Privacy:</label>
+                        <div class="privacy-toggle">
+                            <span>Private</span>
+                            <div class="toggle-switch" id="privacyToggle" onclick="togglePrivacy()">
+                                <div class="toggle-slider"></div>
+                            </div>
+                            <span>Public</span>
+                        </div>
+                        <small style="color: #666; margin-top: 0.5rem;">Private videos are only visible to you</small>
+                    </div>
+                    <button class="btn btn-primary" onclick="addVideo()">
+                        <span id="addVideoText">Add Video</span>
+                        <div class="loading-spinner hidden" id="addVideoSpinner"></div>
+                    </button>
                 </div>
             </div>
         </div>
@@ -478,7 +776,7 @@
                     <h3>Get in Touch</h3>
                     <p><strong>Email:</strong> dmkaawya@gmail.com</p>
                     <p><strong>Phone:</strong> +94 077 50 48 455</p>
-                    <p><strong>Address:</strong> Kalutara south,kalutara,western province,Sri lanka</p>
+                    <p><strong>Address:</strong> Kalutara south, Kalutara, Western Province, Sri Lanka</p>
                 </div>
 
                 <div style="margin-top: 2rem;">
@@ -540,38 +838,56 @@
         </div>
     </main>
 
-    <!-- Video Modal -->
+    <!-- Enhanced Video Modal -->
     <div id="videoModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <div id="videoContainer"></div>
-            <h3 id="videoTitle"></h3>
-            <p id="videoDescription"></p>
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalVideoTitle">Loading...</h2>
+                <button class="close" onclick="closeVideoModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="video-player-container" id="videoPlayerContainer">
+                    <div class="loading-overlay" id="videoLoadingOverlay">
+                        <div class="loading-spinner"></div>
+                        <p style="margin-top: 1rem; color: white;">Loading video...</p>
+                    </div>
+                </div>
+                <div class="video-info" id="modalVideoInfo">
+                    <p class="video-description-full" id="modalVideoDescription"></p>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Staff Login</h2>
-            <div class="admin-form">
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" placeholder="Enter username">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" placeholder="Enter password">
-                </div>
-                <button class="btn btn-primary" onclick="login()">Login</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Staff Login</h2>
+                <span class="close" onclick="closeModal('loginModal')">&times;</span>
             </div>
-            <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Demo credentials: admin / admin123</p>
+            <div style="padding: 2rem;">
+                <div class="admin-form">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" placeholder="Enter username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" placeholder="Enter password">
+                    </div>
+                    <button class="btn btn-primary" onclick="login()">
+                        <span id="loginText">Login</span>
+                        <div class="loading-spinner hidden" id="loginSpinner"></div>
+                    </button>
+                </div>
+                <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Demo credentials: user / admin123</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Sample data structure
+        // Enhanced data structure with privacy support
         let categories = [
             {
                 id: 1,
@@ -581,14 +897,20 @@
                     {
                         id: 1,
                         title: "Introduction to Algebra",
-                        url: "https://www.youtube.com/embed/NybHckSEQBI",
-                        description: "Learn the fundamentals of algebra with clear explanations and examples."
+                        url: "https://www.youtube-nocookie.com/embed/NybHckSEQBI",
+                        description: "Learn the fundamentals of algebra with clear explanations and examples.",
+                        isPrivate: false,
+                        uploadedBy: null,
+                        uploadDate: new Date('2024-01-15')
                     },
                     {
                         id: 2,
                         title: "Calculus Basics",
-                        url: "https://www.youtube.com/embed/WUvTyaaNkzM",
-                        description: "Understanding derivatives and integrals made simple."
+                        url: "https://www.youtube-nocookie.com/embed/WUvTyaaNkzM",
+                        description: "Understanding derivatives and integrals made simple.",
+                        isPrivate: false,
+                        uploadedBy: null,
+                        uploadDate: new Date('2024-01-20')
                     }
                 ]
             },
@@ -600,294 +922,8 @@
                     {
                         id: 3,
                         title: "Newton's Laws of Motion",
-                        url: "https://www.youtube.com/embed/kKKM8Y-u7ds",
-                        description: "Explore the three fundamental laws that govern motion."
-                    },
-                    {
-                        id: 4,
-                        title: "The Periodic Table",
-                        url: "https://www.youtube.com/embed/rz4Dd1I_fX0",
-                        description: "Understanding the organization of elements in chemistry."
-                    }
-                ]
-            },
-            {
-                id: 3,
-                name: "History",
-                description: "Journey through time and learn from the past",
-                videos: [
-                    {
-                        id: 5,
-                        title: "World War 2 Overview",
-                        url: "https://www.youtube.com/embed/Q78COTwT7nE",
-                        description: "A comprehensive overview of the Second World War."
-                    }
-                ]
-            }
-        ];
-
-        let isLoggedIn = false;
-        let currentPage = 'home';
-
-        // Initialize the website
-        function init() {
-            loadCategories();
-            setupEventListeners();
-        }
-
-        // Setup event listeners
-        function setupEventListeners() {
-            // Modal close events
-            document.querySelectorAll('.close').forEach(closeBtn => {
-                closeBtn.onclick = function() {
-                    closeBtn.closest('.modal').style.display = 'none';
-                }
-            });
-
-            // Click outside modal to close
-            window.onclick = function(event) {
-                if (event.target.classList.contains('modal')) {
-                    event.target.style.display = 'none';
-                }
-            }
-
-            // Search input enter key
-            document.getElementById('searchInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    searchVideos();
-                }
-            });
-        }
-
-        // Show different pages
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-            currentPage = pageId;
-        }
-
-        // Load categories and videos
-        function loadCategories() {
-            const container = document.getElementById('categoriesContainer');
-            const videoCategorySelect = document.getElementById('videoCategory');
-            
-            container.innerHTML = '';
-            videoCategorySelect.innerHTML = '<option value="">Choose a category...</option>';
-
-            categories.forEach(category => {
-                // Add to main display
-                const categoryCard = document.createElement('div');
-                categoryCard.className = 'category-card';
-                categoryCard.innerHTML = `
-                    <div class="category-header">
-                        <h3>${category.name}</h3>
-                        <p>${category.description}</p>
-                    </div>
-                    <div class="videos-container">
-                        ${category.videos.map(video => `
-                            <div class="video-item" onclick="playVideo('${video.url}', '${video.title}', '${video.description}')">
-                                <h4>${video.title}</h4>
-                                <p>${video.description}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-                container.appendChild(categoryCard);
-
-                // Add to admin select
-                const option = document.createElement('option');
-                option.value = category.id;
-                option.textContent = category.name;
-                videoCategorySelect.appendChild(option);
-            });
-        }
-
-        // Play video in modal
-        function playVideo(url, title, description) {
-            const modal = document.getElementById('videoModal');
-            const videoContainer = document.getElementById('videoContainer');
-            const videoTitle = document.getElementById('videoTitle');
-            const videoDescription = document.getElementById('videoDescription');
-
-            videoContainer.innerHTML = `<iframe width="100%" height="400" src="${url}" frameborder="0" allowfullscreen></iframe>`;
-            videoTitle.textContent = title;
-            videoDescription.textContent = description;
-            modal.style.display = 'block';
-        }
-
-        // Search functionality
-        function searchVideos() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            if (!searchTerm) return;
-
-            const container = document.getElementById('categoriesContainer');
-            container.innerHTML = '';
-
-            const results = [];
-            categories.forEach(category => {
-                category.videos.forEach(video => {
-                    if (video.title.toLowerCase().includes(searchTerm) || 
-                        video.description.toLowerCase().includes(searchTerm)) {
-                        results.push({...video, category: category.name});
-                    }
-                });
-            });
-
-            if (results.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: #666; font-size: 1.2rem;">No videos found for your search.</p>';
-                return;
-            }
-
-            const resultsCard = document.createElement('div');
-            resultsCard.className = 'category-card';
-            resultsCard.innerHTML = `
-                <div class="category-header">
-                    <h3>Search Results (${results.length})</h3>
-                    <p>Videos matching "${searchTerm}"</p>
-                </div>
-                <div class="videos-container">
-                    ${results.map(video => `
-                        <div class="video-item" onclick="playVideo('${video.url}', '${video.title}', '${video.description}')">
-                            <h4>${video.title}</h4>
-                            <p><strong>Category:</strong> ${video.category}</p>
-                            <p>${video.description}</p>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            container.appendChild(resultsCard);
-
-            // Add clear search button
-            const clearBtn = document.createElement('button');
-            clearBtn.className = 'btn btn-secondary';
-            clearBtn.textContent = 'Clear Search';
-            clearBtn.style.margin = '1rem auto';
-            clearBtn.style.display = 'block';
-            clearBtn.onclick = () => {
-                document.getElementById('searchInput').value = '';
-                loadCategories();
-            };
-            container.appendChild(clearBtn);
-        }
-
-        // Login functionality
-        function showLogin() {
-            document.getElementById('loginModal').style.display = 'block';
-        }
-
-        function login() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-
-            // Simple authentication (in real app, this would be secure backend authentication)
-            if (username === 'user' && password === 'admin123') {
-                isLoggedIn = true;
-                document.getElementById('loginBtn').classList.add('hidden');
-                document.getElementById('logoutBtn').classList.remove('hidden');
-                document.getElementById('adminPanel').classList.remove('hidden');
-                document.getElementById('loginModal').style.display = 'none';
-                alert('Login successful! You can now add categories and videos.');
-            } else {
-                alert('Invalid credentials. Please try again.');
-            }
-        }
-
-        function logout() {
-            isLoggedIn = false;
-            document.getElementById('loginBtn').classList.remove('hidden');
-            document.getElementById('logoutBtn').classList.add('hidden');
-            document.getElementById('adminPanel').classList.add('hidden');
-            alert('Logged out successfully!');
-        }
-
-        // Admin functions
-        function addCategory() {
-            if (!isLoggedIn) {
-                alert('Please log in to add categories.');
-                return;
-            }
-
-            const name = document.getElementById('categoryName').value;
-            const description = document.getElementById('categoryDesc').value;
-
-            if (!name || !description) {
-                alert('Please fill in all fields.');
-                return;
-            }
-
-            const newCategory = {
-                id: Date.now(),
-                name: name,
-                description: description,
-                videos: []
-            };
-
-            categories.push(newCategory);
-            loadCategories();
-            
-            // Clear form
-            document.getElementById('categoryName').value = '';
-            document.getElementById('categoryDesc').value = '';
-            
-            alert('Category added successfully!');
-        }
-
-        function addVideo() {
-            if (!isLoggedIn) {
-                alert('Please log in to add videos.');
-                return;
-            }
-
-            const categoryId = parseInt(document.getElementById('videoCategory').value);
-            const title = document.getElementById('videoTitle').value;
-            const url = document.getElementById('videoUrl').value;
-            const description = document.getElementById('videoDesc').value;
-
-            if (!categoryId || !title || !url || !description) {
-                alert('Please fill in all fields.');
-                return;
-            }
-
-            // Convert YouTube watch URL to embed URL
-            const embedUrl = convertToEmbedUrl(url);
-            if (!embedUrl) {
-                alert('Please enter a valid YouTube URL.');
-                return;
-            }
-
-            const newVideo = {
-                id: Date.now(),
-                title: title,
-                url: embedUrl,
-                description: description
-            };
-
-            const category = categories.find(cat => cat.id === categoryId);
-            category.videos.push(newVideo);
-            loadCategories();
-
-            // Clear form
-            document.getElementById('videoCategory').value = '';
-            document.getElementById('videoTitle').value = '';
-            document.getElementById('videoUrl').value = '';
-            document.getElementById('videoDesc').value = '';
-
-            alert('Video added successfully!');
-        }
-
-        function convertToEmbedUrl(url) {
-            const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/;
-            const match = url.match(regex);
-            if (match) {
-                return `https://www.youtube.com/embed/${match[1]}`;
-            }
-            return null;
-        }
-
-        // Initialize the website when page loads
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
-</body>
-</html>
+                        url: "https://www.youtube-nocookie.com/embed/kKKM8Y-u7ds",
+                        description: "Explore the three fundamental laws that govern motion.",
+                        isPrivate: false,
+                        uploadedBy: null,
+                        uploadDate: new Date('2024-01-

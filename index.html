@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K Edu - Learn Through Videos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+       body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ff4757;
+        }
+
+        .auth-section {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #ff4757;
+            color: white;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Search Section */
+        .search-section {
+            background-color: #f8f9fa;
+            padding: 2rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .search-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .search-box {
+            display: flex;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 25px;
+            overflow: hidden;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-btn {
+            background-color: #2a5298;
+            color: white;
+            border: none;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Home Page */
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #ff4757, #ff3742);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .category-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .videos-container {
+            padding: 1.5rem;
+        }
+
+        .video-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .video-item:hover {
+            background-color: #e9ecef;
+        }
+
+        .video-item h4 {
+            color: #2a5298;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #ff4757;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .admin-form {
+            display: grid;
+            gap: 1rem;
+            max-width: 500px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        /* About Section */
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-content h2 {
+            color: #2a5298;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #ff4757;
+            padding-bottom: 0.5rem;
+        }
+
+        .about-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Staff Section */
+        .staff-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .staff-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .staff-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #2a5298, #ff4757);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">K Edu</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('about')">About</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                    <li><a href="#" onclick="showPage('staff')">Staff</a></li>
+                </ul>
+            </nav>
+            <div class="auth-section">
+                <button class="btn btn-secondary" id="loginBtn" onclick="showLogin()">Login</button>
+                <button class="btn btn-primary hidden" id="logoutBtn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search for videos...">
+                <button class="search-btn" onclick="searchVideos()">Search</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <div class="hero">
+                <h1>Welcome to K Edu</h1>
+                <p>Discover knowledge through carefully curated YouTube videos. Learn at your own pace with our organized educational content.</p>
+            </div>
+
+            <div id="categoriesContainer" class="categories-grid">
+                <!-- Categories will be dynamically loaded here -->
+            </div>
+
+            <!-- Admin Panel (only visible when logged in) -->
+            <div id="adminPanel" class="admin-panel hidden">
+                <h2>Admin Panel</h2>
+                <div class="admin-form">
+                    <h3>Add New Category</h3>
+                    <div class="form-group">
+                        <label for="categoryName">Category Name:</label>
+                        <input type="text" id="categoryName" placeholder="e.g., Mathematics">
+                    </div>
+                    <div class="form-group">
+                        <label for="categoryDesc">Category Description:</label>
+                        <textarea id="categoryDesc" placeholder="Brief description of the category"></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="addCategory()">Add Category</button>
+                </div>
+
+                <div class="admin-form" style="margin-top: 2rem;">
+                    <h3>Add New Video</h3>
+                    <div class="form-group">
+                        <label for="videoCategory">Select Category:</label>
+                        <select id="videoCategory">
+                            <option value="">Choose a category...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoTitle">Video Title:</label>
+                        <input type="text" id="videoTitle" placeholder="Enter video title">
+                    </div>
+                    <div class="form-group">
+                        <label for="videoUrl">YouTube URL:</label>
+                        <input type="url" id="videoUrl" placeholder="https://www.youtube.com/watch?v=...">
+                    </div>
+                    <div class="form-group">
+                        <label for="videoDesc">Video Description:</label>
+                        <textarea id="videoDesc" placeholder="Brief description of the video"></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="addVideo()">Add Video</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <div class="about-content">
+                <h2>About K Edu</h2>
+                <p><strong>What K Edu Does:</strong> K Edu is a comprehensive educational platform that provides access to carefully curated YouTube videos across various subjects. We organize educational content into logical categories, making it easy for students to find and learn from high-quality video resources.</p>
+
+                <h2>Why We Created K Edu</h2>
+                <p>In today's digital age, YouTube has become one of the largest repositories of educational content. However, finding quality educational videos can be overwhelming due to the vast amount of content available. K Edu was created to solve this problem by providing a curated, organized platform where students can access the best educational videos without the distraction of irrelevant content.</p>
+
+                <h2>How K Edu Helps Students</h2>
+                <p><strong>Organized Learning:</strong> Our platform categorizes videos by subject, making it easy to find relevant content for your studies.</p>
+                <p><strong>Quality Assurance:</strong> All videos are reviewed by our educational staff to ensure they meet high standards for accuracy and teaching quality.</p>
+                <p><strong>Easy Search:</strong> Our powerful search functionality helps you quickly find videos on specific topics.</p>
+                <p><strong>Free Access:</strong> All content is freely available to students, removing barriers to quality education.</p>
+                <p><strong>Mobile Friendly:</strong> Access your learning materials anywhere, anytime, on any device.</p>
+            </div>
+        </div>
+
+        <!-- Contact Page -->
+        <div id="contact" class="page">
+            <div class="about-content">
+                <h2>Contact Us</h2>
+                <p>We'd love to hear from you! Whether you have questions, suggestions, or need support, don't hesitate to reach out.</p>
+                
+                <div style="margin-top: 2rem;">
+                    <h3>Get in Touch</h3>
+                    <p><strong>Email:</strong> info@kedu.com</p>
+                    <p><strong>Phone:</strong> +1 (555) 123-4567</p>
+                    <p><strong>Address:</strong> 123 Education Street, Learning City, LC 12345</p>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <h3>Support Hours</h3>
+                    <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                    <p>Saturday: 10:00 AM - 4:00 PM</p>
+                    <p>Sunday: Closed</p>
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <h3>For Educators</h3>
+                    <p>Interested in contributing to our platform? Contact us at <strong>educators@kedu.com</strong> to learn about becoming a content curator.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Staff Page -->
+        <div id="staff" class="page">
+            <div class="about-content">
+                <h2>Our Team</h2>
+                <p>Meet the dedicated educators and administrators who make K Edu possible.</p>
+                
+                <div class="staff-grid" style="margin-top: 2rem;">
+                    <div class="staff-card">
+                        <div class="staff-avatar">JD</div>
+                        <h3>Dr. Jane Doe</h3>
+                        <p><strong>Chief Education Officer</strong></p>
+                        <p>Ph.D. in Education Technology with 15 years of experience in curriculum development.</p>
+                    </div>
+                    
+                    <div class="staff-card">
+                        <div class="staff-avatar">MS</div>
+                        <h3>Prof. Mike Smith</h3>
+                        <p><strong>Content Director</strong></p>
+                        <p>Mathematics educator and content specialist with expertise in online learning platforms.</p>
+                    </div>
+                    
+                    <div class="staff-card">
+                        <div class="staff-avatar">SJ</div>
+                        <h3>Sarah Johnson</h3>
+                        <p><strong>Platform Administrator</strong></p>
+                        <p>Technology specialist ensuring smooth operation of our educational platform.</p>
+                    </div>
+                    
+                    <div class="staff-card">
+                        <div class="staff-avatar">AB</div>
+                        <h3>Dr. Alex Brown</h3>
+                        <p><strong>Science Curriculum Lead</strong></p>
+                        <p>Research scientist and educator specializing in making complex concepts accessible.</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 3rem; padding: 2rem; background: #f8f9fa; border-radius: 10px;">
+                    <h3>Staff Login</h3>
+                    <p>Staff members can log in to access administrative features including adding new categories and video content.</p>
+                    <button class="btn btn-primary" onclick="showLogin()">Staff Login</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="videoContainer"></div>
+            <h3 id="videoTitle"></h3>
+            <p id="videoDescription"></p>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Staff Login</h2>
+            <div class="admin-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" placeholder="Enter password">
+                </div>
+                <button class="btn btn-primary" onclick="login()">Login</button>
+            </div>
+            <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Demo credentials: admin / admin123</p>
+        </div>
+    </div>
+
+    <script>
+        // Sample data structure
+        let categories = [
+            {
+                id: 1,
+                name: "Mathematics",
+                description: "From basic arithmetic to advanced calculus",
+                videos: [
+                    {
+                        id: 1,
+                        title: "Introduction to Algebra",
+                        url: "https://www.youtube.com/embed/NybHckSEQBI",
+                        description: "Learn the fundamentals of algebra with clear explanations and examples."
+                    },
+                    {
+                        id: 2,
+                        title: "Calculus Basics",
+                        url: "https://www.youtube.com/embed/WUvTyaaNkzM",
+                        description: "Understanding derivatives and integrals made simple."
+                    }
+                ]
+            },
+            {
+                id: 2,
+                name: "Science",
+                description: "Physics, Chemistry, and Biology explained simply",
+                videos: [
+                    {
+                        id: 3,
+                        title: "Newton's Laws of Motion",
+                        url: "https://www.youtube.com/embed/kKKM8Y-u7ds",
+                        description: "Explore the three fundamental laws that govern motion."
+                    },
+                    {
+                        id: 4,
+                        title: "The Periodic Table",
+                        url: "https://www.youtube.com/embed/rz4Dd1I_fX0",
+                        description: "Understanding the organization of elements in chemistry."
+                    }
+                ]
+            },
+            {
+                id: 3,
+                name: "History",
+                description: "Journey through time and learn from the past",
+                videos: [
+                    {
+                        id: 5,
+                        title: "World War 2 Overview",
+                        url: "https://www.youtube.com/embed/Q78COTwT7nE",
+                        description: "A comprehensive overview of the Second World War."
+                    }
+                ]
+            }
+        ];
+
+        let isLoggedIn = false;
+        let currentPage = 'home';
+
+        // Initialize the website
+        function init() {
+            loadCategories();
+            setupEventListeners();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Modal close events
+            document.querySelectorAll('.close').forEach(closeBtn => {
+                closeBtn.onclick = function() {
+                    closeBtn.closest('.modal').style.display = 'none';
+                }
+            });
+
+            // Click outside modal to close
+            window.onclick = function(event) {
+                if (event.target.classList.contains('modal')) {
+                    event.target.style.display = 'none';
+                }
+            }
+
+            // Search input enter key
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchVideos();
+                }
+            });
+        }
+
+        // Show different pages
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(pageId).classList.add('active');
+            currentPage = pageId;
+        }
+
+        // Load categories and videos
+        function loadCategories() {
+            const container = document.getElementById('categoriesContainer');
+            const videoCategorySelect = document.getElementById('videoCategory');
+            
+            container.innerHTML = '';
+            videoCategorySelect.innerHTML = '<option value="">Choose a category...</option>';
+
+            categories.forEach(category => {
+                // Add to main display
+                const categoryCard = document.createElement('div');
+                categoryCard.className = 'category-card';
+                categoryCard.innerHTML = `
+                    <div class="category-header">
+                        <h3>${category.name}</h3>
+                        <p>${category.description}</p>
+                    </div>
+                    <div class="videos-container">
+                        ${category.videos.map(video => `
+                            <div class="video-item" onclick="playVideo('${video.url}', '${video.title}', '${video.description}')">
+                                <h4>${video.title}</h4>
+                                <p>${video.description}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                container.appendChild(categoryCard);
+
+                // Add to admin select
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                videoCategorySelect.appendChild(option);
+            });
+        }
+
+        // Play video in modal
+        function playVideo(url, title, description) {
+            const modal = document.getElementById('videoModal');
+            const videoContainer = document.getElementById('videoContainer');
+            const videoTitle = document.getElementById('videoTitle');
+            const videoDescription = document.getElementById('videoDescription');
+
+            videoContainer.innerHTML = `<iframe width="100%" height="400" src="${url}" frameborder="0" allowfullscreen></iframe>`;
+            videoTitle.textContent = title;
+            videoDescription.textContent = description;
+            modal.style.display = 'block';
+        }
+
+        // Search functionality
+        function searchVideos() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (!searchTerm) return;
+
+            const container = document.getElementById('categoriesContainer');
+            container.innerHTML = '';
+
+            const results = [];
+            categories.forEach(category => {
+                category.videos.forEach(video => {
+                    if (video.title.toLowerCase().includes(searchTerm) || 
+                        video.description.toLowerCase().includes(searchTerm)) {
+                        results.push({...video, category: category.name});
+                    }
+                });
+            });
+
+            if (results.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; font-size: 1.2rem;">No videos found for your search.</p>';
+                return;
+            }
+
+            const resultsCard = document.createElement('div');
+            resultsCard.className = 'category-card';
+            resultsCard.innerHTML = `
+                <div class="category-header">
+                    <h3>Search Results (${results.length})</h3>
+                    <p>Videos matching "${searchTerm}"</p>
+                </div>
+                <div class="videos-container">
+                    ${results.map(video => `
+                        <div class="video-item" onclick="playVideo('${video.url}', '${video.title}', '${video.description}')">
+                            <h4>${video.title}</h4>
+                            <p><strong>Category:</strong> ${video.category}</p>
+                            <p>${video.description}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(resultsCard);
+
+            // Add clear search button
+            const clearBtn = document.createElement('button');
+            clearBtn.className = 'btn btn-secondary';
+            clearBtn.textContent = 'Clear Search';
+            clearBtn.style.margin = '1rem auto';
+            clearBtn.style.display = 'block';
+            clearBtn.onclick = () => {
+                document.getElementById('searchInput').value = '';
+                loadCategories();
+            };
+            container.appendChild(clearBtn);
+        }
+
+        // Login functionality
+        function showLogin() {
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Simple authentication (in real app, this would be secure backend authentication)
+            if (username === 'user' && password === 'admin123') {
+                isLoggedIn = true;
+                document.getElementById('loginBtn').classList.add('hidden');
+                document.getElementById('logoutBtn').classList.remove('hidden');
+                document.getElementById('adminPanel').classList.remove('hidden');
+                document.getElementById('loginModal').style.display = 'none';
+                alert('Login successful! You can now add categories and videos.');
+            } else {
+                alert('Invalid credentials. Please try again.');
+            }
+        }
+
+        function logout() {
+            isLoggedIn = false;
+            document.getElementById('loginBtn').classList.remove('hidden');
+            document.getElementById('logoutBtn').classList.add('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+            alert('Logged out successfully!');
+        }
+
+        // Admin functions
+        function addCategory() {
+            if (!isLoggedIn) {
+                alert('Please log in to add categories.');
+                return;
+            }
+
+            const name = document.getElementById('categoryName').value;
+            const description = document.getElementById('categoryDesc').value;
+
+            if (!name || !description) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            const newCategory = {
+                id: Date.now(),
+                name: name,
+                description: description,
+                videos: []
+            };
+
+            categories.push(newCategory);
+            loadCategories();
+            
+            // Clear form
+            document.getElementById('categoryName').value = '';
+            document.getElementById('categoryDesc').value = '';
+            
+            alert('Category added successfully!');
+        }
+
+        function addVideo() {
+            if (!isLoggedIn) {
+                alert('Please log in to add videos.');
+                return;
+            }
+
+            const categoryId = parseInt(document.getElementById('videoCategory').value);
+            const title = document.getElementById('videoTitle').value;
+            const url = document.getElementById('videoUrl').value;
+            const description = document.getElementById('videoDesc').value;
+
+            if (!categoryId || !title || !url || !description) {
+                alert('Please fill in all fields.');
+                return;
+            }
+
+            // Convert YouTube watch URL to embed URL
+            const embedUrl = convertToEmbedUrl(url);
+            if (!embedUrl) {
+                alert('Please enter a valid YouTube URL.');
+                return;
+            }
+
+            const newVideo = {
+                id: Date.now(),
+                title: title,
+                url: embedUrl,
+                description: description
+            };
+
+            const category = categories.find(cat => cat.id === categoryId);
+            category.videos.push(newVideo);
+            loadCategories();
+
+            // Clear form
+            document.getElementById('videoCategory').value = '';
+            document.getElementById('videoTitle').value = '';
+            document.getElementById('videoUrl').value = '';
+            document.getElementById('videoDesc').value = '';
+
+            alert('Video added successfully!');
+        }
+
+        function convertToEmbedUrl(url) {
+            const regex = /(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/;
+            const match = url.match(regex);
+            if (match) {
+                return `https://www.youtube.com/embed/${match[1]}`;
+            }
+            return null;
+        }
+
+        // Initialize the website when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

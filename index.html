@@ -251,7 +251,8 @@
             width: 120px;
             height: 90px;
             object-fit: cover;
-            border-radius: 5px;
+            border-rad
+            ius: 5px;
         }
 
         .video-item h4 {
@@ -627,6 +628,13 @@
     </div>
 
     <script>
+        // Initialize users from localStorage or set default users
+        let users = JSON.parse(localStorage.getItem('users')) || [
+            { username: "admin", password: "admin123" },
+            { username: "teacher", password: "teach2025" }
+        ];
+        localStorage.setItem('users', JSON.stringify(users));
+
         // Sample data structure (loaded from localStorage if available)
         let categories = JSON.parse(localStorage.getItem('categories')) || [
             {
@@ -687,6 +695,10 @@
 
         // Initialize the website
         function init() {
+            // Save default users to localStorage if not already present
+            if (!localStorage.getItem('users')) {
+                localStorage.setItem('users', JSON.stringify(users));
+            }
             loadCategories();
             setupEventListeners();
         }
@@ -748,7 +760,6 @@
                 videoCategorySelect.innerHTML = '<option value="">Choose a category...</option>';
 
                 categories.forEach(category => {
-                    // Add to main display
                     const categoryCard = document.createElement('div');
                     categoryCard.className = 'category-card';
                     const shortDesc = category.description.length > 100 ? category.description.substring(0, 100) + '...' : category.description;
@@ -775,7 +786,6 @@
                     `;
                     container.appendChild(categoryCard);
 
-                    // Add to admin select
                     const option = document.createElement('option');
                     option.value = category.id;
                     option.textContent = category.name;
@@ -783,7 +793,7 @@
                 });
 
                 loader.style.display = 'none';
-            }, 500); // Simulate loading delay (can be removed in production)
+            }, 500);
         }
 
         // Toggle videos visibility
@@ -804,7 +814,6 @@
             videoDescription.textContent = description;
             modal.style.display = 'block';
 
-            // Disable right-click on iframe
             const iframe = videoContainer.querySelector('iframe');
             iframe.addEventListener('contextmenu', (e) => e.preventDefault());
         }
@@ -863,7 +872,6 @@
                 `;
                 container.appendChild(resultsCard);
 
-                // Add clear search button
                 const clearBtn = document.createElement('button');
                 clearBtn.className = 'btn btn-secondary';
                 clearBtn.textContent = 'Clear Search';
@@ -876,7 +884,7 @@
                 container.appendChild(clearBtn);
 
                 loader.style.display = 'none';
-            }, 500); // Simulate loading delay
+            }, 500);
         }
 
         // Login functionality
@@ -887,8 +895,11 @@
         function login() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+            const users = JSON.parse(localStorage.getItem('users')) || [];
 
-            if (username === 'admin' && password === 'admin123') {
+            const isValidUser = users.some(user => user.username === username && user.password === password);
+
+            if (isValidUser) {
                 isLoggedIn = true;
                 document.getElementById('loginBtn').classList.add('hidden');
                 document.getElementById('logoutBtn').classList.remove('hidden');

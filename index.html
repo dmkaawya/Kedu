@@ -11,16 +11,23 @@
             box-sizing: border-box;
         }
 
-       body {
+        :root {
+            --primary-color: #2a5298;
+            --accent-color: #ff4757;
+            --text-color: #333;
+            --background-color: #fff;
+        }
+
+        body {
             font-family: 'Arial', sans-serif;
             line-height: 1.6;
-            color: #333;
-            background-color: #fff;
+            color: var(--text-color);
+            background-color: var(--background-color);
         }
 
         /* Header */
         .header {
-            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            background: linear-gradient(135deg, #1e3c72, var(--primary-color));
             color: white;
             padding: 1rem 0;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
@@ -55,7 +62,7 @@
         }
 
         .nav-links a:hover {
-            color: #ff4757;
+            color: var(--accent-color);
         }
 
         .auth-section {
@@ -73,7 +80,7 @@
         }
 
         .btn-primary {
-            background-color: #ff4757;
+            background-color: var(--accent-color);
             color: white;
         }
 
@@ -100,6 +107,7 @@
             margin: 0 auto;
             padding: 0 2rem;
             text-align: center;
+            position: relative;
         }
 
         .search-box {
@@ -120,12 +128,29 @@
         }
 
         .search-btn {
-            background-color: #2a5298;
+            background-color: var(--primary-color);
             color: white;
             border: none;
             padding: 1rem 1.5rem;
             cursor: pointer;
             font-size: 1rem;
+        }
+
+        /* Loader Animation */
+        .loader {
+            display: none;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Main Content */
@@ -185,10 +210,11 @@
         }
 
         .category-header {
-            background: linear-gradient(135deg, #ff4757, #ff3742);
+            background: linear-gradient(135deg, var(--accent-color), #ff3742);
             color: white;
             padding: 1.5rem;
             text-align: center;
+            cursor: pointer;
         }
 
         .category-header h3 {
@@ -197,7 +223,12 @@
         }
 
         .videos-container {
+            display: none;
             padding: 1.5rem;
+        }
+
+        .videos-container.active {
+            display: block;
         }
 
         .video-item {
@@ -207,15 +238,30 @@
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
         }
 
         .video-item:hover {
             background-color: #e9ecef;
         }
 
+        .video-item img {
+            width: 120px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
         .video-item h4 {
-            color: #2a5298;
+            color: var(--primary-color);
             margin-bottom: 0.5rem;
+        }
+
+        .video-item p {
+            font-size: 0.9rem;
+            color: #666;
         }
 
         /* Modal */
@@ -252,7 +298,7 @@
         }
 
         .close:hover {
-            color: #ff4757;
+            color: var(--accent-color);
         }
 
         /* Admin Panel */
@@ -295,9 +341,9 @@
         }
 
         .about-content h2 {
-            color: #2a5298;
+            color: var(--primary-color);
             margin-bottom: 1rem;
-            border-bottom: 2px solid #ff4757;
+            border-bottom: 2px solid var(--accent-color);
             padding-bottom: 0.5rem;
         }
 
@@ -324,7 +370,7 @@
         .staff-avatar {
             width: 100px;
             height: 100px;
-            background: linear-gradient(135deg, #2a5298, #ff4757);
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
             border-radius: 50%;
             margin: 0 auto 1rem;
             display: flex;
@@ -359,10 +405,20 @@
                 width: 95%;
                 margin: 10% auto;
             }
+
+            .video-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .video-item img {
+                width: 100%;
+                max-width: 200px;
+            }
         }
 
         .hidden {
-            display: none !important;
+            display: none;
         }
     </style>
 </head>
@@ -393,6 +449,7 @@
                 <input type="text" class="search-input" id="searchInput" placeholder="Search for videos...">
                 <button class="search-btn" onclick="searchVideos()">Search</button>
             </div>
+            <div class="loader" id="searchLoader"></div>
         </div>
     </section>
 
@@ -406,7 +463,7 @@
             </div>
 
             <div id="categoriesContainer" class="categories-grid">
-                <!-- Categories will be dynamically loaded here -->
+                <div class="loader" id="categoriesLoader"></div>
             </div>
 
             <!-- Admin Panel (only visible when logged in) -->
@@ -503,28 +560,28 @@
                 
                 <div class="staff-grid" style="margin-top: 2rem;">
                     <div class="staff-card">
-                        <div class="staff-avatar">JD</div>
+                        <div class="staff-avatar" aria-label="Avatar for Dr. Jane Doe">JD</div>
                         <h3>Dr. Jane Doe</h3>
                         <p><strong>Chief Education Officer</strong></p>
                         <p>Ph.D. in Education Technology with 15 years of experience in curriculum development.</p>
                     </div>
                     
                     <div class="staff-card">
-                        <div class="staff-avatar">MS</div>
+                        <div class="staff-avatar" aria-label="Avatar for Prof. Mike Smith">MS</div>
                         <h3>Prof. Mike Smith</h3>
                         <p><strong>Content Director</strong></p>
                         <p>Mathematics educator and content specialist with expertise in online learning platforms.</p>
                     </div>
                     
                     <div class="staff-card">
-                        <div class="staff-avatar">SJ</div>
+                        <div class="staff-avatar" aria-label="Avatar for Sarah Johnson">SJ</div>
                         <h3>Sarah Johnson</h3>
                         <p><strong>Platform Administrator</strong></p>
                         <p>Technology specialist ensuring smooth operation of our educational platform.</p>
                     </div>
                     
                     <div class="staff-card">
-                        <div class="staff-avatar">AB</div>
+                        <div class="staff-avatar" aria-label="Avatar for Dr. Alex Brown">AB</div>
                         <h3>Dr. Alex Brown</h3>
                         <p><strong>Science Curriculum Lead</strong></p>
                         <p>Research scientist and educator specializing in making complex concepts accessible.</p>
@@ -566,13 +623,12 @@
                 </div>
                 <button class="btn btn-primary" onclick="login()">Login</button>
             </div>
-            <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Demo credentials: admin / admin123</p>
         </div>
     </div>
 
     <script>
-        // Sample data structure
-        let categories = [
+        // Sample data structure (loaded from localStorage if available)
+        let categories = JSON.parse(localStorage.getItem('categories')) || [
             {
                 id: 1,
                 name: "Mathematics",
@@ -657,6 +713,17 @@
                     searchVideos();
                 }
             });
+
+            // Event delegation for video clicks
+            document.getElementById('categoriesContainer').addEventListener('click', (e) => {
+                const videoItem = e.target.closest('.video-item');
+                if (videoItem) {
+                    const url = videoItem.dataset.url;
+                    const title = videoItem.dataset.title;
+                    const description = videoItem.dataset.description;
+                    playVideo(url, title, description);
+                }
+            });
         }
 
         // Show different pages
@@ -672,36 +739,57 @@
         function loadCategories() {
             const container = document.getElementById('categoriesContainer');
             const videoCategorySelect = document.getElementById('videoCategory');
+            const loader = document.getElementById('categoriesLoader');
             
+            loader.style.display = 'block';
             container.innerHTML = '';
-            videoCategorySelect.innerHTML = '<option value="">Choose a category...</option>';
 
-            categories.forEach(category => {
-                // Add to main display
-                const categoryCard = document.createElement('div');
-                categoryCard.className = 'category-card';
-                categoryCard.innerHTML = `
-                    <div class="category-header">
-                        <h3>${category.name}</h3>
-                        <p>${category.description}</p>
-                    </div>
-                    <div class="videos-container">
-                        ${category.videos.map(video => `
-                            <div class="video-item" onclick="playVideo('${video.url}', '${video.title}', '${video.description}')">
-                                <h4>${video.title}</h4>
-                                <p>${video.description}</p>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-                container.appendChild(categoryCard);
+            setTimeout(() => {
+                videoCategorySelect.innerHTML = '<option value="">Choose a category...</option>';
 
-                // Add to admin select
-                const option = document.createElement('option');
-                option.value = category.id;
-                option.textContent = category.name;
-                videoCategorySelect.appendChild(option);
-            });
+                categories.forEach(category => {
+                    // Add to main display
+                    const categoryCard = document.createElement('div');
+                    categoryCard.className = 'category-card';
+                    const shortDesc = category.description.length > 100 ? category.description.substring(0, 100) + '...' : category.description;
+                    categoryCard.innerHTML = `
+                        <div class="category-header" onclick="toggleVideos(this)">
+                            <h3>${category.name}</h3>
+                            <p>${shortDesc}</p>
+                        </div>
+                        <div class="videos-container">
+                            ${category.videos.map(video => {
+                                const videoId = video.url.split('/').pop();
+                                const shortDesc = video.description.length > 100 ? video.description.substring(0, 100) + '...' : video.description;
+                                return `
+                                    <div class="video-item" data-url="${video.url}" data-title="${video.title}" data-description="${video.description}">
+                                        <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${video.title} thumbnail">
+                                        <div>
+                                            <h4>${video.title}</h4>
+                                            <p>${shortDesc}</p>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                    `;
+                    container.appendChild(categoryCard);
+
+                    // Add to admin select
+                    const option = document.createElement('option');
+                    option.value = category.id;
+                    option.textContent = category.name;
+                    videoCategorySelect.appendChild(option);
+                });
+
+                loader.style.display = 'none';
+            }, 500); // Simulate loading delay (can be removed in production)
+        }
+
+        // Toggle videos visibility
+        function toggleVideos(header) {
+            const videosContainer = header.nextElementSibling;
+            videosContainer.classList.toggle('active');
         }
 
         // Play video in modal
@@ -711,65 +799,84 @@
             const videoTitle = document.getElementById('videoTitle');
             const videoDescription = document.getElementById('videoDescription');
 
-            videoContainer.innerHTML = `<iframe width="100%" height="400" src="${url}" frameborder="0" allowfullscreen></iframe>`;
+            videoContainer.innerHTML = `<iframe width="100%" height="400" src="${url}" frameborder="0" allowfullscreen sandbox="allow-scripts allow-same-origin"></iframe>`;
             videoTitle.textContent = title;
             videoDescription.textContent = description;
             modal.style.display = 'block';
+
+            // Disable right-click on iframe
+            const iframe = videoContainer.querySelector('iframe');
+            iframe.addEventListener('contextmenu', (e) => e.preventDefault());
         }
 
         // Search functionality
         function searchVideos() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const container = document.getElementById('categoriesContainer');
+            const loader = document.getElementById('searchLoader');
+            
             if (!searchTerm) return;
 
-            const container = document.getElementById('categoriesContainer');
+            loader.style.display = 'block';
             container.innerHTML = '';
 
-            const results = [];
-            categories.forEach(category => {
-                category.videos.forEach(video => {
-                    if (video.title.toLowerCase().includes(searchTerm) || 
-                        video.description.toLowerCase().includes(searchTerm)) {
-                        results.push({...video, category: category.name});
-                    }
+            setTimeout(() => {
+                const results = [];
+                categories.forEach(category => {
+                    category.videos.forEach(video => {
+                        if (video.title.toLowerCase().includes(searchTerm) || 
+                            video.description.toLowerCase().includes(searchTerm)) {
+                            results.push({...video, category: category.name});
+                        }
+                    });
                 });
-            });
 
-            if (results.length === 0) {
-                container.innerHTML = '<p style="text-align: center; color: #666; font-size: 1.2rem;">No videos found for your search.</p>';
-                return;
-            }
+                if (results.length === 0) {
+                    container.innerHTML = '<p style="text-align: center; color: #666; font-size: 1.2rem;">No videos found for your search.</p>';
+                    loader.style.display = 'none';
+                    return;
+                }
 
-            const resultsCard = document.createElement('div');
-            resultsCard.className = 'category-card';
-            resultsCard.innerHTML = `
-                <div class="category-header">
-                    <h3>Search Results (${results.length})</h3>
-                    <p>Videos matching "${searchTerm}"</p>
-                </div>
-                <div class="videos-container">
-                    ${results.map(video => `
-                        <div class="video-item" onclick="playVideo('${video.url}', '${video.title}', '${video.description}')">
-                            <h4>${video.title}</h4>
-                            <p><strong>Category:</strong> ${video.category}</p>
-                            <p>${video.description}</p>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            container.appendChild(resultsCard);
+                const resultsCard = document.createElement('div');
+                resultsCard.className = 'category-card';
+                resultsCard.innerHTML = `
+                    <div class="category-header">
+                        <h3>Search Results (${results.length})</h3>
+                        <p>Videos matching "${searchTerm}"</p>
+                    </div>
+                    <div class="videos-container active">
+                        ${results.map(video => {
+                            const videoId = video.url.split('/').pop();
+                            const shortDesc = video.description.length > 100 ? video.description.substring(0, 100) + '...' : video.description;
+                            return `
+                                <div class="video-item" data-url="${video.url}" data-title="${video.title}" data-description="${video.description}">
+                                    <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${video.title} thumbnail">
+                                    <div>
+                                        <h4>${video.title}</h4>
+                                        <p><strong>Category:</strong> ${video.category}</p>
+                                        <p>${shortDesc}</p>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+                container.appendChild(resultsCard);
 
-            // Add clear search button
-            const clearBtn = document.createElement('button');
-            clearBtn.className = 'btn btn-secondary';
-            clearBtn.textContent = 'Clear Search';
-            clearBtn.style.margin = '1rem auto';
-            clearBtn.style.display = 'block';
-            clearBtn.onclick = () => {
-                document.getElementById('searchInput').value = '';
-                loadCategories();
-            };
-            container.appendChild(clearBtn);
+                // Add clear search button
+                const clearBtn = document.createElement('button');
+                clearBtn.className = 'btn btn-secondary';
+                clearBtn.textContent = 'Clear Search';
+                clearBtn.style.margin = '1rem auto';
+                clearBtn.style.display = 'block';
+                clearBtn.onclick = () => {
+                    document.getElementById('searchInput').value = '';
+                    loadCategories();
+                };
+                container.appendChild(clearBtn);
+
+                loader.style.display = 'none';
+            }, 500); // Simulate loading delay
         }
 
         // Login functionality
@@ -781,8 +888,7 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            // Simple authentication (in real app, this would be secure backend authentication)
-            if (username === 'user' && password === 'admin123') {
+            if (username === 'admin' && password === 'admin123') {
                 isLoggedIn = true;
                 document.getElementById('loginBtn').classList.add('hidden');
                 document.getElementById('logoutBtn').classList.remove('hidden');
@@ -825,9 +931,9 @@
             };
 
             categories.push(newCategory);
+            localStorage.setItem('categories', JSON.stringify(categories));
             loadCategories();
             
-            // Clear form
             document.getElementById('categoryName').value = '';
             document.getElementById('categoryDesc').value = '';
             
@@ -850,7 +956,6 @@
                 return;
             }
 
-            // Convert YouTube watch URL to embed URL
             const embedUrl = convertToEmbedUrl(url);
             if (!embedUrl) {
                 alert('Please enter a valid YouTube URL.');
@@ -866,9 +971,9 @@
 
             const category = categories.find(cat => cat.id === categoryId);
             category.videos.push(newVideo);
+            localStorage.setItem('categories', JSON.stringify(categories));
             loadCategories();
 
-            // Clear form
             document.getElementById('videoCategory').value = '';
             document.getElementById('videoTitle').value = '';
             document.getElementById('videoUrl').value = '';
@@ -889,8 +994,5 @@
         // Initialize the website when page loads
         document.addEventListener('DOMContentLoaded', init);
     </script>
-<script>document.addEventListener('contextmenu', function(e) {
-    e.preventDefault();
-});</script>
 </body>
 </html>

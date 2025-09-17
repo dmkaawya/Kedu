@@ -760,4 +760,203 @@
                 });
 
                 if (results.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; color: #666;
+                    container.innerHTML = '<p style="text-align: center; color: #666; font-size: 1.2rem;">No videos found for your search.</p>';
+                    loader.style.display = 'none';
+                    return;
+                }
+
+                const resultsCard = document.createElement('div');
+                resultsCard.className = 'category-card';
+                resultsCard.innerHTML = `
+                    <div class="category-header">
+                        <h3>Search Results (${results.length})</h3>
+                        <p>Videos matching "${searchTerm}"</p>
+                    </div>
+                    <div class="videos-container active">
+                        ${results.map(video => {
+                            const videoId = video.url.split('/').pop();
+                            const shortDesc = video.description.length > 100 ? video.description.substring(0, 100) + '...' : video.description;
+                            return `
+                                <div class="video-item" data-url="${video.url}" data-title="${video.title}" data-description="${video.description}">
+                                    <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${video.title} thumbnail">
+                                    <div>
+                                        <h4>${video.title}</h4>
+                                        <p><strong>Category:</strong> ${video.category}</p>
+                                        <p>${shortDesc}</p>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                `;
+                container.appendChild(resultsCard);
+
+                const clearBtn = document.createElement('button');
+                clearBtn.className = 'btn btn-secondary';
+                clearBtn.textContent = 'Clear Search';
+                clearBtn.style.margin = '1rem auto';
+                clearBtn.style.display = 'block';
+                clearBtn.onclick = () => {
+                    document.getElementById('searchInput').value = '';
+                    loadCategories();
+                };
+                container.appendChild(clearBtn);
+
+                loader.style.display = 'none';
+            } catch (err) {
+                console.error('Error searching videos:', err);
+                container.innerHTML = '<p style="text-align: center; color: #666;">Error searching videos. Please try again later.</p>';
+                loader.style.display = 'none';
+            }
+        }
+
+        function showLogin() {
+            console.log('Showing login modal');
+            document.getElementById('loginModal').style.display = 'block';
+        }
+
+        async function login() {
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!username || !password) {
+                alert('Please enter both username and password.');
+                return;
+            }
+
+            console.log('Attempting login for:', username);
+            try {
+                const response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    isLoggedIn = true;
+                    token = data.token;
+                    console.log('Login successful, token:', token.substring(0, 10) + '...');
+                    document.getElementById('loginBtn').classList.add('hidden');
+                    document.getElementById('logoutBtn').classList.remove('hidden');
+                    document.getElementById('adminPanel').classList.remove('hidden');
+                    document.getElementById('loginModal').style.display = 'none';
+                    document.getElementById('username').value = '';
+                    document.getElementById('password').value = '';
+                    alert('Login successful! You can now add categories and videos.');
+                } else {
+                    console.log('Login failed:', data.message);
+                    alert(data.message || 'Invalid credentials. Please try again.');
+                }
+            } catch (err) {
+                console.error('Login error:', err);
+                alert('Login failed. Please check your connection and try again.');
+            }
+        }
+
+        function logout() {
+            console.log('Logging out');
+            isLoggedIn = false;
+            token = null;
+            document.getElementById('loginBtn').classList.remove('hidden');
+            document.getElementById('logoutBtn').classList.add('hidden');
+            document.getElementById('adminPanel').classList.add('hidden');
+            alert('Logged out successfully!');
+        }
+
+        async function addCategory() {
+            if (!isLoggedIn || !token) {
+                alert('Please log in to add categories.');
+                console.log('Add category failed: Not logged in or no token');
+                return;
+            }
+
+            const name = document.getElementById('categoryName').value.trim();
+            const description = document.getElementById('categoryDesc').value.trim();
+
+            if (!name || !description) {
+                alert('Please fill in both category name and description.');
+                console.log('Add category failed: Missing fields', { name, description });
+                return;
+            }
+
+            console.log('Adding category:', { name, description });
+            try {
+                const response = await fetch('http://localhost:3000/api/categories', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ name, description })
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    console.log('Category added successfully:', data);
+                    loadCategories();
+                    document.getElementById('categoryName').value = '';
+                    document.getElementById('categoryDesc').value = '';
+                    alert('Category added successfully!');
+                } else {
+                    console.log('Add category failed:', data.message);
+                    alert(data.message || 'Failed to add category. Please try again.');
+                }
+            } catch (err) {
+                console.error('Error adding category:', err);
+                alert('Error adding category. Please check your connection and try again.');
+            }
+        }
+
+        async function addVideo() {
+            if (!isLoggedIn || !token) {
+                alert('Please log in to add videos.');
+                console.log('Add video failed: Not logged in or no token');
+                return;
+            }
+
+            const categoryId = document.getElementById('videoCategory').value.trim();
+            const title = document.getElementById('videoTitle').value.trim();
+            const url = document.getElementById('videoUrl').value.trim();
+            const description = document.getElementById('videoDesc').value.trim();
+
+            if (!categoryId || !title || !url || !description) {
+                alert('Please fill in all video fields.');
+                console.log('Add video failed: Missing fields', { categoryId, title, url, description });
+                return;
+            }
+
+            console.log('Adding video:', { categoryId, title, url, description });
+            try {
+                const response = await fetch('http://localhost:3000/api/videos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ categoryId: parseInt(categoryId), title, url, description })
+                });
+                const data = await response.json();
+
+                if (response.ok) {
+                    console.log('Video added successfully:', data);
+                    loadCategories();
+                    document.getElementById('videoCategory').value = '';
+                    document.getElementById('videoTitle').value = '';
+                    document.getElementById('videoUrl').value = '';
+                    document.getElementById('videoDesc').value = '';
+                    alert('Video added successfully!');
+                } else {
+                    console.log('Add video failed:', data.message);
+                    alert(data.message || 'Failed to add video. Please try again.');
+                }
+            } catch (err) {
+                console.error('Error adding video:', err);
+                alert('Error adding video. Please check your connection and try again.');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

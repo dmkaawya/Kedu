@@ -12,24 +12,39 @@
         }
 
         :root {
-            --primary-color: #2a5298;
-            --accent-color: #ff4757;
-            --text-color: #333;
-            --background-color: #fff;
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #ff6b6b;
+            --success-color: #4ecdc4;
+            --warning-color: #ffe66d;
+            --danger-color: #ff6b6b;
+            --dark-color: #2c3e50;
+            --light-color: #ecf0f1;
+            --text-color: #2c3e50;
+            --text-light: #7f8c8d;
+            --border-color: #bdc3c7;
+            --shadow: 0 4px 20px rgba(0,0,0,0.1);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent-color) 0%, #ff5252 100%);
         }
 
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
             color: var(--text-color);
-            background-color: var(--background-color);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
         }
 
         .header {
-            background: linear-gradient(135deg, #1e3c72, var(--primary-color));
+            background: var(--gradient-primary);
             color: white;
             padding: 1rem 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .nav-container {
@@ -42,9 +57,10 @@
         }
 
         .logo {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 2.5rem;
+            font-weight: 900;
             color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .nav-links {
@@ -56,12 +72,16 @@
         .nav-links a {
             color: white;
             text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .nav-links a:hover {
-            color: var(--accent-color);
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
         }
 
         .auth-section {
@@ -70,34 +90,39 @@
         }
 
         .btn {
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             border: none;
-            border-radius: 5px;
+            border-radius: 25px;
             cursor: pointer;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
         }
 
         .btn-primary {
-            background-color: var(--accent-color);
+            background: var(--gradient-accent);
             color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
         }
 
         .btn-secondary {
-            background-color: transparent;
+            background: transparent;
             color: white;
-            border: 2px solid white;
+            border: 2px solid rgba(255,255,255,0.8);
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
         }
 
         .search-section {
-            background-color: #f8f9fa;
+            background: rgba(255,255,255,0.9);
             padding: 2rem 0;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .search-container {
@@ -105,44 +130,45 @@
             margin: 0 auto;
             padding: 0 2rem;
             text-align: center;
-            position: relative;
         }
 
         .search-box {
             display: flex;
             max-width: 600px;
             margin: 0 auto;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-radius: 25px;
+            box-shadow: var(--shadow);
+            border-radius: 50px;
             overflow: hidden;
+            background: white;
         }
 
         .search-input {
             flex: 1;
-            padding: 1rem 1.5rem;
+            padding: 1.2rem 2rem;
             border: none;
-            font-size: 1rem;
+            font-size: 1.1rem;
             outline: none;
         }
 
         .search-btn {
-            background-color: var(--primary-color);
+            background: var(--gradient-primary);
             color: white;
             border: none;
-            padding: 1rem 1.5rem;
+            padding: 1.2rem 2rem;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
         .loader {
             display: none;
-            border: 4px solid #f3f3f3;
+            width: 50px;
+            height: 50px;
+            margin: 2rem auto;
+            border: 4px solid rgba(102, 126, 234, 0.3);
             border-top: 4px solid var(--primary-color);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
             animation: spin 1s linear infinite;
-            margin: 2rem auto;
         }
 
         @keyframes spin {
@@ -162,100 +188,110 @@
 
         .page.active {
             display: block;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .hero {
             text-align: center;
-            padding: 3rem 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 4rem 2rem;
+            background: var(--gradient-primary);
             color: white;
-            border-radius: 15px;
+            border-radius: 20px;
             margin-bottom: 3rem;
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 1rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             max-width: 600px;
             margin: 0 auto;
+            opacity: 0.9;
         }
 
-        .categories-grid {
+        .categories-grid, .lessons-grid, .videos-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
         }
 
-        .category-card {
+        .card {
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .category-card:hover {
-            transform: translateY(-5px);
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
         }
 
-        .category-header {
-            background: linear-gradient(135deg, var(--accent-color), #ff3742);
+        .card-header {
+            background: var(--gradient-accent);
             color: white;
-            padding: 1.5rem;
+            padding: 2rem;
             text-align: center;
-            cursor: pointer;
         }
 
-        .category-header h3 {
-            font-size: 1.5rem;
+        .card-header h3 {
+            font-size: 1.8rem;
             margin-bottom: 0.5rem;
+            font-weight: 700;
         }
 
-        .videos-container {
-            display: none;
+        .card-content {
+            padding: 2rem;
+        }
+
+        .video-item, .lesson-item {
+            margin-bottom: 1.5rem;
             padding: 1.5rem;
-        }
-
-        .videos-container.active {
-            display: block;
-        }
-
-        .video-item {
-            margin-bottom: 1rem;
-            padding: 1rem;
-            background: #f8f9fa;
-            border-radius: 8px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             align-items: center;
         }
 
-        .video-item:hover {
-            background-color: #e9ecef;
+        .video-item:hover, .lesson-item:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            transform: scale(1.02);
         }
 
         .video-item img {
-            width: 120px;
-            height: 90px;
+            width: 150px;
+            height: 100px;
             object-fit: cover;
-            border-radius: 5px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        .video-item h4 {
+        .video-item h4, .lesson-item h4 {
             color: var(--primary-color);
             margin-bottom: 0.5rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
         }
 
-        .video-item p {
-            font-size: 0.9rem;
-            color: #666;
+        .video-item:hover h4, .lesson-item:hover h4 {
+            color: white;
         }
 
         .modal {
@@ -266,45 +302,47 @@
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.8);
         }
 
         .modal-content {
-            background-color: white;
-            margin: 5% auto;
+            background: white;
+            margin: 2% auto;
             padding: 2rem;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 800px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 900px;
             position: relative;
+            box-shadow: var(--shadow-hover);
         }
 
         .close {
             position: absolute;
-            right: 1rem;
-            top: 1rem;
-            color: #aaa;
-            float: right;
-            font-size: 28px;
+            right: 1.5rem;
+            top: 1.5rem;
+            color: var(--text-light);
+            font-size: 2rem;
             font-weight: bold;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .close:hover {
-            color: var(--accent-color);
+            color: var(--danger-color);
         }
 
         .admin-panel {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
+            background: rgba(255,255,255,0.9);
+            padding: 3rem;
+            border-radius: 20px;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
         }
 
         .admin-form {
             display: grid;
-            gap: 1rem;
-            max-width: 500px;
+            gap: 1.5rem;
+            max-width: 600px;
         }
 
         .form-group {
@@ -314,62 +352,135 @@
 
         .form-group label {
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: 600;
+            color: var(--text-color);
         }
 
         .form-group input,
         .form-group textarea,
         .form-group select {
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
             font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
-        .about-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
 
-        .about-content h2 {
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .breadcrumb-item {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .breadcrumb-item:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .breadcrumb-item.active {
             color: var(--primary-color);
-            margin-bottom: 1rem;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 0.5rem;
+            font-weight: 600;
         }
 
-        .about-content p {
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
+        .breadcrumb-separator {
+            margin: 0 0.5rem;
+            color: var(--text-light);
+        }
+
+        .back-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+            box-shadow: var(--shadow);
         }
 
         .staff-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
         .staff-card {
             background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
             padding: 2rem;
             text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .staff-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
         }
 
         .staff-avatar {
-            width: 100px;
-            height: 100px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            width: 120px;
+            height: 120px;
+            background: var(--gradient-primary);
             border-radius: 50%;
-            margin: 0 auto 1rem;
+            margin: 0 auto 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
+            box-shadow: var(--shadow);
         }
+
+        .hidden { display: none !important; }
+
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            color: white;
+            font-weight: 600;
+            z-index: 1001;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success { background: var(--success-color); }
+        .notification.error { background: var(--danger-color); }
 
         @media (max-width: 768px) {
             .nav-container {
@@ -379,35 +490,35 @@
             }
 
             .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
                 gap: 1rem;
             }
 
             .hero h1 {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
-            .categories-grid {
+            .categories-grid, .lessons-grid, .videos-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .modal-content {
                 width: 95%;
-                margin: 10% auto;
+                margin: 5% auto;
+                padding: 1.5rem;
             }
 
-            .video-item {
+            .video-item, .lesson-item {
                 flex-direction: column;
                 text-align: center;
             }
 
             .video-item img {
                 width: 100%;
-                max-width: 200px;
+                max-width: 250px;
             }
-        }
-
-        .hidden {
-            display: none;
         }
     </style>
 </head>
@@ -417,14 +528,15 @@
             <div class="logo">K Edu</div>
             <nav>
                 <ul class="nav-links">
-                    <li><a href="#" onclick="showPage('home')">Home</a></li>
-                    <li><a href="#" onclick="showPage('about')">About</a></li>
-                    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
-                    <li><a href="#" onclick="showPage('staff')">Staff</a></li>
+                    <li><a onclick="showPage('home')">Home</a></li>
+                    <li><a onclick="showPage('categories')">Categories</a></li>
+                    <li><a onclick="showPage('about')">About</a></li>
+                    <li><a onclick="showPage('contact')">Contact</a></li>
+                    <li><a onclick="showPage('staff')">Staff</a></li>
                 </ul>
             </nav>
             <div class="auth-section">
-                <button class="btn btn-secondary" id="loginBtn" onclick="showLogin()">Login</button>
+                <button class="btn btn-secondary" id="loginBtn" onclick="showLogin()">Admin Login</button>
                 <button class="btn btn-primary hidden" id="logoutBtn" onclick="logout()">Logout</button>
             </div>
         </div>
@@ -433,45 +545,71 @@
     <section class="search-section">
         <div class="search-container">
             <div class="search-box">
-                <input type="text" class="search-input" id="searchInput" placeholder="Search for videos...">
-                <button class="search-btn" onclick="searchVideos()">Search</button>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search for videos, lessons, categories...">
+                <button class="search-btn" onclick="searchContent()">Search</button>
             </div>
             <div class="loader" id="searchLoader"></div>
         </div>
     </section>
 
     <main class="main-content">
+        <!-- Home Page -->
         <div id="home" class="page active">
             <div class="hero">
                 <h1>Welcome to K Edu</h1>
-                <p>Discover knowledge through carefully curated YouTube videos. Learn at your own pace with our organized educational content.</p>
+                <p>Discover knowledge through carefully curated YouTube videos. Learn at your own pace with our organized educational content across various subjects.</p>
             </div>
 
-            <div id="categoriesContainer" class="categories-grid">
-                <div class="loader" id="categoriesLoader"></div>
-            </div>
+            <div id="searchResults" class="categories-grid hidden"></div>
+            <div id="featuredContent" class="categories-grid"></div>
 
             <div id="adminPanel" class="admin-panel hidden">
-                <h2>Admin Panel</h2>
+                <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;">Admin Panel</h2>
+                
                 <div class="admin-form">
-                    <h3>Add New Category</h3>
+                    <h3 style="color: var(--accent-color);">Add New Category</h3>
                     <div class="form-group">
                         <label for="categoryName">Category Name:</label>
-                        <input type="text" id="categoryName" placeholder="e.g., Mathematics">
+                        <input type="text" id="categoryName" placeholder="e.g., Mathematics, Science, History">
                     </div>
                     <div class="form-group">
                         <label for="categoryDesc">Category Description:</label>
-                        <textarea id="categoryDesc" placeholder="Brief description of the category"></textarea>
+                        <textarea id="categoryDesc" rows="3" placeholder="Brief description of the category"></textarea>
                     </div>
                     <button class="btn btn-primary" onclick="addCategory()">Add Category</button>
                 </div>
 
-                <div class="admin-form" style="margin-top: 2rem;">
-                    <h3>Add New Video</h3>
+                <div class="admin-form" style="margin-top: 3rem;">
+                    <h3 style="color: var(--accent-color);">Add New Lesson</h3>
+                    <div class="form-group">
+                        <label for="lessonCategory">Select Category:</label>
+                        <select id="lessonCategory">
+                            <option value="">Choose a category...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="lessonTitle">Lesson Title:</label>
+                        <input type="text" id="lessonTitle" placeholder="Enter lesson title">
+                    </div>
+                    <div class="form-group">
+                        <label for="lessonDesc">Lesson Description:</label>
+                        <textarea id="lessonDesc" rows="3" placeholder="Brief description of the lesson"></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="addLesson()">Add Lesson</button>
+                </div>
+
+                <div class="admin-form" style="margin-top: 3rem;">
+                    <h3 style="color: var(--accent-color);">Add New Video</h3>
                     <div class="form-group">
                         <label for="videoCategory">Select Category:</label>
-                        <select id="videoCategory">
+                        <select id="videoCategory" onchange="loadLessonsForVideo()">
                             <option value="">Choose a category...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoLesson">Select Lesson:</label>
+                        <select id="videoLesson">
+                            <option value="">Choose a lesson...</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -479,96 +617,140 @@
                         <input type="text" id="videoTitle" placeholder="Enter video title">
                     </div>
                     <div class="form-group">
-                        <label for="videoUrl">YouTube URL:</label>
-                        <input type="url" id="videoUrl" placeholder="https://www.youtube.com/watch?v=...">
+                        <label for="videoUrl">YouTube Video URL:</label>
+                        <input type="text" id="videoUrl" placeholder="https://www.youtube.com/watch?v=...">
                     </div>
                     <div class="form-group">
                         <label for="videoDesc">Video Description:</label>
-                        <textarea id="videoDesc" placeholder="Brief description of the video"></textarea>
+                        <textarea id="videoDesc" rows="3" placeholder="Brief description of the video"></textarea>
                     </div>
                     <button class="btn btn-primary" onclick="addVideo()">Add Video</button>
                 </div>
             </div>
         </div>
 
+        <!-- Categories Page -->
+        <div id="categories" class="page">
+            <div class="breadcrumb">
+                <span class="breadcrumb-item" onclick="showPage('home')">Home</span>
+                <span class="breadcrumb-separator">></span>
+                <span class="breadcrumb-item active">Categories</span>
+            </div>
+            <h1 style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;">All Categories</h1>
+            <div id="allCategories" class="categories-grid"></div>
+        </div>
+
+        <!-- Lessons Page -->
+        <div id="lessons" class="page">
+            <div class="breadcrumb" id="lessonsBreadcrumb"></div>
+            <button class="back-btn" onclick="showPage('categories')">← Back to Categories</button>
+            <h1 id="lessonsTitle" style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;"></h1>
+            <div id="categoryLessons" class="lessons-grid"></div>
+        </div>
+
+        <!-- Videos Page -->
+        <div id="videos" class="page">
+            <div class="breadcrumb" id="videosBreadcrumb"></div>
+            <button class="back-btn" onclick="goBackToLessons()">← Back to Lessons</button>
+            <h1 id="videosTitle" style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;"></h1>
+            <div id="lessonVideos" class="videos-grid"></div>
+        </div>
+
+        <!-- About Page -->
         <div id="about" class="page">
-            <div class="about-content">
-                <h2>About K Edu</h2>
-                <p><strong>What K Edu Does:</strong> K Edu is a comprehensive educational platform that provides access to carefully curated YouTube videos across various subjects. We organize educational content into logical categories, making it easy for students to find and learn from high-quality video resources.</p>
-                <h2>Why We Created K Edu</h2>
-                <p>In today's digital age, YouTube has become one of the largest repositories of educational content. However, finding quality educational videos can be overwhelming due to the vast amount of content available. K Edu was created to solve this problem by providing a curated, organized platform where students can access the best educational videos without the distraction of irrelevant content.</p>
-                <h2>How K Edu Helps Students</h2>
-                <p><strong>Organized Learning:</strong> Our platform categorizes videos by subject, making it easy to find relevant content for your studies.</p>
-                <p><strong>Quality Assurance:</strong> All videos are reviewed by our educational staff to ensure they meet high standards for accuracy and teaching quality.</p>
-                <p><strong>Easy Search:</strong> Our powerful search functionality helps you quickly find videos on specific topics.</p>
-                <p><strong>Free Access:</strong> All content is freely available to students, removing barriers to quality education.</p>
-                <p><strong>Mobile Friendly:</strong> Access your learning materials anywhere, anytime, on any device.</p>
+            <div class="card">
+                <div class="card-content">
+                    <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">About K Edu</h2>
+                    <p style="margin-bottom: 1.5rem; font-size: 1.1rem;"><strong>What K Edu Does:</strong> K Edu is a comprehensive educational platform that provides access to carefully curated YouTube videos across various subjects. We organize educational content into logical categories and lessons, making it easy for students to find and learn from high-quality video resources.</p>
+                    
+                    <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Why We Created K Edu</h3>
+                    <p style="margin-bottom: 1.5rem;">In today's digital age, YouTube has become one of the largest repositories of educational content. However, finding quality educational videos can be overwhelming due to the vast amount of content available. K Edu was created to solve this problem by providing a curated, organized platform where students can access the best educational videos without the distraction of irrelevant content.</p>
+                    
+                    <h3 style="color: var(--accent-color); margin-bottom: 1rem;">How K Edu Helps Students</h3>
+                    <p style="margin-bottom: 1rem;"><strong>Organized Learning:</strong> Our platform categorizes videos by subject and lessons, making it easy to find relevant content for your studies.</p>
+                    <p style="margin-bottom: 1rem;"><strong>Quality Assurance:</strong> All videos are reviewed by our educational staff to ensure they meet high standards for accuracy and teaching quality.</p>
+                    <p style="margin-bottom: 1rem;"><strong>Easy Search:</strong> Our powerful search functionality helps you quickly find videos on specific topics.</p>
+                    <p style="margin-bottom: 1rem;"><strong>Free Access:</strong> All content is freely available to students, removing barriers to quality education.</p>
+                    <p style="margin-bottom: 1rem;"><strong>Mobile Friendly:</strong> Access your learning materials anywhere, anytime, on any device.</p>
+                    <p><strong>Secure Learning:</strong> Watch videos in our platform without being redirected to external sites, ensuring focused learning.</p>
+                </div>
             </div>
         </div>
 
+        <!-- Contact Page -->
         <div id="contact" class="page">
-            <div class="about-content">
-                <h2>Contact Us</h2>
-                <p>We'd love to hear from you! Whether you have questions, suggestions, or need support, don't hesitate to reach out.</p>
-                <div style="margin-top: 2rem;">
-                    <h3>Get in Touch</h3>
-                    <p><strong>Email:</strong> dmkaawya@gmail.com</p>
-                    <p><strong>Phone:</strong> +94 077 50 48 455</p>
-                    <p><strong>Address:</strong> Kalutara south, Kalutara, Western Province, Sri Lanka</p>
-                </div>
-                <div style="margin-top: 2rem;">
-                    <h3>Support Hours</h3>
-                    <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                    <p>Saturday: 10:00 AM - 4:00 PM</p>
-                    <p>Sunday: Closed</p>
-                </div>
-                <div style="margin-top: 2rem;">
-                    <h3>For Educators</h3>
-                    <p>Interested in contributing to our platform? Contact us at <strong>dmkaawya@gmail.com</strong> to learn about becoming a content curator.</p>
+            <div class="card">
+                <div class="card-content">
+                    <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Contact Us</h2>
+                    <p style="margin-bottom: 2rem; font-size: 1.1rem;">We'd love to hear from you! Whether you have questions, suggestions, or need support, don't hesitate to reach out.</p>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Get in Touch</h3>
+                        <p style="margin-bottom: 0.5rem;"><strong>Email:</strong> dmkaawya@gmail.com</p>
+                        <p style="margin-bottom: 0.5rem;"><strong>Phone:</strong> +94 077 50 48 455</p>
+                        <p><strong>Address:</strong> Kalutara South, Kalutara, Western Province, Sri Lanka</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 2rem;">
+                        <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Support Hours</h3>
+                        <p style="margin-bottom: 0.5rem;">Monday - Friday: 9:00 AM - 6:00 PM</p>
+                        <p style="margin-bottom: 0.5rem;">Saturday: 10:00 AM - 4:00 PM</p>
+                        <p>Sunday: Closed</p>
+                    </div>
+                    
+                    <div>
+                        <h3 style="color: var(--accent-color); margin-bottom: 1rem;">For Educators</h3>
+                        <p>Interested in contributing to our platform? Contact us at <strong>dmkaawya@gmail.com</strong> to learn about becoming a content curator.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- Staff Page -->
         <div id="staff" class="page">
-            <div class="about-content">
-                <h2>Our Team</h2>
-                <p>Meet the dedicated educators and administrators who make K Edu possible.</p>
-                <div class="staff-grid" style="margin-top: 2rem;">
-                    <div class="staff-card">
-                        <div class="staff-avatar" aria-label="Avatar for Dr. Jane Doe">JD</div>
-                        <h3>D.M.C.Kaawya Chandrasekara</h3>
-                        <p><strong>Chief Education Officer</strong></p>
-                        <p>Certificates in web devoloper with 4 years of experience in Basic web development.</p>
+            <div class="card">
+                <div class="card-content">
+                    <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Our Team</h2>
+                    <p style="margin-bottom: 2rem;">Meet the dedicated educators and administrators who make K Edu possible.</p>
+                    <div class="staff-grid">
+                        <div class="staff-card">
+                            <div class="staff-avatar">DK</div>
+                            <h3>D.M.C.Kaawya Chandrasekara</h3>
+                            <p><strong>Chief Education Officer</strong></p>
+                            <p>Certificates in web developer with 4 years of experience in Basic web development.</p>
+                        </div>
+                        <div class="staff-card">
+                            <div class="staff-avatar">SL</div>
+                            <h3>Sandeepa Lakshan</h3>
+                            <p><strong>Platform Administrator</strong></p>
+                            <p>Diploma in Web developer with 6 years of experience in Expert web development</p>
+                        </div>
                     </div>
-                    <div class="staff-card">
-                        <div class="staff-avatar" aria-label="Avatar for Prof. Mike Smith">MS</div>
-                        <h3>Sandeepa lakshan</h3>
-                        <p><strong>Platform Administrator</strong></p>
-                        <p>Diploma in Web devoloper with 6 years of exprience in Exprect web development</p>
+                    <div style="margin-top: 3rem; padding: 2rem; background: #f8f9fa; border-radius: 15px; text-align: center;">
+                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Staff Login</h3>
+                        <p style="margin-bottom: 1.5rem;">Staff members can log in to access administrative features including adding new categories, lessons, and video content.</p>
+                        <button class="btn btn-primary" onclick="showLogin()">Staff Login</button>
                     </div>
-                </div>
-                <div style="margin-top: 3rem; padding: 2rem; background: #f8f9fa; border-radius: 10px;">
-                    <h3>Staff Login</h3>
-                    <p>Staff members can log in to access administrative features including adding new categories and video content.</p>
-                    <button class="btn btn-primary" onclick="showLogin()">Staff Login</button>
                 </div>
             </div>
         </div>
     </main>
 
+    <!-- Video Modal -->
     <div id="videoModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" onclick="closeModal()">&times;</span>
             <div id="videoContainer"></div>
-            <h3 id="videoTitle"></h3>
-            <p id="videoDescription"></p>
+            <h3 id="modalVideoTitle" style="margin-top: 1rem; color: var(--primary-color);"></h3>
+            <p id="modalVideoDescription" style="margin-top: 0.5rem; color: var(--text-light);"></p>
         </div>
     </div>
 
+    <!-- Login Modal -->
     <div id="loginModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Staff Login</h2>
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;">Admin Login</h2>
             <div class="admin-form">
                 <div class="form-group">
                     <label for="username">Username:</label>
@@ -578,378 +760,36 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" placeholder="Enter password">
                 </div>
-                <button class="btn btn-primary" onclick="login()">Login</button>
+                <button class="btn btn-primary" onclick="login()" style="width: 100%;">Login</button>
             </div>
         </div>
     </div>
 
     <script>
+        // Global variables
         let isLoggedIn = false;
         let currentPage = 'home';
-        let token = null;
-
-        function init() {
-            console.log('Initializing K Edu website');
-            loadCategories();
-            setupEventListeners();
-        }
-
-        function setupEventListeners() {
-            console.log('Setting up event listeners');
-            document.querySelectorAll('.close').forEach(closeBtn => {
-                closeBtn.onclick = function() {
-                    closeBtn.closest('.modal').style.display = 'none';
-                }
-            });
-
-            window.onclick = function(event) {
-                if (event.target.classList.contains('modal')) {
-                    event.target.style.display = 'none';
-                }
-            }
-
-            document.getElementById('searchInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    searchVideos();
-                }
-            });
-
-            document.getElementById('categoriesContainer').addEventListener('click', (e) => {
-                const videoItem = e.target.closest('.video-item');
-                if (videoItem) {
-                    const url = videoItem.dataset.url;
-                    const title = videoItem.dataset.title;
-                    const description = videoItem.dataset.description;
-                    playVideo(url, title, description);
-                }
-            });
-        }
-
-        function showPage(pageId) {
-            console.log('Showing page:', pageId);
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-            currentPage = pageId;
-        }
-
-        async function loadCategories() {
-            const container = document.getElementById('categoriesContainer');
-            const videoCategorySelect = document.getElementById('videoCategory');
-            const loader = document.getElementById('categoriesLoader');
-            
-            console.log('Loading categories');
-            loader.style.display = 'block';
-            container.innerHTML = '';
-
-            try {
-                const response = await fetch('http://localhost:3000/api/categories');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const categories = await response.json();
-                console.log('Categories fetched:', categories);
-
-                videoCategorySelect.innerHTML = '<option value="">Choose a category...</option>';
-
-                categories.forEach(category => {
-                    const categoryCard = document.createElement('div');
-                    categoryCard.className = 'category-card';
-                    const shortDesc = category.description.length > 100 ? category.description.substring(0, 100) + '...' : category.description;
-                    categoryCard.innerHTML = `
-                        <div class="category-header" onclick="toggleVideos(this)">
-                            <h3>${category.name}</h3>
-                            <p>${shortDesc}</p>
-                        </div>
-                        <div class="videos-container">
-                            ${category.videos.map(video => {
-                                const videoId = video.url.split('/').pop();
-                                const shortDesc = video.description.length > 100 ? video.description.substring(0, 100) + '...' : video.description;
-                                return `
-                                    <div class="video-item" data-url="${video.url}" data-title="${video.title}" data-description="${video.description}">
-                                        <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${video.title} thumbnail">
-                                        <div>
-                                            <h4>${video.title}</h4>
-                                            <p>${shortDesc}</p>
-                                        </div>
-                                    </div>
-                                `;
-                            }).join('')}
-                        </div>
-                    `;
-                    container.appendChild(categoryCard);
-
-                    const option = document.createElement('option');
-                    option.value = category.id;
-                    option.textContent = category.name;
-                    videoCategorySelect.appendChild(option);
-                });
-
-                loader.style.display = 'none';
-            } catch (err) {
-                console.error('Error loading categories:', err);
-                container.innerHTML = '<p style="text-align: center; color: #666;">Error loading categories. Please try again later.</p>';
-                container.innerHTML = '<p style="text-align: center; color: #666;">If it doesn't work, try logging in Username - admin, Password - admin123.</p>';
-                container.innerHTML = '<p style="text-align: center; color: #666;">But if it doesn't work, contact us from the Contact tab.dmkaawya@gmail.com.</p>';
-                loader.style.display = 'none';
-            }
-        }
-
-        function toggleVideos(header) {
-            console.log('Toggling videos for category');
-            const videosContainer = header.nextElementSibling;
-            videosContainer.classList.toggle('active');
-        }
-
-        function playVideo(url, title, description) {
-            console.log('Playing video:', title);
-            const modal = document.getElementById('videoModal');
-            const videoContainer = document.getElementById('videoContainer');
-            const videoTitle = document.getElementById('videoTitle');
-            const videoDescription = document.getElementById('videoDescription');
-
-            videoContainer.innerHTML = `<iframe width="100%" height="400" src="${url}" frameborder="0" allowfullscreen sandbox="allow-scripts allow-same-origin"></iframe>`;
-            videoTitle.textContent = title;
-            videoDescription.textContent = description;
-            modal.style.display = 'block';
-
-            const iframe = videoContainer.querySelector('iframe');
-            iframe.addEventListener('contextmenu', (e) => e.preventDefault());
-        }
-
-        async function searchVideos() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const container = document.getElementById('categoriesContainer');
-            const loader = document.getElementById('searchLoader');
-            
-            if (!searchTerm) {
-                alert('Please enter a search term.');
-                return;
-            }
-
-            console.log('Searching videos with term:', searchTerm);
-            loader.style.display = 'block';
-            container.innerHTML = '';
-
-            try {
-                const response = await fetch('http://localhost:3000/api/categories');
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                const categories = await response.json();
-
-                const results = [];
-                categories.forEach(category => {
-                    category.videos.forEach(video => {
-                        if (video.title.toLowerCase().includes(searchTerm) || 
-                            video.description.toLowerCase().includes(searchTerm)) {
-                            results.push({...video, category: category.name});
-                        }
-                    });
-                });
-
-                if (results.length === 0) {
-                    container.innerHTML = '<p style="text-align: center; color: #666; font-size: 1.2rem;">No videos found for your search.</p>';
-                    loader.style.display = 'none';
-                    return;
-                }
-
-                const resultsCard = document.createElement('div');
-                resultsCard.className = 'category-card';
-                resultsCard.innerHTML = `
-                    <div class="category-header">
-                        <h3>Search Results (${results.length})</h3>
-                        <p>Videos matching "${searchTerm}"</p>
-                    </div>
-                    <div class="videos-container active">
-                        ${results.map(video => {
-                            const videoId = video.url.split('/').pop();
-                            const shortDesc = video.description.length > 100 ? video.description.substring(0, 100) + '...' : video.description;
-                            return `
-                                <div class="video-item" data-url="${video.url}" data-title="${video.title}" data-description="${video.description}">
-                                    <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${video.title} thumbnail">
-                                    <div>
-                                        <h4>${video.title}</h4>
-                                        <p><strong>Category:</strong> ${video.category}</p>
-                                        <p>${shortDesc}</p>
-                                    </div>
-                                </div>
-                            `;
-                        }).join('')}
-                    </div>
-                `;
-                container.appendChild(resultsCard);
-
-                const clearBtn = document.createElement('button');
-                clearBtn.className = 'btn btn-secondary';
-                clearBtn.textContent = 'Clear Search';
-                clearBtn.style.margin = '1rem auto';
-                clearBtn.style.display = 'block';
-                clearBtn.onclick = () => {
-                    document.getElementById('searchInput').value = '';
-                    loadCategories();
-                };
-                container.appendChild(clearBtn);
-
-                loader.style.display = 'none';
-            } catch (err) {
-                console.error('Error searching videos:', err);
-                container.innerHTML = '<p style="text-align: center; color: #666;">Error searching videos. Please try again later.</p>';
-                container.innerHTML = '<p style="text-align: center; color: #666;">If it doesn't work, try logging in Username - admin, Password - admin123.</p>';
-                container.innerHTML = '<p style="text-align: center; color: #666;">But if it doesn't work, contact us from the Contact tab.dmkaawya@gmail.com.</p>';
-                loader.style.display = 'none';
-                
-            }
-        }
-
-        function showLogin() {
-            console.log('Showing login modal');
-            document.getElementById('loginModal').style.display = 'block';
-        }
-
-        async function login() {
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value.trim();
-
-            if (!username || !password) {
-                alert('Please enter both username and password.');
-                return;
-            }
-
-            console.log('Attempting login for:', username);
-            try {
-                const response = await fetch('http://localhost:3000/api/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
-                const data = await response.json();
-
-                if (response.ok) {
-                    isLoggedIn = true;
-                    token = data.token;
-                    console.log('Login successful, token:', token.substring(0, 10) + '...');
-                    document.getElementById('loginBtn').classList.add('hidden');
-                    document.getElementById('logoutBtn').classList.remove('hidden');
-                    document.getElementById('adminPanel').classList.remove('hidden');
-                    document.getElementById('loginModal').style.display = 'none';
-                    document.getElementById('username').value = '';
-                    document.getElementById('password').value = '';
-                    alert('Login successful! You can now add categories and videos.');
-                } else {
-                    console.log('Login failed:', data.message);
-                    alert(data.message || 'Invalid credentials. Please try again.');
-                }
-            } catch (err) {
-                console.error('Login error:', err);
-                alert('Login failed. Please check your connection and try again.');
-            }
-        }
-
-        function logout() {
-            console.log('Logging out');
-            isLoggedIn = false;
-            token = null;
-            document.getElementById('loginBtn').classList.remove('hidden');
-            document.getElementById('logoutBtn').classList.add('hidden');
-            document.getElementById('adminPanel').classList.add('hidden');
-            alert('Logged out successfully!');
-        }
-
-        async function addCategory() {
-            if (!isLoggedIn || !token) {
-                alert('Please log in to add categories.');
-                console.log('Add category failed: Not logged in or no token');
-                return;
-            }
-
-            const name = document.getElementById('categoryName').value.trim();
-            const description = document.getElementById('categoryDesc').value.trim();
-
-            if (!name || !description) {
-                alert('Please fill in both category name and description.');
-                console.log('Add category failed: Missing fields', { name, description });
-                return;
-            }
-
-            console.log('Adding category:', { name, description });
-            try {
-                const response = await fetch('http://localhost:3000/api/categories', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ name, description })
-                });
-                const data = await response.json();
-
-                if (response.ok) {
-                    console.log('Category added successfully:', data);
-                    loadCategories();
-                    document.getElementById('categoryName').value = '';
-                    document.getElementById('categoryDesc').value = '';
-                    alert('Category added successfully!');
-                } else {
-                    console.log('Add category failed:', data.message);
-                    alert(data.message || 'Failed to add category. Please try again.');
-                }
-            } catch (err) {
-                console.error('Error adding category:', err);
-                alert('Error adding category. Please check your connection and try again.');
-            }
-        }
-
-        async function addVideo() {
-            if (!isLoggedIn || !token) {
-                alert('Please log in to add videos.');
-                console.log('Add video failed: Not logged in or no token');
-                return;
-            }
-
-            const categoryId = document.getElementById('videoCategory').value.trim();
-            const title = document.getElementById('videoTitle').value.trim();
-            const url = document.getElementById('videoUrl').value.trim();
-            const description = document.getElementById('videoDesc').value.trim();
-
-            if (!categoryId || !title || !url || !description) {
-                alert('Please fill in all video fields.');
-                console.log('Add video failed: Missing fields', { categoryId, title, url, description });
-                return;
-            }
-
-            console.log('Adding video:', { categoryId, title, url, description });
-            try {
-                const response = await fetch('http://localhost:3000/api/videos', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ categoryId: parseInt(categoryId), title, url, description })
-                });
-                const data = await response.json();
-
-                if (response.ok) {
-                    console.log('Video added successfully:', data);
-                    loadCategories();
-                    document.getElementById('videoCategory').value = '';
-                    document.getElementById('videoTitle').value = '';
-                    document.getElementById('videoUrl').value = '';
-                    document.getElementById('videoDesc').value = '';
-                    alert('Video added successfully!');
-                } else {
-                    console.log('Add video failed:', data.message);
-                    alert(data.message || 'Failed to add video. Please try again.');
-                }
-            } catch (err) {
-                console.error('Error adding video:', err);
-                alert('Error adding video. Please check your connection and try again.');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', init);
-    </script>
-</body>
-</html>
+        let currentCategory = null;
+        let currentLesson = null;
+        let data = {
+            categories: [
+                {
+                    id: 1,
+                    name: "Mathematics",
+                    description: "Learn mathematical concepts from basic to advanced levels",
+                    lessons: [
+                        {
+                            id: 1,
+                            title: "Basic Algebra",
+                            description: "Introduction to algebraic expressions and equations",
+                            videos: [
+                                {
+                                    id: 1,
+                                    title: "Introduction to Algebra",
+                                    url: "dQw4w9WgXcQ",
+                                    description: "Learn the basics of algebra"
+                                },
+                                {
+                                    id: 2,
+                                    title: "Solving Linear Equations",
+                                    url: "dQw4w9WgXcQ",

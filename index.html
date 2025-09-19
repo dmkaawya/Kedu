@@ -756,7 +756,7 @@
         <div id="home" class="page active">
             <section class="hero">
                 <h1>Welcome to K-Edu</h1>
-                <p>Your gateway to quality education in ICT, English, Korean, Mathematics, and Media Studies</p>
+                <p>Your gateway to quality education in ALL Subject</p>
                 <a href="#" class="btn" id="exploreBtn">Explore Courses</a>
             </section>
             
@@ -800,6 +800,16 @@
                     </div>
                     <div class="category-body">
                         <p>Comprehensive English language courses for all levels, from basics to advanced.</p>
+                    </div>
+                </div>
+
+                <div class="category-card" data-category="network">
+                    <div class="category-header network">
+                        <i class="fas fa-network"></i>
+                        <h3>Networking</h3>
+                    </div>
+                    <div class="category-body">
+                        <p>a system of interconnected people, devices, or things that communicate and share resources.</p>
                     </div>
                 </div>
                 
@@ -940,7 +950,7 @@
                     <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
                 </form>
                 <p style="text-align: center; margin-top: 1rem; color: #6B7280;">
-                    Demo credentials: admin / admin123
+                    username-admin / password-admin123
                 </p>
             </div>
         </div>
@@ -1173,6 +1183,11 @@
                 { id: 8, title: "Basic Korean Phrases", description: "Essential phrases for beginners", type: "free", duration: "1h", url: "https://www.youtube.com/embed/UC6im0qO8u0" },
                 { id: 9, title: "Korean Culture", description: "Understanding Korean traditions", type: "paid", duration: "1h 15min", url: "https://www.youtube.com/embed/5yHlHJl_BqE" }
             ],
+             network: [
+                { id: 7, title: "Network Engineer Roadmap(2025)", description: "How to Become a Network Engineer - Beginner to Advanced", type: "free", duration: "11 min", url: "https://youtu.be/pwWeoqNMmAo?si=yiR3xfYcDZf1IyFc" },
+                { id: 8, title: "what is an IP Address?", description: "You SUCK at Subnetting EP 01", type: "free", duration: "19 Min", url: "https://youtu.be/5WfiTHiU4x8?si=fVMZ3G2GGsexpA1L" },
+                { id: 9, title: "you need to learn Python RIGHT NOW!!", description: "Python Start EP 01", type: "Free", duration: "18min", url: "https://youtu.be/mRMmlo_Uqcs?si=fXPjXbfLDl-CVYk0" }
+            ],
             maths: [
                 { id: 10, title: "Algebra Fundamentals", description: "Master algebraic concepts", type: "free", duration: "1h", url: "https://www.youtube.com/embed/3DyBj7dOyNk" },
                 { id: 11, title: "Calculus Introduction", description: "Limits, derivatives, and integrals", type: "paid", duration: "2h 30min", url: "https://www.youtube.com/embed/WUvTyaaNkzM" },
@@ -1263,6 +1278,7 @@
                 korean: 'Korean',
                 maths: 'Mathematics',
                 media: 'Media Studies'
+                network: 'Networking'
             };
             
             categoryTitle.textContent = categoryNames[category] + ' Lessons';

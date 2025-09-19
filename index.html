@@ -4,11 +4,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>K-Edu - Educational Platform</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
+        :root {
+            --primary: #3B82F6;
+            --secondary: #10B981;
+            --accent: #8B5CF6;
+            --dark: #1F2937;
+            --light: #F3F4F6;
+            --white: #FFFFFF;
+            --danger: #EF4444;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            margin-right: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--dark);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+        
+        /* Main Content */
+        main {
+            min-height: calc(100vh - 120px);
+            padding: 2rem 0;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s;
         }
         
         @keyframes fadeIn {
@@ -16,586 +129,1134 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
+        /* Home Page */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: var(--white);
+            border-radius: 10px;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--white);
+            color: var(--primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-primary:hover {
+            background-color: #2563EB;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .feature-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Categories Page */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .category-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .category-header {
+            padding: 1.5rem;
+            color: var(--white);
+            text-align: center;
+        }
+        
+        .category-header.ict {
+            background-color: var(--primary);
+        }
+        
+        .category-header.english {
+            background-color: var(--secondary);
+        }
+        
+        .category-header.korean {
+            background-color: #EF4444;
+        }
+        
+        .category-header.maths {
+            background-color: #F59E0B;
+        }
+        
+        .category-header.media {
+            background-color: var(--accent);
+        }
+        
+        .category-header i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .category-body {
+            padding: 1.5rem;
+        }
+        
+        /* Lessons Page */
+        .lessons-container {
+            display: none;
+            margin-top: 3rem;
+        }
+        
+        .lessons-container.active {
+            display: block;
+        }
+        
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
         .lesson-card {
-            transition: all 0.3s ease;
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            cursor: pointer;
         }
         
         .lesson-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-10px);
         }
         
-        .nav-link {
+        .lesson-thumbnail {
+            height: 180px;
+            background-color: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+        }
+        
+        .lesson-thumbnail i {
+            font-size: 3rem;
+        }
+        
+        .lesson-body {
+            padding: 1.5rem;
+        }
+        
+        .lesson-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .lesson-description {
+            color: #6B7280;
+            margin-bottom: 1rem;
+        }
+        
+        .lesson-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .lesson-type {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .lesson-type.free {
+            background-color: #D1FAE5;
+            color: #065F46;
+        }
+        
+        .lesson-type.paid {
+            background-color: #FEF3C7;
+            color: #92400E;
+        }
+        
+        .lesson-duration {
+            color: #6B7280;
+            font-size: 0.9rem;
+        }
+        
+        /* Lesson Detail Page */
+        .lesson-detail {
+            display: none;
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .lesson-detail.active {
+            display: block;
+        }
+        
+        .lesson-header {
+            margin-bottom: 2rem;
+        }
+        
+        .lesson-title-large {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .lesson-meta-large {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .video-container {
             position: relative;
-            transition: color 0.3s ease;
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background-color: #3B82F6;
-            transition: width 0.3s ease;
-        }
-        
-        .nav-link:hover::after,
-        .nav-link.active::after {
             width: 100%;
+            height: 0;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            margin-bottom: 2rem;
         }
         
-        .video-modal {
-            backdrop-filter: blur(10px);
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 8px;
         }
         
-        .admin-card {
-            transition: all 0.3s ease;
+        .lesson-description-large {
+            margin-bottom: 2rem;
+            line-height: 1.8;
         }
         
-        .admin-card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        .lesson-actions {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn-visit {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-request {
+            background-color: var(--secondary);
+            color: var(--white);
+        }
+        
+        /* About Page */
+        .about-content {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            line-height: 1.8;
+        }
+        
+        .about-content h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        /* Contact Page */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .contact-info, .contact-form {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-info h2, .contact-form h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-item i {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-right: 1rem;
+            margin-top: 0.25rem;
+        }
+        
+        .info-item h3 {
+            margin-bottom: 0.25rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #E5E7EB;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .form-message {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .form-message.success {
+            background-color: #D1FAE5;
+            color: #065F46;
+        }
+        
+        .form-message.error {
+            background-color: #FEE2E2;
+            color: #B91C1C;
+        }
+        
+        /* Login Page */
+        .login-container {
+            max-width: 400px;
+            margin: 3rem auto;
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-header i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .login-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .login-error {
+            background-color: #FEE2E2;
+            color: #B91C1C;
+            padding: 0.75rem;
+            border-radius: 5px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        
+        /* Admin Dashboard */
+        .admin-dashboard {
+            display: none;
+        }
+        
+        .admin-dashboard.active {
+            display: block;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .admin-header h1 {
+            color: var(--primary);
+        }
+        
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+        }
+        
+        .stat-icon.blue {
+            background-color: #DBEAFE;
+            color: var(--primary);
+        }
+        
+        .stat-icon.green {
+            background-color: #D1FAE5;
+            color: var(--secondary);
+        }
+        
+        .stat-icon.purple {
+            background-color: #EDE9FE;
+            color: var(--accent);
+        }
+        
+        .stat-icon.red {
+            background-color: #FEE2E2;
+            color: var(--danger);
+        }
+        
+        .stat-icon i {
+            font-size: 1.5rem;
+        }
+        
+        .stat-info h3 {
+            font-size: 0.9rem;
+            color: #6B7280;
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-info p {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .admin-section {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .admin-section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        
+        .admin-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+        
+        .admin-table th, .admin-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        
+        .admin-table th {
+            background-color: #F9FAFB;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .admin-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+        
+        .btn-danger:hover {
+            background-color: #DC2626;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                display: none;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .lesson-meta-large {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .lesson-actions {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-40">
-        <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-graduation-cap text-blue-600 text-3xl"></i>
-                    <h1 class="text-2xl font-bold text-gray-800">K-Edu</h1>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>K-Edu</span>
                 </div>
-                <nav class="hidden md:flex space-x-8">
-                    <a href="#" class="nav-link text-gray-700 hover:text-blue-600 font-medium" data-page="home">Home</a>
-                    <a href="#" class="nav-link text-gray-700 hover:text-blue-600 font-medium" data-page="categories">Categories</a>
-                    <a href="#" class="nav-link text-gray-700 hover:text-blue-600 font-medium" data-page="about">About</a>
-                    <a href="#" class="nav-link text-gray-700 hover:text-blue-600 font-medium" data-page="contact">Contact</a>
-                    <a href="#" class="nav-link text-gray-700 hover:text-blue-600 font-medium" data-page="login">Login</a>
-                </nav>
-                <button class="md:hidden text-gray-700" id="mobileMenuBtn">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-            </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#" data-page="home" class="nav-link active">Home</a></li>
+                    <li><a href="#" data-page="categories" class="nav-link">Categories</a></li>
+                    <li><a href="#" data-page="about" class="nav-link">About</a></li>
+                    <li><a href="#" data-page="contact" class="nav-link">Contact</a></li>
+                    <li><a href="#" data-page="login" class="nav-link">Admin</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
         </div>
-        <!-- Mobile Menu -->
-        <nav class="md:hidden bg-white border-t hidden" id="mobileMenu">
-            <div class="container mx-auto px-4 py-4 space-y-3">
-                <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium" data-page="home">Home</a>
-                <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium" data-page="categories">Categories</a>
-                <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium" data-page="about">About</a>
-                <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium" data-page="contact">Contact</a>
-                <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium" data-page="login">Login</a>
-            </div>
-        </nav>
     </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8 min-h-screen">
+    <main class="container">
         <!-- Home Page -->
-        <div id="homePage" class="page fade-in">
-            <section class="text-center py-16">
-                <h2 class="text-5xl font-bold text-gray-800 mb-6">Welcome to K-Edu</h2>
-                <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">Your gateway to quality education in ICT, English, Korean, Mathematics, and Media Studies</p>
-                <button class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300" onclick="showPage('categories')">
-                    Explore Courses <i class="fas fa-arrow-right ml-2"></i>
-                </button>
+        <div id="home" class="page active">
+            <section class="hero">
+                <h1>Welcome to K-Edu</h1>
+                <p>Your gateway to quality education in ICT, English, Korean, Mathematics, and Media Studies</p>
+                <a href="#" class="btn" id="exploreBtn">Explore Courses</a>
             </section>
             
-            <section class="grid md:grid-cols-3 gap-8 py-8">
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                    <i class="fas fa-book text-4xl text-blue-600 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-2">Comprehensive Courses</h3>
-                    <p class="text-gray-600">Access a wide range of subjects taught by expert instructors</p>
+            <section class="features">
+                <div class="feature-card">
+                    <i class="fas fa-book"></i>
+                    <h3>Comprehensive Courses</h3>
+                    <p>Access a wide range of subjects taught by expert instructors</p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                    <i class="fas fa-video text-4xl text-green-600 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-2">Video Lessons</h3>
-                    <p class="text-gray-600">Learn at your own pace with high-quality video content</p>
+                <div class="feature-card">
+                    <i class="fas fa-video"></i>
+                    <h3>Video Lessons</h3>
+                    <p>Learn at your own pace with high-quality video content</p>
                 </div>
-                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
-                    <i class="fas fa-users text-4xl text-purple-600 mb-4"></i>
-                    <h3 class="text-xl font-semibold mb-2">Expert Instructors</h3>
-                    <p class="text-gray-600">Learn from qualified professionals in each field</p>
+                <div class="feature-card">
+                    <i class="fas fa-users"></i>
+                    <h3>Expert Instructors</h3>
+                    <p>Learn from qualified professionals in each field</p>
                 </div>
             </section>
         </div>
 
         <!-- Categories Page -->
-        <div id="categoriesPage" class="page hidden">
-            <h2 class="text-3xl font-bold text-gray-800 mb-8">Course Categories</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- ICT Category -->
-                <div class="category-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer" data-category="ict">
-                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white">
-                        <i class="fas fa-laptop-code text-4xl mb-3"></i>
-                        <h3 class="text-2xl font-bold">ICT</h3>
+        <div id="categories" class="page">
+            <h1 style="margin-bottom: 2rem;">Course Categories</h1>
+            <div class="categories-grid">
+                <div class="category-card" data-category="ict">
+                    <div class="category-header ict">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>ICT</h3>
                     </div>
-                    <div class="p-6">
-                        <p class="text-gray-600">Information and Communication Technology courses covering programming, networking, and more.</p>
-                    </div>
-                </div>
-
-                <!-- English Category -->
-                <div class="category-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer" data-category="english">
-                    <div class="bg-gradient-to-r from-green-500 to-green-600 p-6 text-white">
-                        <i class="fas fa-language text-4xl mb-3"></i>
-                        <h3 class="text-2xl font-bold">English</h3>
-                    </div>
-                    <div class="p-6">
-                        <p class="text-gray-600">Comprehensive English language courses for all levels, from basics to advanced.</p>
+                    <div class="category-body">
+                        <p>Information and Communication Technology courses covering programming, networking, and more.</p>
                     </div>
                 </div>
-
-                <!-- Korean Category -->
-                <div class="category-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer" data-category="korean">
-                    <div class="bg-gradient-to-r from-red-500 to-red-600 p-6 text-white">
-                        <i class="fas fa-yin-yang text-4xl mb-3"></i>
-                        <h3 class="text-2xl font-bold">Korean</h3>
+                
+                <div class="category-card" data-category="english">
+                    <div class="category-header english">
+                        <i class="fas fa-language"></i>
+                        <h3>English</h3>
                     </div>
-                    <div class="p-6">
-                        <p class="text-gray-600">Learn Korean language and culture with native speakers and interactive lessons.</p>
-                    </div>
-                </div>
-
-                <!-- Maths Category -->
-                <div class="category-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer" data-category="maths">
-                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-6 text-white">
-                        <i class="fas fa-calculator text-4xl mb-3"></i>
-                        <h3 class="text-2xl font-bold">Maths</h3>
-                    </div>
-                    <div class="p-6">
-                        <p class="text-gray-600">Mathematics courses from basic arithmetic to advanced calculus and statistics.</p>
+                    <div class="category-body">
+                        <p>Comprehensive English language courses for all levels, from basics to advanced.</p>
                     </div>
                 </div>
-
-                <!-- Media Studies Category -->
-                <div class="category-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer" data-category="media">
-                    <div class="bg-gradient-to-r from-pink-500 to-pink-600 p-6 text-white">
-                        <i class="fas fa-film text-4xl mb-3"></i>
-                        <h3 class="text-2xl font-bold">Media Studies</h3>
+                
+                <div class="category-card" data-category="korean">
+                    <div class="category-header korean">
+                        <i class="fas fa-yin-yang"></i>
+                        <h3>Korean</h3>
                     </div>
-                    <div class="p-6">
-                        <p class="text-gray-600">Explore digital media, film production, journalism, and communication studies.</p>
+                    <div class="category-body">
+                        <p>Learn Korean language and culture with native speakers and interactive lessons.</p>
+                    </div>
+                </div>
+                
+                <div class="category-card" data-category="maths">
+                    <div class="category-header maths">
+                        <i class="fas fa-calculator"></i>
+                        <h3>Maths</h3>
+                    </div>
+                    <div class="category-body">
+                        <p>Mathematics courses from basic arithmetic to advanced calculus and statistics.</p>
+                    </div>
+                </div>
+                
+                <div class="category-card" data-category="media">
+                    <div class="category-header media">
+                        <i class="fas fa-film"></i>
+                        <h3>Media Studies</h3>
+                    </div>
+                    <div class="category-body">
+                        <p>Explore digital media, film production, journalism, and communication studies.</p>
                     </div>
                 </div>
             </div>
-
-            <!-- Lessons Container -->
-            <div id="lessonsContainer" class="mt-12 hidden">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6" id="categoryTitle"></h3>
-                <div id="lessonsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            
+            <div class="lessons-container" id="lessonsContainer">
+                <h2 id="categoryTitle" style="margin-bottom: 1.5rem;"></h2>
+                <div class="lessons-grid" id="lessonsGrid"></div>
             </div>
         </div>
 
         <!-- About Page -->
-        <div id="aboutPage" class="page hidden">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8">About K-Edu</h2>
-                <div class="bg-white rounded-lg shadow-lg p-8">
-                    <p class="text-lg text-gray-700 mb-6">
-                        K-Edu is a comprehensive online educational platform dedicated to providing high-quality learning experiences across multiple disciplines. Our mission is to make education accessible, engaging, and effective for learners of all ages and backgrounds.
-                    </p>
-                    <p class="text-lg text-gray-700 mb-6">
-                        Founded with the vision of bridging educational gaps, K-Edu offers carefully curated courses in Information and Communication Technology, English Language, Korean Language, Mathematics, and Media Studies. Each course is designed by expert educators and delivered through interactive video lessons, ensuring an immersive learning experience.
-                    </p>
-                    <p class="text-lg text-gray-700">
-                        Whether you're looking to enhance your professional skills, learn a new language, or explore creative fields, K-Edu provides the tools and resources you need to succeed in your educational journey.
-                    </p>
-                </div>
+        <div id="about" class="page">
+            <div class="about-content">
+                <h2>About K-Edu</h2>
+                <p>
+                    K-Edu is a comprehensive online educational platform dedicated to providing high-quality learning experiences across multiple disciplines. Our mission is to make education accessible, engaging, and effective for learners of all ages and backgrounds.
+                </p>
+                <p>
+                    Founded with the vision of bridging educational gaps, K-Edu offers carefully curated courses in Information and Communication Technology, English Language, Korean Language, Mathematics, and Media Studies. Each course is designed by expert educators and delivered through interactive video lessons, ensuring an immersive learning experience.
+                </p>
+                <p>
+                    Whether you're looking to enhance your professional skills, learn a new language, or explore creative fields, K-Edu provides the tools and resources you need to succeed in your educational journey.
+                </p>
             </div>
         </div>
 
         <!-- Contact Page -->
-        <div id="contactPage" class="page hidden">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-3xl font-bold text-gray-800 mb-8">Contact Us</h2>
-                <div class="bg-white rounded-lg shadow-lg p-8">
-                    <div class="grid md:grid-cols-2 gap-8">
+        <div id="contact" class="page">
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h2>Contact Information</h2>
+                    <div class="info-item">
+                        <i class="fas fa-user"></i>
                         <div>
-                            <h3 class="text-xl font-semibold mb-4">Get in Touch</h3>
-                            <div class="space-y-4">
-                                <div class="flex items-center space-x-3">
-                                    <i class="fas fa-user text-blue-600 text-xl"></i>
-                                    <div>
-                                        <p class="font-medium">D.M.Kaawya</p>
-                                        <p class="text-gray-600">Developer & Founder</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-3">
-                                    <i class="fas fa-envelope text-blue-600 text-xl"></i>
-                                    <div>
-                                        <p class="font-medium">Email</p>
-                                        <p class="text-gray-600">info@kedu.com</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-3">
-                                    <i class="fas fa-phone text-blue-600 text-xl"></i>
-                                    <div>
-                                        <p class="font-medium">Phone</p>
-                                        <p class="text-gray-600">+94 123 456 789</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center space-x-3">
-                                    <i class="fas fa-globe text-blue-600 text-xl"></i>
-                                    <div>
-                                        <p class="font-medium">Website</p>
-                                        <p class="text-gray-600">www.kedu.com</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="mt-6">
-                                <h4 class="font-semibold mb-3">Follow Us</h4>
-                                <div class="flex space-x-4">
-                                    <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300">
-                                        <i class="fab fa-facebook-f text-2xl"></i>
-                                    </a>
-                                    <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300">
-                                        <i class="fab fa-twitter text-2xl"></i>
-                                    </a>
-                                    <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300">
-                                        <i class="fab fa-linkedin-in text-2xl"></i>
-                                    </a>
-                                    <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300">
-                                        <i class="fab fa-instagram text-2xl"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-semibold mb-4">Send a Message</h3>
-                            <form class="space-y-4">
-                                <input type="text" placeholder="Your Name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                                <input type="email" placeholder="Your Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                                <textarea placeholder="Your Message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"></textarea>
-                                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
-                                    Send Message
-                                </button>
-                            </form>
+                            <h3>Name</h3>
+                            <p>D.M.Kaawya</p>
                         </div>
                     </div>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>dmkaawya@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Phone</h3>
+                            <p>0775048455 (WhatsApp/Telegram)</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <h3>Website</h3>
+                            <p>dmkaawya.vercel.app</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-share-alt"></i>
+                        <div>
+                            <h3>Social Media</h3>
+                            <p>dmkaawya</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h2>Send a Message</h2>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                        <div class="form-message" id="formMessage"></div>
+                    </form>
                 </div>
             </div>
         </div>
 
         <!-- Login Page -->
-        <div id="loginPage" class="page hidden">
-            <div class="max-w-md mx-auto">
-                <div class="bg-white rounded-lg shadow-lg p-8">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Admin Login</h2>
-                    <form id="loginForm" class="space-y-4">
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Username</label>
-                            <input type="text" id="username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Password</label>
-                            <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
-                        </div>
-                        <div id="loginError" class="text-red-600 text-sm hidden">Invalid username or password</div>
-                        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
-                            Login
-                        </button>
-                    </form>
-                    <p class="text-center text-gray-600 mt-4">
-                        Demo credentials: admin / admin123
-                    </p>
+        <div id="login" class="page">
+            <div class="login-container">
+                <div class="login-header">
+                    <i class="fas fa-user-shield"></i>
+                    <h1>Admin Login</h1>
                 </div>
+                <div class="login-error" id="loginError">Invalid username or password</div>
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                </form>
+                <p style="text-align: center; margin-top: 1rem; color: #6B7280;">
+                    Demo credentials: admin / admin123
+                </p>
             </div>
         </div>
 
         <!-- Admin Dashboard -->
-        <div id="adminPage" class="page hidden">
-            <div class="max-w-6xl mx-auto">
-                <div class="flex justify-between items-center mb-8">
-                    <h2 class="text-3xl font-bold text-gray-800">Admin Dashboard</h2>
-                    <button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 transition duration-300">
-                        <i class="fas fa-sign-out-alt mr-2"></i>
-                        Logout
-                    </button>
+        <div id="admin" class="page admin-dashboard">
+            <div class="admin-header">
+                <h1>Admin Dashboard</h1>
+                <button class="btn btn-danger" id="logoutBtn">Logout</button>
+            </div>
+            
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-folder"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Categories</h3>
+                        <p id="categoryCount">5</p>
+                    </div>
                 </div>
                 
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                    <div class="admin-card bg-white p-6 rounded-lg shadow-lg text-center">
-                        <i class="fas fa-folder text-4xl text-blue-600 mb-3"></i>
-                        <h3 class="text-xl font-semibold mb-2">Categories</h3>
-                        <p class="text-3xl font-bold text-gray-800">5</p>
-                        <button onclick="showAddCategoryForm()" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition duration-300">
-                            Add New
-                        </button>
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-video"></i>
                     </div>
-                    
-                    <div class="admin-card bg-white p-6 rounded-lg shadow-lg text-center">
-                        <i class="fas fa-video text-4xl text-green-600 mb-3"></i>
-                        <h3 class="text-xl font-semibold mb-2">Videos</h3>
-                        <p class="text-3xl font-bold text-gray-800">15</p>
-                        <button onclick="showAddVideoForm()" class="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700 transition duration-300">
-                            Add New
-                        </button>
-                    </div>
-                    
-                    <div class="admin-card bg-white p-6 rounded-lg shadow-lg text-center">
-                        <i class="fas fa-users text-4xl text-purple-600 mb-3"></i>
-                        <h3 class="text-xl font-semibold mb-2">Staff</h3>
-                        <p class="text-3xl font-bold text-gray-800">8</p>
-                        <button onclick="showAddStaffForm()" class="mt-4 bg-purple-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-700 transition duration-300">
-                            Add New
-                        </button>
-                    </div>
-                    
-                    <div class="admin-card bg-white p-6 rounded-lg shadow-lg text-center">
-                        <i class="fas fa-user-shield text-4xl text-red-600 mb-3"></i>
-                        <h3 class="text-xl font-semibold mb-2">Admins</h3>
-                        <p class="text-3xl font-bold text-gray-800">3</p>
-                        <button class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700 transition duration-300">
-                            Manage
-                        </button>
+                    <div class="stat-info">
+                        <h3>Videos</h3>
+                        <p id="videoCount">15</p>
                     </div>
                 </div>
-
-                <!-- Add Category Form -->
-                <div id="addCategoryForm" class="bg-white rounded-lg shadow-lg p-8 mb-8 hidden">
-                    <h3 class="text-2xl font-bold mb-6">Add New Category</h3>
-                    <form class="space-y-4">
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Category Name</label>
-                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Description</label>
-                            <textarea rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required></textarea>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Icon Class</label>
-                            <input type="text" placeholder="e.g., fas fa-laptop-code" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                        </div>
-                        <div class="flex space-x-4">
-                            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
-                                Save Category
-                            </button>
-                            <button type="button" onclick="hideAddCategoryForm()" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400 transition duration-300">
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
+                
+                <div class="stat-card">
+                    <div class="stat-icon purple">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Staff</h3>
+                        <p id="staffCount">8</p>
+                    </div>
                 </div>
-
-                <!-- Add Video Form -->
-                <div id="addVideoForm" class="bg-white rounded-lg shadow-lg p-8 mb-8 hidden">
-                    <h3 class="text-2xl font-bold mb-6">Add New Video</h3>
-                    <form class="space-y-4">
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Video Title</label>
-                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Description</label>
-                            <textarea rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required></textarea>
-                        </div>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-gray-700 font-medium mb-2">Category</label>
-                                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                                    <option>ICT</option>
-                                    <option>English</option>
-                                    <option>Korean</option>
-                                    <option>Maths</option>
-                                    <option>Media Studies</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 font-medium mb-2">Duration</label>
-                                <input type="text" placeholder="e.g., 45 min" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Video URL</label>
-                            <input type="url" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Access Type</label>
-                            <div class="flex space-x-4">
-                                <label class="flex items-center">
-                                    <input type="radio" name="accessType" value="free" class="mr-2">
-                                    <span>Free</span>
-                                </label>
-                                <label class="flex items-center">
-                                    <input type="radio" name="accessType" value="paid" class="mr-2">
-                                    <span>Paid</span>
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Button Type</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                                <option>Visit</option>
-                                <option>Request Access</option>
-                            </select>
-                        </div>
-                        <div class="flex space-x-4">
-                            <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition duration-300">
-                                Save Video
-                            </button>
-                            <button type="button" onclick="hideAddVideoForm()" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400 transition duration-300">
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
+                
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>Admins</h3>
+                        <p>3</p>
+                    </div>
                 </div>
-
-                <!-- Add Staff Form -->
-                <div id="addStaffForm" class="bg-white rounded-lg shadow-lg p-8 mb-8 hidden">
-                    <h3 class="text-2xl font-bold mb-6">Add New Staff Member</h3>
-                    <form class="space-y-4">
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-gray-700 font-medium mb-2">First Name</label>
-                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
-                            </div>
-                            <div>
-                                <label class="block text-gray-700 font-medium mb-2">Last Name</label>
-                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Email</label>
-                            <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Position</label>
-                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-medium mb-2">Department</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                                <option>ICT</option>
-                                <option>English</option>
-                                <option>Korean</option>
-                                <option>Maths</option>
-                                <option>Media Studies</option>
-                                <option>Administration</option>
-                            </select>
-                        </div>
-                        <div class="flex space-x-4">
-                            <button type="submit" class="bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-700 transition duration-300">
-                                Save Staff
-                            </button>
-                            <button type="button" onclick="hideAddStaffForm()" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400 transition duration-300">
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                </div>
+            </div>
+            
+            <div class="admin-section">
+                <h2>Add New Category</h2>
+                <form id="categoryForm" class="admin-form">
+                    <div class="form-group">
+                        <label for="catName">Category Name</label>
+                        <input type="text" id="catName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="catDescription">Description</label>
+                        <input type="text" id="catDescription" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="catIcon">Icon Class</label>
+                        <input type="text" id="catIcon" name="icon" placeholder="e.g., fas fa-laptop-code">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Category</button>
+                </form>
+            </div>
+            
+            <div class="admin-section">
+                <h2>Add New Video</h2>
+                <form id="videoForm" class="admin-form">
+                    <div class="form-group">
+                        <label for="videoTitle">Video Title</label>
+                        <input type="text" id="videoTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoDescription">Description</label>
+                        <input type="text" id="videoDescription" name="description" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoCategory">Category</label>
+                        <select id="videoCategory" name="category" required>
+                            <option value="ict">ICT</option>
+                            <option value="english">English</option>
+                            <option value="korean">Korean</option>
+                            <option value="maths">Maths</option>
+                            <option value="media">Media Studies</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoDuration">Duration</label>
+                        <input type="text" id="videoDuration" name="duration" placeholder="e.g., 45 min" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoUrl">YouTube URL</label>
+                        <input type="text" id="videoUrl" name="url" placeholder="https://www.youtube.com/embed/VIDEO_ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoType">Access Type</label>
+                        <select id="videoType" name="type" required>
+                            <option value="free">Free</option>
+                            <option value="paid">Paid</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="buttonType">Button Type</label>
+                        <select id="buttonType" name="buttonType" required>
+                            <option value="visit">Visit</option>
+                            <option value="request">Request Access</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Video</button>
+                </form>
+            </div>
+            
+            <div class="admin-section">
+                <h2>Add New Staff</h2>
+                <form id="staffForm" class="admin-form">
+                    <div class="form-group">
+                        <label for="staffName">Full Name</label>
+                        <input type="text" id="staffName" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="staffEmail">Email</label>
+                        <input type="email" id="staffEmail" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="staffPosition">Position</label>
+                        <input type="text" id="staffPosition" name="position" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="staffDepartment">Department</label>
+                        <select id="staffDepartment" name="department" required>
+                            <option value="ict">ICT</option>
+                            <option value="english">English</option>
+                            <option value="korean">Korean</option>
+                            <option value="maths">Maths</option>
+                            <option value="media">Media Studies</option>
+                            <option value="administration">Administration</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add Staff</button>
+                </form>
+            </div>
+            
+            <div class="admin-section">
+                <h2>Manage Categories</h2>
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Icon</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="categoryTableBody">
+                        <tr>
+                            <td>ICT</td>
+                            <td>Information and Communication Technology</td>
+                            <td>fas fa-laptop-code</td>
+                            <td>
+                                <button class="btn btn-danger btn-small">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>English</td>
+                            <td>English Language Courses</td>
+                            <td>fas fa-language</td>
+                            <td>
+                                <button class="btn btn-danger btn-small">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Korean</td>
+                            <td>Korean Language and Culture</td>
+                            <td>fas fa-yin-yang</td>
+                            <td>
+                                <button class="btn btn-danger btn-small">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Maths</td>
+                            <td>Mathematics Courses</td>
+                            <td>fas fa-calculator</td>
+                            <td>
+                                <button class="btn btn-danger btn-small">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Media Studies</td>
+                            <td>Media and Communication</td>
+                            <td>fas fa-film</td>
+                            <td>
+                                <button class="btn btn-danger btn-small">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </main>
 
-    <!-- Video Modal -->
-    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 video-modal hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <h3 id="videoTitle" class="text-2xl font-bold text-gray-800"></h3>
-                    <button onclick="closeVideoModal()" class="text-gray-500 hover:text-gray-700">
-                        <i class="fas fa-times text-2xl"></i>
-                    </button>
-                </div>
-                <div class="aspect-w-16 aspect-h-9 mb-4">
-                    <div class="bg-gray-900 rounded-lg flex items-center justify-center" style="height: 400px;">
-                        <i class="fas fa-play-circle text-white text-6xl"></i>
-                    </div>
-                </div>
-                <p id="videoDescription" class="text-gray-600 mb-4"></p>
-                <div class="flex flex-wrap items-center gap-4 mb-6">
-                    <span id="videoType" class="px-3 py-1 rounded-full text-sm font-semibold"></span>
-                    <span id="videoDuration" class="text-gray-600">
-                        <i class="fas fa-clock mr-1"></i>
-                        <span></span>
-                    </span>
-                </div>
-                <button id="visitButton" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
-                    <i class="fas fa-external-link-alt mr-2"></i>
-                    Visit
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8 mt-16">
-        <div class="container mx-auto px-4 text-center">
-            <p class="mb-2">Developed by D.M.Kaawya</p>
-            <p>© 2025 K-Edu. All rights reserved.</p>
+    <footer>
+        <div class="container">
+            <p>Developed by D.M.Kaawya</p>
+            <p>&copy; 2025 K-Edu. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
-        // Sample lesson data
+        // Sample data
         const lessonsData = {
             ict: [
-                { id: 1, title: "Introduction to Programming", description: "Learn the basics of programming with Python", type: "free", duration: "45 min", videoUrl: "#" },
-                { id: 2, title: "Web Development Fundamentals", description: "HTML, CSS, and JavaScript basics", type: "paid", duration: "1h 30min", videoUrl: "#" },
-                { id: 3, title: "Database Design", description: "Learn SQL and database concepts", type: "free", duration: "1h", videoUrl: "#" }
+                { id: 1, title: "Introduction to Programming", description: "Learn the basics of programming with Python", type: "free", duration: "45 min", url: "https://www.youtube.com/embed/_uQrJ0TkZlc" },
+                { id: 2, title: "Web Development Fundamentals", description: "HTML, CSS, and JavaScript basics", type: "paid", duration: "1h 30min", url: "https://www.youtube.com/embed/UB1O30fR-EE" },
+                { id: 3, title: "Database Design", description: "Learn SQL and database concepts", type: "free", duration: "1h", url: "https://www.youtube.com/embed/FR4QIeZaPeM" }
             ],
             english: [
-                { id: 4, title: "English Grammar Basics", description: "Master essential grammar rules", type: "free", duration: "30 min", videoUrl: "#" },
-                { id: 5, title: "Business English", description: "Professional communication skills", type: "paid", duration: "2h", videoUrl: "#" },
-                { id: 6, title: "IELTS Preparation", description: "Comprehensive IELTS exam guide", type: "paid", duration: "3h", videoUrl: "#" }
+                { id: 4, title: "English Grammar Basics", description: "Master essential grammar rules", type: "free", duration: "30 min", url: "https://www.youtube.com/embed/pxu7a1fx8gI" },
+                { id: 5, title: "Business English", description: "Professional communication skills", type: "paid", duration: "2h", url: "https://www.youtube.com/embed/0eUOsWVBqoM" },
+                { id: 6, title: "IELTS Preparation", description: "Comprehensive IELTS exam guide", type: "paid", duration: "3h", url: "https://www.youtube.com/embed/1T8fCqg9Zg4" }
             ],
             korean: [
-                { id: 7, title: "Korean Alphabet (Hangul)", description: "Learn to read and write Korean", type: "free", duration: "45 min", videoUrl: "#" },
-                { id: 8, title: "Basic Korean Phrases", description: "Essential phrases for beginners", type: "free", duration: "1h", videoUrl: "#" },
-                { id: 9, title: "Korean Culture", description: "Understanding Korean traditions", type: "paid", duration: "1h 15min", videoUrl: "#" }
+                { id: 7, title: "Korean Alphabet (Hangul)", description: "Learn to read and write Korean", type: "free", duration: "45 min", url: "https://www.youtube.com/embed/suVnT_lBfHg" },
+                { id: 8, title: "Basic Korean Phrases", description: "Essential phrases for beginners", type: "free", duration: "1h", url: "https://www.youtube.com/embed/UC6im0qO8u0" },
+                { id: 9, title: "Korean Culture", description: "Understanding Korean traditions", type: "paid", duration: "1h 15min", url: "https://www.youtube.com/embed/5yHlHJl_BqE" }
             ],
             maths: [
-                { id: 10, title: "Algebra Fundamentals", description: "Master algebraic concepts", type: "free", duration: "1h", videoUrl: "#" },
-                { id: 11, title: "Calculus Introduction", description: "Limits, derivatives, and integrals", type: "paid", duration: "2h 30min", videoUrl: "#" },
-                { id: 12, title: "Statistics for Beginners", description: "Basic statistical concepts", type: "free", duration: "1h 15min", videoUrl: "#" }
+                { id: 10, title: "Algebra Fundamentals", description: "Master algebraic concepts", type: "free", duration: "1h", url: "https://www.youtube.com/embed/3DyBj7dOyNk" },
+                { id: 11, title: "Calculus Introduction", description: "Limits, derivatives, and integrals", type: "paid", duration: "2h 30min", url: "https://www.youtube.com/embed/WUvTyaaNkzM" },
+                { id: 12, title: "Statistics for Beginners", description: "Basic statistical concepts", type: "free", duration: "1h 15min", url: "https://www.youtube.com/embed/TMZ3uF6XG1c" }
             ],
             media: [
-                { id: 13, title: "Digital Photography", description: "Master your camera skills", type: "paid", duration: "2h", videoUrl: "#" },
-                { id: 14, title: "Video Editing Basics", description: "Learn professional editing techniques", type: "paid", duration: "1h 45min", videoUrl: "#" },
-                { id: 15, title: "Social Media Marketing", description: "Effective social media strategies", type: "free", duration: "1h", videoUrl: "#" }
+                { id: 13, title: "Digital Photography", description: "Master your camera skills", type: "paid", duration: "2h", url: "https://www.youtube.com/embed/7o2V5LjH4sE" },
+                { id: 14, title: "Video Editing Basics", description: "Learn professional editing techniques", type: "paid", duration: "1h 45min", url: "https://www.youtube.com/embed/GI5J9LrP_9s" },
+                { id: 15, title: "Social Media Marketing", description: "Effective social media strategies", type: "free", duration: "1h", url: "https://www.youtube.com/embed/fO1ii0S_rTo" }
             ]
         };
 
-        // Navigation functionality
-        function showPage(pageName) {
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.add('hidden'));
+        // DOM elements
+        const pages = document.querySelectorAll('.page');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const hamburger = document.getElementById('hamburger');
+        const navLinksContainer = document.getElementById('navLinks');
+        const exploreBtn = document.getElementById('exploreBtn');
+        const categoryCards = document.querySelectorAll('.category-card');
+        const lessonsContainer = document.getElementById('lessonsContainer');
+        const lessonsGrid = document.getElementById('lessonsGrid');
+        const categoryTitle = document.getElementById('categoryTitle');
+        const contactForm = document.getElementById('contactForm');
+        const formMessage = document.getElementById('formMessage');
+        const loginForm = document.getElementById('loginForm');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const categoryForm = document.getElementById('categoryForm');
+        const videoForm = document.getElementById('videoForm');
+        const staffForm = document.getElementById('staffForm');
+        const categoryTableBody = document.getElementById('categoryTableBody');
+        const categoryCount = document.getElementById('categoryCount');
+        const videoCount = document.getElementById('videoCount');
+        const staffCount = document.getElementById('staffCount');
+
+        // Navigation
+        function showPage(pageId) {
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
             
-            const targetPage = document.getElementById(pageName + 'Page');
-            if (targetPage) {
-                targetPage.classList.remove('hidden');
-                targetPage.classList.add('fade-in');
-            }
+            document.getElementById(pageId).classList.add('active');
             
-            // Update active nav link
-            document.querySelectorAll('.nav-link').forEach(link => {
+            navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.dataset.page === pageName) {
+                if (link.getAttribute('data-page') === pageId) {
                     link.classList.add('active');
                 }
             });
             
             // Close mobile menu
-            document.getElementById('mobileMenu').classList.add('hidden');
+            navLinksContainer.classList.remove('active');
         }
 
-        // Category click handler
-        document.querySelectorAll('.category-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const category = this.dataset.category;
+        // Event listeners for navigation
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.getAttribute('data-page');
+                showPage(pageId);
+            });
+        });
+
+        // Mobile menu toggle
+        hamburger.addEventListener('click', () => {
+            navLinksContainer.classList.toggle('active');
+        });
+
+        // Explore button
+        exploreBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage('categories');
+        });
+
+        // Category cards
+        categoryCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const category = card.getAttribute('data-category');
                 showLessons(category);
             });
         });
 
-        // Show lessons for category
+        // Show lessons for a category
         function showLessons(category) {
-            const lessons = lessonsData[category];
             const categoryNames = {
                 ict: 'ICT',
                 english: 'English',
@@ -604,121 +1265,227 @@
                 media: 'Media Studies'
             };
             
-            document.getElementById('categoryTitle').textContent = categoryNames[category] + ' Lessons';
-            const lessonsGrid = document.getElementById('lessonsGrid');
+            categoryTitle.textContent = categoryNames[category] + ' Lessons';
             lessonsGrid.innerHTML = '';
             
+            const lessons = lessonsData[category];
             lessons.forEach(lesson => {
                 const lessonCard = document.createElement('div');
-                lessonCard.className = 'lesson-card bg-white rounded-lg shadow-lg p-6 cursor-pointer';
+                lessonCard.className = 'lesson-card';
                 lessonCard.innerHTML = `
-                    <h4 class="text-xl font-semibold mb-2">${lesson.title}</h4>
-                    <p class="text-gray-600 mb-4">${lesson.description}</p>
-                    <div class="flex justify-between items-center">
-                        <span class="px-3 py-1 rounded-full text-sm font-semibold ${lesson.type === 'free' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
-                            ${lesson.type === 'free' ? 'Free' : 'Paid'}
-                        </span>
-                        <span class="text-gray-600 text-sm">
-                            <i class="fas fa-clock mr-1"></i>
-                            ${lesson.duration}
-                        </span>
+                    <div class="lesson-thumbnail">
+                        <i class="fas fa-play-circle"></i>
+                    </div>
+                    <div class="lesson-body">
+                        <h3 class="lesson-title">${lesson.title}</h3>
+                        <p class="lesson-description">${lesson.description}</p>
+                        <div class="lesson-meta">
+                            <span class="lesson-type ${lesson.type}">${lesson.type === 'free' ? 'Free' : 'Paid'}</span>
+                            <span class="lesson-duration"><i class="fas fa-clock"></i> ${lesson.duration}</span>
+                        </div>
                     </div>
                 `;
-                lessonCard.addEventListener('click', () => openVideoModal(lesson));
+                
+                lessonCard.addEventListener('click', () => {
+                    showLessonDetail(lesson);
+                });
+                
                 lessonsGrid.appendChild(lessonCard);
             });
             
-            document.getElementById('lessonsContainer').classList.remove('hidden');
-            document.getElementById('lessonsContainer').scrollIntoView({ behavior: 'smooth' });
+            lessonsContainer.classList.add('active');
+            lessonsContainer.scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Video modal functions
-        function openVideoModal(lesson) {
-            document.getElementById('videoTitle').textContent = lesson.title;
-            document.getElementById('videoDescription').textContent = lesson.description;
-            document.getElementById('videoType').textContent = lesson.type === 'free' ? 'Free' : 'Paid';
-            document.getElementById('videoType').className = `px-3 py-1 rounded-full text-sm font-semibold ${lesson.type === 'free' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`;
-            document.getElementById('videoDuration').querySelector('span').textContent = lesson.duration;
-            document.getElementById('visitButton').onclick = () => window.open(lesson.videoUrl, '_blank');
-            document.getElementById('videoModal').classList.remove('hidden');
-        }
-
-        function closeVideoModal() {
-            document.getElementById('videoModal').classList.add('hidden');
-        }
-
-        // Mobile menu toggle
-        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
-            document.getElementById('mobileMenu').classList.toggle('hidden');
-        });
-
-        // Navigation link handlers
-        document.querySelectorAll('[data-page]').forEach(link => {
-            link.addEventListener('click', function(e) {
+        // Show lesson detail
+        function showLessonDetail(lesson) {
+            // Create lesson detail view
+            const lessonDetail = document.createElement('div');
+            lessonDetail.className = 'lesson-detail active';
+            lessonDetail.innerHTML = `
+                <div class="lesson-header">
+                    <h1 class="lesson-title-large">${lesson.title}</h1>
+                    <div class="lesson-meta-large">
+                        <span class="lesson-type ${lesson.type}">${lesson.type === 'free' ? 'Free' : 'Paid'}</span>
+                        <span class="lesson-duration"><i class="fas fa-clock"></i> ${lesson.duration}</span>
+                    </div>
+                </div>
+                
+                <div class="video-container">
+                    <iframe 
+                        src="${lesson.url}?rel=0&modestbranding=1&showinfo=0" 
+                        frameborder="0" 
+                        allowfullscreen
+                        id="videoFrame"
+                    ></iframe>
+                </div>
+                
+                <p class="lesson-description-large">${lesson.description}</p>
+                
+                <div class="lesson-actions">
+                    <a href="${lesson.url}" target="_blank" class="btn btn-visit">Visit</a>
+                    <button class="btn btn-request">Request Access</button>
+                </div>
+            `;
+            
+            // Replace lessons grid with lesson detail
+            lessonsGrid.innerHTML = '';
+            lessonsGrid.appendChild(lessonDetail);
+            
+            // Scroll to top of lessons container
+            lessonsContainer.scrollIntoView({ behavior: 'smooth' });
+            
+            // Add basic protection to video
+            const videoFrame = document.getElementById('videoFrame');
+            videoFrame.addEventListener('contextmenu', (e) => {
                 e.preventDefault();
-                showPage(this.dataset.page);
             });
+        }
+
+        // Contact form
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(contactForm);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const message = formData.get('message');
+            
+            // Here you would normally send the data to a server
+            // For demo purposes, we'll just show a success message
+            
+            formMessage.textContent = 'Thank you for your message! We will get back to you soon.';
+            formMessage.className = 'form-message success';
+            formMessage.style.display = 'block';
+            
+            // Reset form
+            contactForm.reset();
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                formMessage.style.display = 'none';
+            }, 5000);
         });
 
-        // Login functionality
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        // Login form
+        loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
+            
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
-            // Simple demo authentication
+            // Simple authentication (in a real app, this would be server-side)
             if (username === 'admin' && password === 'admin123') {
-                document.getElementById('loginError').classList.add('hidden');
                 showPage('admin');
+                loginError.style.display = 'none';
             } else {
-                document.getElementById('loginError').classList.remove('hidden');
+                loginError.style.display = 'block';
             }
         });
 
-        // Logout functionality
-        function logout() {
+        // Logout button
+        logoutBtn.addEventListener('click', () => {
             showPage('home');
-        }
-
-        // Admin form functions
-        function showAddCategoryForm() {
-            document.getElementById('addCategoryForm').classList.remove('hidden');
-            document.getElementById('addVideoForm').classList.add('hidden');
-            document.getElementById('addStaffForm').classList.add('hidden');
-        }
-
-        function hideAddCategoryForm() {
-            document.getElementById('addCategoryForm').classList.add('hidden');
-        }
-
-        function showAddVideoForm() {
-            document.getElementById('addVideoForm').classList.remove('hidden');
-            document.getElementById('addCategoryForm').classList.add('hidden');
-            document.getElementById('addStaffForm').classList.add('hidden');
-        }
-
-        function hideAddVideoForm() {
-            document.getElementById('addVideoForm').classList.add('hidden');
-        }
-
-        function showAddStaffForm() {
-            document.getElementById('addStaffForm').classList.remove('hidden');
-            document.getElementById('addCategoryForm').classList.add('hidden');
-            document.getElementById('addVideoForm').classList.add('hidden');
-        }
-
-        function hideAddStaffForm() {
-            document.getElementById('addStaffForm').classList.add('hidden');
-        }
-
-        // Close modal on outside click
-        document.getElementById('videoModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeVideoModal();
-            }
         });
 
-        // Initialize home page
+        // Category form
+        categoryForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(categoryForm);
+            const name = formData.get('name');
+            const description = formData.get('description');
+            const icon = formData.get('icon');
+            
+            // Add to table (in a real app, this would be saved to a database)
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${name}</td>
+                <td>${description}</td>
+                <td>${icon}</td>
+                <td>
+                    <button class="btn btn-danger btn-small">Delete</button>
+                </td>
+            `;
+            categoryTableBody.appendChild(newRow);
+            
+            // Update count
+            const currentCount = parseInt(categoryCount.textContent);
+            categoryCount.textContent = currentCount + 1;
+            
+            // Reset form
+            categoryForm.reset();
+            
+            // Show success message
+            alert('Category added successfully!');
+        });
+
+        // Video form
+        videoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(videoForm);
+            const title = formData.get('title');
+            const description = formData.get('description');
+            const category = formData.get('category');
+            const duration = formData.get('duration');
+            const url = formData.get('url');
+            const type = formData.get('type');
+            const buttonType = formData.get('buttonType');
+            
+            // Add to lessons data (in a real app, this would be saved to a database)
+            const newId = Object.keys(lessonsData).reduce((max, cat) => {
+                const catMax = Math.max(...lessonsData[cat].map(l => l.id));
+                return Math.max(max, catMax);
+            }, 0) + 1;
+            
+            lessonsData[category].push({
+                id: newId,
+                title,
+                description,
+                type,
+                duration,
+                url,
+                buttonType
+            });
+            
+            // Update count
+            const currentCount = parseInt(videoCount.textContent);
+            videoCount.textContent = currentCount + 1;
+            
+            // Reset form
+            videoForm.reset();
+            
+            // Show success message
+            alert('Video added successfully!');
+        });
+
+        // Staff form
+        staffForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(staffForm);
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const position = formData.get('position');
+            const department = formData.get('department');
+            
+            // Update count (in a real app, this would be saved to a database)
+            const currentCount = parseInt(staffCount.textContent);
+            staffCount.textContent = currentCount + 1;
+            
+            // Reset form
+            staffForm.reset();
+            
+            // Show success message
+            alert('Staff member added successfully!');
+        });
+
+        // Initialize the page
         showPage('home');
     </script>
 </body>

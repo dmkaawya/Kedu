@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K Edu - Learn Through Videos</title>
+    <title>K Edu - Coming Soon</title>
     <style>
         * {
             margin: 0;
@@ -11,785 +11,585 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
-            --accent-color: #ff6b6b;
-            --success-color: #4ecdc4;
-            --warning-color: #ffe66d;
-            --danger-color: #ff6b6b;
-            --dark-color: #2c3e50;
-            --light-color: #ecf0f1;
-            --text-color: #2c3e50;
-            --text-light: #7f8c8d;
-            --border-color: #bdc3c7;
-            --shadow: 0 4px 20px rgba(0,0,0,0.1);
-            --shadow-hover: 0 8px 30px rgba(0,0,0,0.15);
-            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            --gradient-accent: linear-gradient(135deg, var(--accent-color) 0%, #ff5252 100%);
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b6b 100%);
             min-height: 100vh;
-        }
-
-        .header {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 1rem 0;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 2rem;
-        }
-
-        .logo {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .nav-links a:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-2px);
-        }
-
-        .auth-section {
-            display: flex;
-            gap: 1rem;
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-primary {
-            background: var(--gradient-accent);
-            color: white;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255,255,255,0.8);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .search-section {
-            background: rgba(255,255,255,0.9);
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .search-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            text-align: center;
-        }
-
-        .search-box {
-            display: flex;
-            max-width: 600px;
-            margin: 0 auto;
-            box-shadow: var(--shadow);
-            border-radius: 50px;
-            overflow: hidden;
-            background: white;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 1.2rem 2rem;
-            border: none;
-            font-size: 1.1rem;
-            outline: none;
-        }
-
-        .search-btn {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: 1.2rem 2rem;
-            cursor: pointer;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .loader {
-            display: none;
-            width: 50px;
-            height: 50px;
-            margin: 2rem auto;
-            border: 4px solid rgba(102, 126, 234, 0.3);
-            border-top: 4px solid var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .main-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: var(--gradient-primary);
-            color: white;
-            border-radius: 20px;
-            margin-bottom: 3rem;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            font-weight: 900;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 600px;
-            margin: 0 auto;
-            opacity: 0.9;
-        }
-
-        .categories-grid, .lessons-grid, .videos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .card-header {
-            background: var(--gradient-accent);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        .card-header h3 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .card-content {
-            padding: 2rem;
-        }
-
-        .video-item, .lesson-item {
-            margin-bottom: 1.5rem;
-            padding: 1.5rem;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        .video-item:hover, .lesson-item:hover {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            transform: scale(1.02);
-        }
-
-        .video-item img {
-            width: 150px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .video-item h4, .lesson-item h4 {
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            transition: color 0.3s ease;
-        }
-
-        .video-item:hover h4, .lesson-item:hover h4 {
-            color: white;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-        }
-
-        .modal-content {
-            background: white;
-            margin: 2% auto;
-            padding: 2rem;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 900px;
-            position: relative;
-            box-shadow: var(--shadow-hover);
-        }
-
-        .close {
-            position: absolute;
-            right: 1.5rem;
-            top: 1.5rem;
-            color: var(--text-light);
-            font-size: 2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .close:hover {
-            color: var(--danger-color);
-        }
-
-        .admin-panel {
-            background: rgba(255,255,255,0.9);
-            padding: 3rem;
-            border-radius: 20px;
-            margin-bottom: 3rem;
-            box-shadow: var(--shadow);
-        }
-
-        .admin-form {
-            display: grid;
-            gap: 1.5rem;
-            max-width: 600px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--text-color);
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            padding: 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            margin-bottom: 2rem;
-            padding: 1rem;
-            background: rgba(255,255,255,0.9);
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-        }
-
-        .breadcrumb-item {
-            color: var(--text-light);
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .breadcrumb-item:hover {
-            background: var(--primary-color);
-            color: white;
-        }
-
-        .breadcrumb-item.active {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-
-        .breadcrumb-separator {
-            margin: 0 0.5rem;
-            color: var(--text-light);
-        }
-
-        .back-btn {
-            background: var(--gradient-primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 600;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .back-btn:hover {
-            transform: translateX(-5px);
-            box-shadow: var(--shadow);
-        }
-
-        .staff-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .staff-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .staff-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .staff-avatar {
-            width: 120px;
-            height: 120px;
-            background: var(--gradient-primary);
-            border-radius: 50%;
-            margin: 0 auto 1.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 2.5rem;
-            font-weight: bold;
-            box-shadow: var(--shadow);
+            overflow: hidden;
         }
 
-        .hidden { display: none !important; }
+        .coming-soon-container {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 90%;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
 
-        .notification {
-            position: fixed;
-            top: 100px;
-            right: 2rem;
-            padding: 1rem 1.5rem;
-            border-radius: 15px;
-            color: white;
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .countdown-container {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .countdown-title {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
             font-weight: 600;
-            z-index: 1001;
-            transform: translateX(400px);
-            transition: transform 0.3s ease;
+            color: #fff;
         }
 
-        .notification.show {
-            transform: translateX(0);
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
         }
 
-        .notification.success { background: var(--success-color); }
-        .notification.error { background: var(--danger-color); }
+        .time-unit {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem 1rem;
+            min-width: 120px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .time-unit:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .time-number {
+            font-size: 3rem;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .time-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .features {
+            margin: 3rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+
+        .contact-info {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .contact-details {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            border-radius: 3px;
+            animation: progress 10s linear infinite;
+        }
+
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .admin-preview {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .admin-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: particleFloat 15s linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) translateX(100px);
+                opacity: 0;
+            }
+        }
 
         @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
+            .coming-soon-container {
+                padding: 2rem 1rem;
+            }
+
+            .logo {
+                font-size: 3rem;
+            }
+
+            .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .countdown-timer {
                 gap: 1rem;
-                padding: 1rem;
             }
 
-            .nav-links {
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 1rem;
+            .time-unit {
+                min-width: 80px;
+                padding: 1rem 0.5rem;
             }
 
-            .hero h1 {
-                font-size: 2.5rem;
+            .time-number {
+                font-size: 2rem;
             }
 
-            .categories-grid, .lessons-grid, .videos-grid {
+            .features {
                 grid-template-columns: 1fr;
-                gap: 1.5rem;
+                gap: 1rem;
             }
 
-            .modal-content {
-                width: 95%;
-                margin: 5% auto;
-                padding: 1.5rem;
-            }
-
-            .video-item, .lesson-item {
+            .contact-details {
                 flex-direction: column;
-                text-align: center;
+                gap: 1rem;
             }
+        }
 
-            .video-item img {
-                width: 100%;
-                max-width: 250px;
+        .launch-ready {
+            display: none;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="nav-container">
-            <div class="logo">K Edu</div>
-            <nav>
-                <ul class="nav-links">
-                    <li><a onclick="showPage('home')">Home</a></li>
-                    <li><a onclick="showPage('categories')">Categories</a></li>
-                    <li><a onclick="showPage('about')">About</a></li>
-                    <li><a onclick="showPage('contact')">Contact</a></li>
-                    <li><a onclick="showPage('staff')">Staff</a></li>
-                </ul>
-            </nav>
-            <div class="auth-section">
-                <button class="btn btn-secondary" id="loginBtn" onclick="showLogin()">Admin Login</button>
-                <button class="btn btn-primary hidden" id="logoutBtn" onclick="logout()">Logout</button>
-            </div>
+    <div class="particles" id="particles"></div>
+    
+    <div class="coming-soon-container">
+        <div class="logo">K Edu</div>
+        <div class="subtitle">Learn Through Videos</div>
+        <div class="description">
+            Get ready for Sri Lanka's most comprehensive educational platform! We're organizing thousands of YouTube videos into structured lessons across all subjects. Quality education will be just a click away.
         </div>
-    </header>
 
-    <section class="search-section">
-        <div class="search-container">
-            <div class="search-box">
-                <input type="text" class="search-input" id="searchInput" placeholder="Search for videos, lessons, categories...">
-                <button class="search-btn" onclick="searchContent()">Search</button>
-            </div>
-            <div class="loader" id="searchLoader"></div>
-        </div>
-    </section>
-
-    <main class="main-content">
-        <!-- Home Page -->
-        <div id="home" class="page active">
-            <div class="hero">
-                <h1>Welcome to K Edu</h1>
-                <p>Discover knowledge through carefully curated YouTube videos. Learn at your own pace with our organized educational content across various subjects.</p>
-            </div>
-
-            <div id="searchResults" class="categories-grid hidden"></div>
-            <div id="featuredContent" class="categories-grid"></div>
-
-            <div id="adminPanel" class="admin-panel hidden">
-                <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;">Admin Panel</h2>
-                
-                <div class="admin-form">
-                    <h3 style="color: var(--accent-color);">Add New Category</h3>
-                    <div class="form-group">
-                        <label for="categoryName">Category Name:</label>
-                        <input type="text" id="categoryName" placeholder="e.g., Mathematics, Science, History">
-                    </div>
-                    <div class="form-group">
-                        <label for="categoryDesc">Category Description:</label>
-                        <textarea id="categoryDesc" rows="3" placeholder="Brief description of the category"></textarea>
-                    </div>
-                    <button class="btn btn-primary" onclick="addCategory()">Add Category</button>
+        <div class="countdown-container" id="countdownContainer">
+            <div class="countdown-title">Launching In:</div>
+            <div class="countdown-timer">
+                <div class="time-unit">
+                    <span class="time-number" id="days">10</span>
+                    <span class="time-label">Days</span>
                 </div>
-
-                <div class="admin-form" style="margin-top: 3rem;">
-                    <h3 style="color: var(--accent-color);">Add New Lesson</h3>
-                    <div class="form-group">
-                        <label for="lessonCategory">Select Category:</label>
-                        <select id="lessonCategory">
-                            <option value="">Choose a category...</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="lessonTitle">Lesson Title:</label>
-                        <input type="text" id="lessonTitle" placeholder="Enter lesson title">
-                    </div>
-                    <div class="form-group">
-                        <label for="lessonDesc">Lesson Description:</label>
-                        <textarea id="lessonDesc" rows="3" placeholder="Brief description of the lesson"></textarea>
-                    </div>
-                    <button class="btn btn-primary" onclick="addLesson()">Add Lesson</button>
+                <div class="time-unit">
+                    <span class="time-number" id="hours">00</span>
+                    <span class="time-label">Hours</span>
                 </div>
-
-                <div class="admin-form" style="margin-top: 3rem;">
-                    <h3 style="color: var(--accent-color);">Add New Video</h3>
-                    <div class="form-group">
-                        <label for="videoCategory">Select Category:</label>
-                        <select id="videoCategory" onchange="loadLessonsForVideo()">
-                            <option value="">Choose a category...</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoLesson">Select Lesson:</label>
-                        <select id="videoLesson">
-                            <option value="">Choose a lesson...</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoTitle">Video Title:</label>
-                        <input type="text" id="videoTitle" placeholder="Enter video title">
-                    </div>
-                    <div class="form-group">
-                        <label for="videoUrl">YouTube Video URL:</label>
-                        <input type="text" id="videoUrl" placeholder="https://www.youtube.com/watch?v=...">
-                    </div>
-                    <div class="form-group">
-                        <label for="videoDesc">Video Description:</label>
-                        <textarea id="videoDesc" rows="3" placeholder="Brief description of the video"></textarea>
-                    </div>
-                    <button class="btn btn-primary" onclick="addVideo()">Add Video</button>
+                <div class="time-unit">
+                    <span class="time-number" id="minutes">00</span>
+                    <span class="time-label">Minutes</span>
+                </div>
+                <div class="time-unit">
+                    <span class="time-number" id="seconds">00</span>
+                    <span class="time-label">Seconds</span>
                 </div>
             </div>
-        </div>
-
-        <!-- Categories Page -->
-        <div id="categories" class="page">
-            <div class="breadcrumb">
-                <span class="breadcrumb-item" onclick="showPage('home')">Home</span>
-                <span class="breadcrumb-separator">></span>
-                <span class="breadcrumb-item active">Categories</span>
-            </div>
-            <h1 style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;">All Categories</h1>
-            <div id="allCategories" class="categories-grid"></div>
-        </div>
-
-        <!-- Lessons Page -->
-        <div id="lessons" class="page">
-            <div class="breadcrumb" id="lessonsBreadcrumb"></div>
-            <button class="back-btn" onclick="showPage('categories')">← Back to Categories</button>
-            <h1 id="lessonsTitle" style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;"></h1>
-            <div id="categoryLessons" class="lessons-grid"></div>
-        </div>
-
-        <!-- Videos Page -->
-        <div id="videos" class="page">
-            <div class="breadcrumb" id="videosBreadcrumb"></div>
-            <button class="back-btn" onclick="goBackToLessons()">← Back to Lessons</button>
-            <h1 id="videosTitle" style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;"></h1>
-            <div id="lessonVideos" class="videos-grid"></div>
-        </div>
-
-        <!-- About Page -->
-        <div id="about" class="page">
-            <div class="card">
-                <div class="card-content">
-                    <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">About K Edu</h2>
-                    <p style="margin-bottom: 1.5rem; font-size: 1.1rem;"><strong>What K Edu Does:</strong> K Edu is a comprehensive educational platform that provides access to carefully curated YouTube videos across various subjects. We organize educational content into logical categories and lessons, making it easy for students to find and learn from high-quality video resources.</p>
-                    
-                    <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Why We Created K Edu</h3>
-                    <p style="margin-bottom: 1.5rem;">In today's digital age, YouTube has become one of the largest repositories of educational content. However, finding quality educational videos can be overwhelming due to the vast amount of content available. K Edu was created to solve this problem by providing a curated, organized platform where students can access the best educational videos without the distraction of irrelevant content.</p>
-                    
-                    <h3 style="color: var(--accent-color); margin-bottom: 1rem;">How K Edu Helps Students</h3>
-                    <p style="margin-bottom: 1rem;"><strong>Organized Learning:</strong> Our platform categorizes videos by subject and lessons, making it easy to find relevant content for your studies.</p>
-                    <p style="margin-bottom: 1rem;"><strong>Quality Assurance:</strong> All videos are reviewed by our educational staff to ensure they meet high standards for accuracy and teaching quality.</p>
-                    <p style="margin-bottom: 1rem;"><strong>Easy Search:</strong> Our powerful search functionality helps you quickly find videos on specific topics.</p>
-                    <p style="margin-bottom: 1rem;"><strong>Free Access:</strong> All content is freely available to students, removing barriers to quality education.</p>
-                    <p style="margin-bottom: 1rem;"><strong>Mobile Friendly:</strong> Access your learning materials anywhere, anytime, on any device.</p>
-                    <p><strong>Secure Learning:</strong> Watch videos in our platform without being redirected to external sites, ensuring focused learning.</p>
-                </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
             </div>
         </div>
 
-        <!-- Contact Page -->
-        <div id="contact" class="page">
-            <div class="card">
-                <div class="card-content">
-                    <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Contact Us</h2>
-                    <p style="margin-bottom: 2rem; font-size: 1.1rem;">We'd love to hear from you! Whether you have questions, suggestions, or need support, don't hesitate to reach out.</p>
-                    
-                    <div style="margin-bottom: 2rem;">
-                        <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Get in Touch</h3>
-                        <p style="margin-bottom: 0.5rem;"><strong>Email:</strong> dmkaawya@gmail.com</p>
-                        <p style="margin-bottom: 0.5rem;"><strong>Phone:</strong> +94 077 50 48 455</p>
-                        <p><strong>Address:</strong> Kalutara South, Kalutara, Western Province, Sri Lanka</p>
-                    </div>
-                    
-                    <div style="margin-bottom: 2rem;">
-                        <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Support Hours</h3>
-                        <p style="margin-bottom: 0.5rem;">Monday - Friday: 9:00 AM - 6:00 PM</p>
-                        <p style="margin-bottom: 0.5rem;">Saturday: 10:00 AM - 4:00 PM</p>
-                        <p>Sunday: Closed</p>
-                    </div>
-                    
-                    <div>
-                        <h3 style="color: var(--accent-color); margin-bottom: 1rem;">For Educators</h3>
-                        <p>Interested in contributing to our platform? Contact us at <strong>dmkaawya@gmail.com</strong> to learn about becoming a content curator.</p>
-                    </div>
-                </div>
+        <div class="launch-ready" id="launchReady">
+            <div style="font-size: 2rem; color: #4ecdc4; margin-bottom: 1rem; font-weight: bold;">
+                🎉 We're Live! 🎉
+            </div>
+            <button class="admin-btn" onclick="enterSite()">Enter K Edu Platform</button>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">📚</div>
+                <div class="feature-title">Organized Content</div>
+                <div class="feature-description">Videos organized by subjects, categories, and difficulty levels</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-title">Quality Curated</div>
+                <div class="feature-description">Hand-picked educational videos from expert educators</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🔍</div>
+                <div class="feature-title">Smart Search</div>
+                <div class="feature-description">Find exactly what you need with our advanced search</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📱</div>
+                <div class="feature-title">Mobile Ready</div>
+                <div class="feature-description">Learn anywhere, anytime on any device</div>
             </div>
         </div>
 
-        <!-- Staff Page -->
-        <div id="staff" class="page">
-            <div class="card">
-                <div class="card-content">
-                    <h2 style="color: var(--primary-color); margin-bottom: 1.5rem;">Our Team</h2>
-                    <p style="margin-bottom: 2rem;">Meet the dedicated educators and administrators who make K Edu possible.</p>
-                    <div class="staff-grid">
-                        <div class="staff-card">
-                            <div class="staff-avatar">DK</div>
-                            <h3>D.M.C.Kaawya Chandrasekara</h3>
-                            <p><strong>Chief Education Officer</strong></p>
-                            <p>Certificates in web developer with 4 years of experience in Basic web development.</p>
-                        </div>
-                        <div class="staff-card">
-                            <div class="staff-avatar">SL</div>
-                            <h3>Sandeepa Lakshan</h3>
-                            <p><strong>Platform Administrator</strong></p>
-                            <p>Diploma in Web developer with 6 years of experience in Expert web development</p>
-                        </div>
-                    </div>
-                    <div style="margin-top: 3rem; padding: 2rem; background: #f8f9fa; border-radius: 15px; text-align: center;">
-                        <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Staff Login</h3>
-                        <p style="margin-bottom: 1.5rem;">Staff members can log in to access administrative features including adding new categories, lessons, and video content.</p>
-                        <button class="btn btn-primary" onclick="showLogin()">Staff Login</button>
-                    </div>
-                </div>
+        <div class="admin-preview">
+            <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">Preview Admin Features</div>
+            <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 1rem;">
+                Want to see what's coming? Get a sneak peek at the admin panel features.
+                <br><strong>Demo Login:</strong> Username: admin | Password: admin123
             </div>
+            <button class="admin-btn" onclick="showAdminPreview()">Preview Admin Panel</button>
         </div>
-    </main>
 
-    <!-- Video Modal -->
-    <div id="videoModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div id="videoContainer"></div>
-            <h3 id="modalVideoTitle" style="margin-top: 1rem; color: var(--primary-color);"></h3>
-            <p id="modalVideoDescription" style="margin-top: 0.5rem; color: var(--text-light);"></p>
+        <div class="contact-info">
+            <div class="contact-title">Contact Us</div>
+            <div class="contact-details">
+                <div class="contact-item">📧 dmkaawya@gmail.com</div>
+                <div class="contact-item">📱 +94 077 50 48 455</div>
+                <div class="contact-item">📍 Kalutara South, Sri Lanka</div>
+            </div>
         </div>
     </div>
 
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 style="text-align: center; color: var(--primary-color); margin-bottom: 2rem;">Admin Login</h2>
-            <div class="admin-form">
-                <div class="form-group">
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" placeholder="Enter username">
+    <!-- Hidden Main Site -->
+    <div id="mainSite" style="display: none;">
+        <!-- This will contain the full K Edu platform -->
+        <div style="text-align: center; padding: 50px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; min-height: 100vh;">
+            <h1 style="font-size: 3rem; margin-bottom: 2rem;">Welcome to K Edu!</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Your comprehensive learning platform is now live!</p>
+            <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 20px; max-width: 600px; margin: 0 auto;">
+                <h3>Platform Features:</h3>
+                <ul style="text-align: left; margin-top: 1rem; line-height: 1.8;">
+                    <li>📚 Organized video categories and lessons</li>
+                    <li>🔍 Advanced search functionality</li>
+                    <li>👨‍💼 Admin panel for content management</li>
+                    <li>📱 Fully responsive design</li>
+                    <li>🎥 Embedded YouTube videos</li>
+                    <li>🔐 Secure admin authentication</li>
+                </ul>
+                <div style="margin-top: 2rem;">
+                    <button onclick="showLoginDemo()" style="background: #ff6b6b; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; font-size: 1rem; margin-right: 1rem;">Admin Demo</button>
+                    <button onclick="goBack()" style="background: transparent; color: white; border: 2px solid white; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; font-size: 1rem;">Back to Coming Soon</button>
                 </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" placeholder="Enter password">
-                </div>
-                <button class="btn btn-primary" onclick="login()" style="width: 100%;">Login</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Global variables
-        let isLoggedIn = false;
-        let currentPage = 'home';
-        let currentCategory = null;
-        let currentLesson = null;
-        let data = {
-            categories: [
-                {
-                    id: 1,
-                    name: "Mathematics",
-                    description: "Learn mathematical concepts from basic to advanced levels",
-                    lessons: [
-                        {
-                            id: 1,
-                            title: "Basic Algebra",
-                            description: "Introduction to algebraic expressions and equations",
-                            videos: [
-                                {
-                                    id: 1,
-                                    title: "Introduction to Algebra",
-                                    url: "dQw4w9WgXcQ",
-                                    description: "Learn the basics of algebra"
-                                },
-                                {
-                                    id: 2,
-                                    title: "Solving Linear Equations",
-                                    url: "dQw4w9WgXcQ",
+        // Set launch date to 10 days from now
+        const launchDate = new Date();
+        launchDate.setDate(launchDate.getDate() + 10);
+        
+        let countdownFinished = false;
+
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Update countdown
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = launchDate.getTime() - now;
+
+            if (distance < 0 && !countdownFinished) {
+                // Countdown finished
+                countdownFinished = true;
+                document.getElementById('countdownContainer').style.display = 'none';
+                document.getElementById('launchReady').style.display = 'block';
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+
+            // Update progress bar
+            const totalTime = 10 * 24 * 60 * 60 * 1000; // 10 days in milliseconds
+            const elapsed = totalTime - distance;
+            const progress = (elapsed / totalTime) * 100;
+            document.getElementById('progressFill').style.width = Math.max(0, Math.min(100, progress)) + '%';
+        }
+
+        // Enter main site
+        function enterSite() {
+            document.querySelector('.coming-soon-container').style.display = 'none';
+            document.getElementById('particles').style.display = 'none';
+            document.getElementById('mainSite').style.display = 'block';
+        }
+
+        // Show admin preview
+        function showAdminPreview() {
+            alert('Admin Preview:\n\n✅ Add/Edit Categories\n✅ Create Lesson Plans\n✅ Upload Video Content\n✅ Manage User Access\n✅ Analytics Dashboard\n✅ Content Moderation\n\nFull admin panel will be available after launch!\n\nDemo Credentials:\nUsername: admin\nPassword: admin123');
+        }
+
+        // Show login demo
+        function showLoginDemo() {
+            const username = prompt('Enter username (try: admin)');
+            const password = prompt('Enter password (try: admin123)');
+            
+            if (username === 'admin' && password === 'admin123') {
+                alert('Login Successful! 🎉\n\nAdmin features unlocked:\n• Content Management\n• User Analytics\n• System Settings\n• Course Creation\n\nFull platform launching soon!');
+            } else {
+                alert('Invalid credentials. Try:\nUsername: admin\nPassword: admin123');
+            }
+        }
+
+        // Go back to coming soon
+        function goBack() {
+            document.querySelector('.coming-soon-container').style.display = 'block';
+            document.getElementById('particles').style.display = 'block';
+            document.getElementById('mainSite').style.display = 'none';
+        }
+
+        // Fast countdown for demo (uncomment to test)
+        function fastCountdown() {
+            const fastLaunchDate = new Date();
+            fastLaunchDate.setSeconds(fastLaunchDate.getSeconds() + 10); // 10 seconds for demo
+            
+            const fastTimer = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = fastLaunchDate.getTime() - now;
+                
+                if (distance < 0) {
+                    clearInterval(fastTimer);
+                    countdownFinished = true;
+                    document.getElementById('countdownContainer').style.display = 'none';
+                    document.getElementById('launchReady').style.display = 'block';
+                    return;
+                }
+                
+                const seconds = Math.floor(distance / 1000);
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            }, 100);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            updateCountdown();
+            
+            // Update countdown every second
+            setInterval(updateCountdown, 1000);
+            
+            // Uncomment next line for quick demo (10 seconds countdown)
+            // setTimeout(fastCountdown, 2000);
+        });
+
+        // Add some interactive effects
+        document.addEventListener('mousemove', function(e) {
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach(particle => {
+                const rect = particle.getBoundingClientRect();
+                const distance = Math.sqrt(
+                    Math.pow(e.clientX - rect.left, 2) + 
+                    Math.pow(e.clientY - rect.top, 2)
+                );
+                
+                if (distance < 100) {
+                    particle.style.opacity = '1';
+                    particle.style.transform = `scale(1.5)`;
+                } else {
+                    particle.style.opacity = '0.5';
+                    particle.style.transform = `scale(1)`;
+                }
+            });
+        });
+
+        // Easter egg - type "launch" to skip countdown
+        let easterEggSequence = '';
+        document.addEventListener('keypress', function(e) {
+            easterEggSequence += e.key;
+            if (easterEggSequence.includes('launch')) {
+                countdownFinished = true;
+                document.getElementById('countdownContainer').style.display = 'none';
+                document.getElementById('launchReady').style.display = 'block';
+                easterEggSequence = '';
+                
+                // Add special effect
+                const container = document.querySelector('.coming-soon-container');
+                container.style.animation = 'none';
+                container.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    container.style.transform = 'scale(1)';
+                    container.style.animation = 'float 6s ease-in-out infinite';
+                }, 500);
+            }
+            
+            // Reset sequence if too long
+            if (easterEggSequence.length > 10) {
+                easterEggSequence = '';
+            }
+        });
+    </script>
+</body>
+</html>

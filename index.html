@@ -3,593 +3,723 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K Edu - Coming Soon</title>
+    <title>K-Edu - Educational Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b6b 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            overflow: hidden;
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-
-        .coming-soon-container {
-            text-align: center;
-            padding: 3rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-            max-width: 800px;
-            width: 90%;
-            position: relative;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .logo {
-            font-size: 4rem;
-            font-weight: 900;
-            margin-bottom: 1rem;
-            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(45deg, #fff, #f0f0f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-            font-weight: 300;
-        }
-
-        .description {
-            font-size: 1.1rem;
-            margin-bottom: 3rem;
-            line-height: 1.6;
-            opacity: 0.8;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .countdown-container {
-            margin: 3rem 0;
-            padding: 2rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .countdown-title {
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .countdown-timer {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .time-unit {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 1.5rem 1rem;
-            min-width: 120px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+        
+        .lesson-card {
             transition: all 0.3s ease;
         }
-
-        .time-unit:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.05);
-        }
-
-        .time-number {
-            font-size: 3rem;
-            font-weight: bold;
-            display: block;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .time-label {
-            font-size: 1rem;
-            opacity: 0.8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 500;
-        }
-
-        .features {
-            margin: 3rem 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem 1.5rem;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .feature:hover {
-            background: rgba(255, 255, 255, 0.2);
+        
+        .lesson-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
         }
-
-        .feature-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #3B82F6;
+            transition: width 0.3s ease;
         }
-
-        .feature-description {
-            font-size: 0.9rem;
-            opacity: 0.8;
-            line-height: 1.4;
-        }
-
-        .contact-info {
-            margin-top: 3rem;
-            padding: 2rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .contact-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-
-        .contact-details {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .contact-item {
-            opacity: 0.9;
-            font-size: 1rem;
-        }
-
-        .progress-bar {
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
             width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-            margin: 2rem 0;
-            overflow: hidden;
         }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
-            border-radius: 3px;
-            animation: progress 10s linear infinite;
+        
+        .video-modal {
+            backdrop-filter: blur(10px);
         }
-
-        @keyframes progress {
-            0% { width: 0%; }
-            100% { width: 100%; }
-        }
-
-        .admin-preview {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .admin-btn {
-            background: linear-gradient(135deg, #ff6b6b, #ff5252);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            font-weight: 600;
-            cursor: pointer;
+        
+        .admin-card {
             transition: all 0.3s ease;
-            font-size: 1rem;
-            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
         }
-
-        .admin-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
-        }
-
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            animation: particleFloat 15s linear infinite;
-        }
-
-        @keyframes particleFloat {
-            0% {
-                transform: translateY(100vh) translateX(0);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-10vh) translateX(100px);
-                opacity: 0;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .coming-soon-container {
-                padding: 2rem 1rem;
-            }
-
-            .logo {
-                font-size: 3rem;
-            }
-
-            .subtitle {
-                font-size: 1.2rem;
-            }
-
-            .countdown-timer {
-                gap: 1rem;
-            }
-
-            .time-unit {
-                min-width: 80px;
-                padding: 1rem 0.5rem;
-            }
-
-            .time-number {
-                font-size: 2rem;
-            }
-
-            .features {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .contact-details {
-                flex-direction: column;
-                gap: 1rem;
-            }
-        }
-
-        .launch-ready {
-            display: none;
-            animation: slideUp 0.8s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        
+        .admin-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
-<body>
-    <div class="particles" id="particles"></div>
-    
-    <div class="coming-soon-container">
-        <div class="logo">K Edu</div>
-        <div class="subtitle">Learn Through Videos</div>
-        <div class="description">
-            Get ready for Sri Lanka's most comprehensive educational platform! We're organizing thousands of YouTube videos into structured lessons across all subjects. Quality education will be just a click away.
-        </div>
-
-        <div class="countdown-container" id="countdownContainer">
-            <div class="countdown-title">Launching In:</div>
-            <div class="countdown-timer">
-                <div class="time-unit">
-                    <span class="time-number" id="days">10</span>
-                    <span class="time-label">Days</span>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-graduation-cap text-blue-600 text-3xl"></i>
+                    <h1 class="text-2xl font-bold text-gray-800">K-Edu</h1>
                 </div>
-                <div class="time-unit">
-                    <span class="time-number" id="hours">00</span>
-                    <span class="time-label">Hours</span>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="nav-link text-gray-700 hover:text-blue-600 font-medium" data-page="home">Home</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-blue-600 font-medium" data-page="categories">Categories</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-blue-600 font-medium" data-page="about">About</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-blue-600 font-medium" data-page="contact">Contact</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-blue-600 font-medium" data-page="login">Login</a>
+                </nav>
+                <button class="md:hidden text-gray-700" id="mobileMenuBtn">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <nav class="md:hidden bg-white border-t hidden" id="mobileMenu">
+            <div class="container mx-auto px-4 py-4 space-y-3">
+                <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium" data-page="home">Home</a>
+                <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium" data-page="categories">Categories</a>
+                <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium" data-page="about">About</a>
+                <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium" data-page="contact">Contact</a>
+                <a href="#" class="block text-gray-700 hover:text-blue-600 font-medium" data-page="login">Login</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 min-h-screen">
+        <!-- Home Page -->
+        <div id="homePage" class="page fade-in">
+            <section class="text-center py-16">
+                <h2 class="text-5xl font-bold text-gray-800 mb-6">Welcome to K-Edu</h2>
+                <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">Your gateway to quality education in ICT, English, Korean, Mathematics, and Media Studies</p>
+                <button class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300" onclick="showPage('categories')">
+                    Explore Courses <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </section>
+            
+            <section class="grid md:grid-cols-3 gap-8 py-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <i class="fas fa-book text-4xl text-blue-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Comprehensive Courses</h3>
+                    <p class="text-gray-600">Access a wide range of subjects taught by expert instructors</p>
                 </div>
-                <div class="time-unit">
-                    <span class="time-number" id="minutes">00</span>
-                    <span class="time-label">Minutes</span>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <i class="fas fa-video text-4xl text-green-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Video Lessons</h3>
+                    <p class="text-gray-600">Learn at your own pace with high-quality video content</p>
                 </div>
-                <div class="time-unit">
-                    <span class="time-number" id="seconds">00</span>
-                    <span class="time-label">Seconds</span>
+                <div class="bg-white p-6 rounded-lg shadow-lg text-center">
+                    <i class="fas fa-users text-4xl text-purple-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Expert Instructors</h3>
+                    <p class="text-gray-600">Learn from qualified professionals in each field</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- Categories Page -->
+        <div id="categoriesPage" class="page hidden">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8">Course Categories</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- ICT Category -->
+                <div class="category-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer" data-category="ict">
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 p-6 text-white">
+                        <i class="fas fa-laptop-code text-4xl mb-3"></i>
+                        <h3 class="text-2xl font-bold">ICT</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600">Information and Communication Technology courses covering programming, networking, and more.</p>
+                    </div>
+                </div>
+
+                <!-- English Category -->
+                <div class="category-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer" data-category="english">
+                    <div class="bg-gradient-to-r from-green-500 to-green-600 p-6 text-white">
+                        <i class="fas fa-language text-4xl mb-3"></i>
+                        <h3 class="text-2xl font-bold">English</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600">Comprehensive English language courses for all levels, from basics to advanced.</p>
+                    </div>
+                </div>
+
+                <!-- Korean Category -->
+                <div class="category-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer" data-category="korean">
+                    <div class="bg-gradient-to-r from-red-500 to-red-600 p-6 text-white">
+                        <i class="fas fa-yin-yang text-4xl mb-3"></i>
+                        <h3 class="text-2xl font-bold">Korean</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600">Learn Korean language and culture with native speakers and interactive lessons.</p>
+                    </div>
+                </div>
+
+                <!-- Maths Category -->
+                <div class="category-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer" data-category="maths">
+                    <div class="bg-gradient-to-r from-purple-500 to-purple-600 p-6 text-white">
+                        <i class="fas fa-calculator text-4xl mb-3"></i>
+                        <h3 class="text-2xl font-bold">Maths</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600">Mathematics courses from basic arithmetic to advanced calculus and statistics.</p>
+                    </div>
+                </div>
+
+                <!-- Media Studies Category -->
+                <div class="category-card bg-white rounded-lg shadow-lg overflow-hidden cursor-pointer" data-category="media">
+                    <div class="bg-gradient-to-r from-pink-500 to-pink-600 p-6 text-white">
+                        <i class="fas fa-film text-4xl mb-3"></i>
+                        <h3 class="text-2xl font-bold">Media Studies</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600">Explore digital media, film production, journalism, and communication studies.</p>
+                    </div>
                 </div>
             </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
+
+            <!-- Lessons Container -->
+            <div id="lessonsContainer" class="mt-12 hidden">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6" id="categoryTitle"></h3>
+                <div id="lessonsGrid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             </div>
         </div>
 
-        <div class="launch-ready" id="launchReady">
-            <div style="font-size: 2rem; color: #4ecdc4; margin-bottom: 1rem; font-weight: bold;">
-                🎉 We're Live! 🎉
-            </div>
-            <button class="admin-btn" onclick="enterSite()">Enter K Edu Platform</button>
-        </div>
-
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">📚</div>
-                <div class="feature-title">Organized Content</div>
-                <div class="feature-description">Videos organized by subjects, categories, and difficulty levels</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🎯</div>
-                <div class="feature-title">Quality Curated</div>
-                <div class="feature-description">Hand-picked educational videos from expert educators</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">🔍</div>
-                <div class="feature-title">Smart Search</div>
-                <div class="feature-description">Find exactly what you need with our advanced search</div>
-            </div>
-            <div class="feature">
-                <div class="feature-icon">📱</div>
-                <div class="feature-title">Mobile Ready</div>
-                <div class="feature-description">Learn anywhere, anytime on any device</div>
+        <!-- About Page -->
+        <div id="aboutPage" class="page hidden">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">About K-Edu</h2>
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <p class="text-lg text-gray-700 mb-6">
+                        K-Edu is a comprehensive online educational platform dedicated to providing high-quality learning experiences across multiple disciplines. Our mission is to make education accessible, engaging, and effective for learners of all ages and backgrounds.
+                    </p>
+                    <p class="text-lg text-gray-700 mb-6">
+                        Founded with the vision of bridging educational gaps, K-Edu offers carefully curated courses in Information and Communication Technology, English Language, Korean Language, Mathematics, and Media Studies. Each course is designed by expert educators and delivered through interactive video lessons, ensuring an immersive learning experience.
+                    </p>
+                    <p class="text-lg text-gray-700">
+                        Whether you're looking to enhance your professional skills, learn a new language, or explore creative fields, K-Edu provides the tools and resources you need to succeed in your educational journey.
+                    </p>
+                </div>
             </div>
         </div>
 
-        <div class="admin-preview">
-            <div style="font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem;">Preview Admin Features</div>
-            <div style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 1rem;">
-                Want to see what's coming? Get a sneak peek at the admin panel features.
-                <br><strong>Demo Login:</strong> Username: admin | Password: admin123
+        <!-- Contact Page -->
+        <div id="contactPage" class="page hidden">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8">Contact Us</h2>
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-4">Get in Touch</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-user text-blue-600 text-xl"></i>
+                                    <div>
+                                        <p class="font-medium">D.M.Kaawya</p>
+                                        <p class="text-gray-600">Developer & Founder</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-envelope text-blue-600 text-xl"></i>
+                                    <div>
+                                        <p class="font-medium">Email</p>
+                                        <p class="text-gray-600">info@kedu.com</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-phone text-blue-600 text-xl"></i>
+                                    <div>
+                                        <p class="font-medium">Phone</p>
+                                        <p class="text-gray-600">+94 123 456 789</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-globe text-blue-600 text-xl"></i>
+                                    <div>
+                                        <p class="font-medium">Website</p>
+                                        <p class="text-gray-600">www.kedu.com</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6">
+                                <h4 class="font-semibold mb-3">Follow Us</h4>
+                                <div class="flex space-x-4">
+                                    <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300">
+                                        <i class="fab fa-facebook-f text-2xl"></i>
+                                    </a>
+                                    <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300">
+                                        <i class="fab fa-twitter text-2xl"></i>
+                                    </a>
+                                    <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300">
+                                        <i class="fab fa-linkedin-in text-2xl"></i>
+                                    </a>
+                                    <a href="#" class="text-gray-600 hover:text-blue-600 transition duration-300">
+                                        <i class="fab fa-instagram text-2xl"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-4">Send a Message</h3>
+                            <form class="space-y-4">
+                                <input type="text" placeholder="Your Name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <input type="email" placeholder="Your Email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <textarea placeholder="Your Message" rows="5" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"></textarea>
+                                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <button class="admin-btn" onclick="showAdminPreview()">Preview Admin Panel</button>
         </div>
 
-        <div class="contact-info">
-            <div class="contact-title">Contact Us</div>
-            <div class="contact-details">
-                <div class="contact-item">📧 dmkaawya@gmail.com</div>
-                <div class="contact-item">📱 +94 077 50 48 455</div>
-                <div class="contact-item">📍 Kalutara South, Sri Lanka</div>
+        <!-- Login Page -->
+        <div id="loginPage" class="page hidden">
+            <div class="max-w-md mx-auto">
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Admin Login</h2>
+                    <form id="loginForm" class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Username</label>
+                            <input type="text" id="username" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Password</label>
+                            <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        <div id="loginError" class="text-red-600 text-sm hidden">Invalid username or password</div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                            Login
+                        </button>
+                    </form>
+                    <p class="text-center text-gray-600 mt-4">
+                        Demo credentials: admin / admin123
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminPage" class="page hidden">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800">Admin Dashboard</h2>
+                    <button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 transition duration-300">
+                        <i class="fas fa-sign-out-alt mr-2"></i>
+                        Logout
+                    </button>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="admin-card bg-white p-6 rounded-lg shadow-lg text-center">
+                        <i class="fas fa-folder text-4xl text-blue-600 mb-3"></i>
+                        <h3 class="text-xl font-semibold mb-2">Categories</h3>
+                        <p class="text-3xl font-bold text-gray-800">5</p>
+                        <button onclick="showAddCategoryForm()" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition duration-300">
+                            Add New
+                        </button>
+                    </div>
+                    
+                    <div class="admin-card bg-white p-6 rounded-lg shadow-lg text-center">
+                        <i class="fas fa-video text-4xl text-green-600 mb-3"></i>
+                        <h3 class="text-xl font-semibold mb-2">Videos</h3>
+                        <p class="text-3xl font-bold text-gray-800">15</p>
+                        <button onclick="showAddVideoForm()" class="mt-4 bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700 transition duration-300">
+                            Add New
+                        </button>
+                    </div>
+                    
+                    <div class="admin-card bg-white p-6 rounded-lg shadow-lg text-center">
+                        <i class="fas fa-users text-4xl text-purple-600 mb-3"></i>
+                        <h3 class="text-xl font-semibold mb-2">Staff</h3>
+                        <p class="text-3xl font-bold text-gray-800">8</p>
+                        <button onclick="showAddStaffForm()" class="mt-4 bg-purple-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-700 transition duration-300">
+                            Add New
+                        </button>
+                    </div>
+                    
+                    <div class="admin-card bg-white p-6 rounded-lg shadow-lg text-center">
+                        <i class="fas fa-user-shield text-4xl text-red-600 mb-3"></i>
+                        <h3 class="text-xl font-semibold mb-2">Admins</h3>
+                        <p class="text-3xl font-bold text-gray-800">3</p>
+                        <button class="mt-4 bg-red-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-700 transition duration-300">
+                            Manage
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Add Category Form -->
+                <div id="addCategoryForm" class="bg-white rounded-lg shadow-lg p-8 mb-8 hidden">
+                    <h3 class="text-2xl font-bold mb-6">Add New Category</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Category Name</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Description</label>
+                            <textarea rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Icon Class</label>
+                            <input type="text" placeholder="e.g., fas fa-laptop-code" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div class="flex space-x-4">
+                            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                                Save Category
+                            </button>
+                            <button type="button" onclick="hideAddCategoryForm()" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400 transition duration-300">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Add Video Form -->
+                <div id="addVideoForm" class="bg-white rounded-lg shadow-lg p-8 mb-8 hidden">
+                    <h3 class="text-2xl font-bold mb-6">Add New Video</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Video Title</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Description</label>
+                            <textarea rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required></textarea>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Category</label>
+                                <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                    <option>ICT</option>
+                                    <option>English</option>
+                                    <option>Korean</option>
+                                    <option>Maths</option>
+                                    <option>Media Studies</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Duration</label>
+                                <input type="text" placeholder="e.g., 45 min" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Video URL</label>
+                            <input type="url" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Access Type</label>
+                            <div class="flex space-x-4">
+                                <label class="flex items-center">
+                                    <input type="radio" name="accessType" value="free" class="mr-2">
+                                    <span>Free</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="radio" name="accessType" value="paid" class="mr-2">
+                                    <span>Paid</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Button Type</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option>Visit</option>
+                                <option>Request Access</option>
+                            </select>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition duration-300">
+                                Save Video
+                            </button>
+                            <button type="button" onclick="hideAddVideoForm()" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400 transition duration-300">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Add Staff Form -->
+                <div id="addStaffForm" class="bg-white rounded-lg shadow-lg p-8 mb-8 hidden">
+                    <h3 class="text-2xl font-bold mb-6">Add New Staff Member</h3>
+                    <form class="space-y-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">First Name</label>
+                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 font-medium mb-2">Last Name</label>
+                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Email</label>
+                            <input type="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Position</label>
+                            <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-medium mb-2">Department</label>
+                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                                <option>ICT</option>
+                                <option>English</option>
+                                <option>Korean</option>
+                                <option>Maths</option>
+                                <option>Media Studies</option>
+                                <option>Administration</option>
+                            </select>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button type="submit" class="bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-700 transition duration-300">
+                                Save Staff
+                            </button>
+                            <button type="button" onclick="hideAddStaffForm()" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-semibold hover:bg-gray-400 transition duration-300">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Video Modal -->
+    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 video-modal hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h3 id="videoTitle" class="text-2xl font-bold text-gray-800"></h3>
+                    <button onclick="closeVideoModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                <div class="aspect-w-16 aspect-h-9 mb-4">
+                    <div class="bg-gray-900 rounded-lg flex items-center justify-center" style="height: 400px;">
+                        <i class="fas fa-play-circle text-white text-6xl"></i>
+                    </div>
+                </div>
+                <p id="videoDescription" class="text-gray-600 mb-4"></p>
+                <div class="flex flex-wrap items-center gap-4 mb-6">
+                    <span id="videoType" class="px-3 py-1 rounded-full text-sm font-semibold"></span>
+                    <span id="videoDuration" class="text-gray-600">
+                        <i class="fas fa-clock mr-1"></i>
+                        <span></span>
+                    </span>
+                </div>
+                <button id="visitButton" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+                    <i class="fas fa-external-link-alt mr-2"></i>
+                    Visit
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Hidden Main Site -->
-    <div id="mainSite" style="display: none;">
-        <!-- This will contain the full K Edu platform -->
-        <div style="text-align: center; padding: 50px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; min-height: 100vh;">
-            <h1 style="font-size: 3rem; margin-bottom: 2rem;">Welcome to K Edu!</h1>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Your comprehensive learning platform is now live!</p>
-            <div style="background: rgba(255,255,255,0.1); padding: 2rem; border-radius: 20px; max-width: 600px; margin: 0 auto;">
-                <h3>Platform Features:</h3>
-                <ul style="text-align: left; margin-top: 1rem; line-height: 1.8;">
-                    <li>📚 Organized video categories and lessons</li>
-                    <li>🔍 Advanced search functionality</li>
-                    <li>👨‍💼 Admin panel for content management</li>
-                    <li>📱 Fully responsive design</li>
-                    <li>🎥 Embedded YouTube videos</li>
-                    <li>🔐 Secure admin authentication</li>
-                </ul>
-                <div style="margin-top: 2rem;">
-                    <button onclick="showLoginDemo()" style="background: #ff6b6b; color: white; border: none; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; font-size: 1rem; margin-right: 1rem;">Admin Demo</button>
-                    <button onclick="goBack()" style="background: transparent; color: white; border: 2px solid white; padding: 1rem 2rem; border-radius: 25px; cursor: pointer; font-size: 1rem;">Back to Coming Soon</button>
-                </div>
-            </div>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 mt-16">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">Developed by D.M.Kaawya</p>
+            <p>© 2025 K-Edu. All rights reserved.</p>
         </div>
-    </div>
+    </footer>
 
     <script>
-        // Set launch date to 10 days from now
-        const launchDate = new Date();
-        launchDate.setDate(launchDate.getDate() + 10);
-        
-        let countdownFinished = false;
+        // Sample lesson data
+        const lessonsData = {
+            ict: [
+                { id: 1, title: "Introduction to Programming", description: "Learn the basics of programming with Python", type: "free", duration: "45 min", videoUrl: "#" },
+                { id: 2, title: "Web Development Fundamentals", description: "HTML, CSS, and JavaScript basics", type: "paid", duration: "1h 30min", videoUrl: "#" },
+                { id: 3, title: "Database Design", description: "Learn SQL and database concepts", type: "free", duration: "1h", videoUrl: "#" }
+            ],
+            english: [
+                { id: 4, title: "English Grammar Basics", description: "Master essential grammar rules", type: "free", duration: "30 min", videoUrl: "#" },
+                { id: 5, title: "Business English", description: "Professional communication skills", type: "paid", duration: "2h", videoUrl: "#" },
+                { id: 6, title: "IELTS Preparation", description: "Comprehensive IELTS exam guide", type: "paid", duration: "3h", videoUrl: "#" }
+            ],
+            korean: [
+                { id: 7, title: "Korean Alphabet (Hangul)", description: "Learn to read and write Korean", type: "free", duration: "45 min", videoUrl: "#" },
+                { id: 8, title: "Basic Korean Phrases", description: "Essential phrases for beginners", type: "free", duration: "1h", videoUrl: "#" },
+                { id: 9, title: "Korean Culture", description: "Understanding Korean traditions", type: "paid", duration: "1h 15min", videoUrl: "#" }
+            ],
+            maths: [
+                { id: 10, title: "Algebra Fundamentals", description: "Master algebraic concepts", type: "free", duration: "1h", videoUrl: "#" },
+                { id: 11, title: "Calculus Introduction", description: "Limits, derivatives, and integrals", type: "paid", duration: "2h 30min", videoUrl: "#" },
+                { id: 12, title: "Statistics for Beginners", description: "Basic statistical concepts", type: "free", duration: "1h 15min", videoUrl: "#" }
+            ],
+            media: [
+                { id: 13, title: "Digital Photography", description: "Master your camera skills", type: "paid", duration: "2h", videoUrl: "#" },
+                { id: 14, title: "Video Editing Basics", description: "Learn professional editing techniques", type: "paid", duration: "1h 45min", videoUrl: "#" },
+                { id: 15, title: "Social Media Marketing", description: "Effective social media strategies", type: "free", duration: "1h", videoUrl: "#" }
+            ]
+        };
 
-        // Create particles
-        function createParticles() {
-            const particlesContainer = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // Update countdown
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = launchDate.getTime() - now;
-
-            if (distance < 0 && !countdownFinished) {
-                // Countdown finished
-                countdownFinished = true;
-                document.getElementById('countdownContainer').style.display = 'none';
-                document.getElementById('launchReady').style.display = 'block';
-                return;
-            }
-
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-            document.getElementById('days').textContent = days.toString().padStart(2, '0');
-            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-
-            // Update progress bar
-            const totalTime = 10 * 24 * 60 * 60 * 1000; // 10 days in milliseconds
-            const elapsed = totalTime - distance;
-            const progress = (elapsed / totalTime) * 100;
-            document.getElementById('progressFill').style.width = Math.max(0, Math.min(100, progress)) + '%';
-        }
-
-        // Enter main site
-        function enterSite() {
-            document.querySelector('.coming-soon-container').style.display = 'none';
-            document.getElementById('particles').style.display = 'none';
-            document.getElementById('mainSite').style.display = 'block';
-        }
-
-        // Show admin preview
-        function showAdminPreview() {
-            alert('Admin Preview:\n\n✅ Add/Edit Categories\n✅ Create Lesson Plans\n✅ Upload Video Content\n✅ Manage User Access\n✅ Analytics Dashboard\n✅ Content Moderation\n\nFull admin panel will be available after launch!\n\nDemo Credentials:\nUsername: admin\nPassword: admin123');
-        }
-
-        // Show login demo
-        function showLoginDemo() {
-            const username = prompt('Enter username (try: admin)');
-            const password = prompt('Enter password (try: admin123)');
+        // Navigation functionality
+        function showPage(pageName) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.add('hidden'));
             
-            if (username === 'admin' && password === 'admin123') {
-                alert('Login Successful! 🎉\n\nAdmin features unlocked:\n• Content Management\n• User Analytics\n• System Settings\n• Course Creation\n\nFull platform launching soon!');
-            } else {
-                alert('Invalid credentials. Try:\nUsername: admin\nPassword: admin123');
+            const targetPage = document.getElementById(pageName + 'Page');
+            if (targetPage) {
+                targetPage.classList.remove('hidden');
+                targetPage.classList.add('fade-in');
             }
-        }
-
-        // Go back to coming soon
-        function goBack() {
-            document.querySelector('.coming-soon-container').style.display = 'block';
-            document.getElementById('particles').style.display = 'block';
-            document.getElementById('mainSite').style.display = 'none';
-        }
-
-        // Fast countdown for demo (uncomment to test)
-        function fastCountdown() {
-            const fastLaunchDate = new Date();
-            fastLaunchDate.setSeconds(fastLaunchDate.getSeconds() + 10); // 10 seconds for demo
             
-            const fastTimer = setInterval(() => {
-                const now = new Date().getTime();
-                const distance = fastLaunchDate.getTime() - now;
-                
-                if (distance < 0) {
-                    clearInterval(fastTimer);
-                    countdownFinished = true;
-                    document.getElementById('countdownContainer').style.display = 'none';
-                    document.getElementById('launchReady').style.display = 'block';
-                    return;
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === pageName) {
+                    link.classList.add('active');
                 }
-                
-                const seconds = Math.floor(distance / 1000);
-                document.getElementById('days').textContent = '00';
-                document.getElementById('hours').textContent = '00';
-                document.getElementById('minutes').textContent = '00';
-                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
-            }, 100);
+            });
+            
+            // Close mobile menu
+            document.getElementById('mobileMenu').classList.add('hidden');
         }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            createParticles();
-            updateCountdown();
-            
-            // Update countdown every second
-            setInterval(updateCountdown, 1000);
-            
-            // Uncomment next line for quick demo (10 seconds countdown)
-            // setTimeout(fastCountdown, 2000);
-        });
-
-        // Add some interactive effects
-        document.addEventListener('mousemove', function(e) {
-            const particles = document.querySelectorAll('.particle');
-            particles.forEach(particle => {
-                const rect = particle.getBoundingClientRect();
-                const distance = Math.sqrt(
-                    Math.pow(e.clientX - rect.left, 2) + 
-                    Math.pow(e.clientY - rect.top, 2)
-                );
-                
-                if (distance < 100) {
-                    particle.style.opacity = '1';
-                    particle.style.transform = `scale(1.5)`;
-                } else {
-                    particle.style.opacity = '0.5';
-                    particle.style.transform = `scale(1)`;
-                }
+        // Category click handler
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const category = this.dataset.category;
+                showLessons(category);
             });
         });
 
-        // Easter egg - type "launch" to skip countdown
-        let easterEggSequence = '';
-        document.addEventListener('keypress', function(e) {
-            easterEggSequence += e.key;
-            if (easterEggSequence.includes('launch')) {
-                countdownFinished = true;
-                document.getElementById('countdownContainer').style.display = 'none';
-                document.getElementById('launchReady').style.display = 'block';
-                easterEggSequence = '';
-                
-                // Add special effect
-                const container = document.querySelector('.coming-soon-container');
-                container.style.animation = 'none';
-                container.style.transform = 'scale(1.05)';
-                setTimeout(() => {
-                    container.style.transform = 'scale(1)';
-                    container.style.animation = 'float 6s ease-in-out infinite';
-                }, 500);
-            }
+        // Show lessons for category
+        function showLessons(category) {
+            const lessons = lessonsData[category];
+            const categoryNames = {
+                ict: 'ICT',
+                english: 'English',
+                korean: 'Korean',
+                maths: 'Mathematics',
+                media: 'Media Studies'
+            };
             
-            // Reset sequence if too long
-            if (easterEggSequence.length > 10) {
-                easterEggSequence = '';
+            document.getElementById('categoryTitle').textContent = categoryNames[category] + ' Lessons';
+            const lessonsGrid = document.getElementById('lessonsGrid');
+            lessonsGrid.innerHTML = '';
+            
+            lessons.forEach(lesson => {
+                const lessonCard = document.createElement('div');
+                lessonCard.className = 'lesson-card bg-white rounded-lg shadow-lg p-6 cursor-pointer';
+                lessonCard.innerHTML = `
+                    <h4 class="text-xl font-semibold mb-2">${lesson.title}</h4>
+                    <p class="text-gray-600 mb-4">${lesson.description}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="px-3 py-1 rounded-full text-sm font-semibold ${lesson.type === 'free' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
+                            ${lesson.type === 'free' ? 'Free' : 'Paid'}
+                        </span>
+                        <span class="text-gray-600 text-sm">
+                            <i class="fas fa-clock mr-1"></i>
+                            ${lesson.duration}
+                        </span>
+                    </div>
+                `;
+                lessonCard.addEventListener('click', () => openVideoModal(lesson));
+                lessonsGrid.appendChild(lessonCard);
+            });
+            
+            document.getElementById('lessonsContainer').classList.remove('hidden');
+            document.getElementById('lessonsContainer').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Video modal functions
+        function openVideoModal(lesson) {
+            document.getElementById('videoTitle').textContent = lesson.title;
+            document.getElementById('videoDescription').textContent = lesson.description;
+            document.getElementById('videoType').textContent = lesson.type === 'free' ? 'Free' : 'Paid';
+            document.getElementById('videoType').className = `px-3 py-1 rounded-full text-sm font-semibold ${lesson.type === 'free' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}`;
+            document.getElementById('videoDuration').querySelector('span').textContent = lesson.duration;
+            document.getElementById('visitButton').onclick = () => window.open(lesson.videoUrl, '_blank');
+            document.getElementById('videoModal').classList.remove('hidden');
+        }
+
+        function closeVideoModal() {
+            document.getElementById('videoModal').classList.add('hidden');
+        }
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        // Navigation link handlers
+        document.querySelectorAll('[data-page]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                showPage(this.dataset.page);
+            });
+        });
+
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple demo authentication
+            if (username === 'admin' && password === 'admin123') {
+                document.getElementById('loginError').classList.add('hidden');
+                showPage('admin');
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
             }
         });
+
+        // Logout functionality
+        function logout() {
+            showPage('home');
+        }
+
+        // Admin form functions
+        function showAddCategoryForm() {
+            document.getElementById('addCategoryForm').classList.remove('hidden');
+            document.getElementById('addVideoForm').classList.add('hidden');
+            document.getElementById('addStaffForm').classList.add('hidden');
+        }
+
+        function hideAddCategoryForm() {
+            document.getElementById('addCategoryForm').classList.add('hidden');
+        }
+
+        function showAddVideoForm() {
+            document.getElementById('addVideoForm').classList.remove('hidden');
+            document.getElementById('addCategoryForm').classList.add('hidden');
+            document.getElementById('addStaffForm').classList.add('hidden');
+        }
+
+        function hideAddVideoForm() {
+            document.getElementById('addVideoForm').classList.add('hidden');
+        }
+
+        function showAddStaffForm() {
+            document.getElementById('addStaffForm').classList.remove('hidden');
+            document.getElementById('addCategoryForm').classList.add('hidden');
+            document.getElementById('addVideoForm').classList.add('hidden');
+        }
+
+        function hideAddStaffForm() {
+            document.getElementById('addStaffForm').classList.add('hidden');
+        }
+
+        // Close modal on outside click
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideoModal();
+            }
+        });
+
+        // Initialize home page
+        showPage('home');
     </script>
 </body>
 </html>

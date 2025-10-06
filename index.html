@@ -1,714 +1,962 @@
-import React, { useState } from 'react';
-import { Search, PlayCircle, Eye, Calendar, ChevronLeft, ChevronRight, LogOut, User, Plus, Trash2, Users, Settings, X, ExternalLink, Menu } from 'lucide-react';
-
-const USERS = {
-  admin: { password: 'admin', role: 'admin', name: 'Administrator' },
-  admin1: { password: 'admin1', role: 'admin', name: 'Admin User 1' },
-  admin2: { password: 'admin2', role: 'admin', name: 'Admin User 2' },
-  student3: { password: 'student3', role: 'student', name: 'Student 3' },
-  student4: { password: 'student4', role: 'student', name: 'Student 4' },
-  student5: { password: 'student5', role: 'student', name: 'Student 5' },
-  student6: { password: 'student6', role: 'student', name: 'Student 6' },
-  student7: { password: 'student7', role: 'student', name: 'Student 7' },
-  student8: { password: 'student8', role: 'student', name: 'Student 8' },
-  student9: { password: 'student9', role: 'student', name: 'Student 9' }
-};
-
-const generateVideos = () => {
-  const videos = [];
-  let id = 1;
-
-  const months2024 = ['June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  months2024.forEach((month, idx) => {
-    for (let i = 0; i < 8; i++) {
-      videos.push({
-        id: id++,
-        title: `${month} 2024 - Lesson ${i + 1}`,
-        month,
-        year: 2024,
-        monthNum: idx + 6,
-        description: `Educational content for ${month} 2024`,
-        duration: `${Math.floor(Math.random() * 20 + 10)}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
-        views: Math.floor(Math.random() * 5000 + 1000),
-        source: i % 2 === 0 ? 'mediamayura' : 'youtube',
-        url: i % 2 === 0 ? 'https://www.mediamayura.lk/student/home.php' : 'https://youtube.com/watch?v=dQw4w9WgXcQ',
-        thumbnail: ['🎓', '📚', '💻', '🔬', '🎨', '🌍', '📊', '🎯'][i % 8],
-        uploadedDate: `2024-${String(idx + 6).padStart(2, '0')}-${String(Math.floor(Math.random() * 28 + 1)).padStart(2, '0')}`
-      });
-    }
-  });
-
-  const months2025 = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  months2025.forEach((month, idx) => {
-    for (let i = 0; i < 12; i++) {
-      videos.push({
-        id: id++,
-        title: `${month} 2025 - Tutorial ${i + 1}`,
-        month,
-        year: 2025,
-        monthNum: idx + 1,
-        description: `Comprehensive guide for ${month} 2025`,
-        duration: `${Math.floor(Math.random() * 25 + 15)}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
-        views: Math.floor(Math.random() * 8000 + 2000),
-        source: i % 3 === 0 ? 'mediamayura' : 'youtube',
-        url: i % 3 === 0 ? 'https://www.mediamayura.lk/student/home.php' : 'https://youtube.com/watch?v=dQw4w9WgXcQ',
-        thumbnail: ['🎓', '📚', '💻', '🔬', '🎨', '🌍', '📊', '🎯', '🧮', '🎭', '🎪', '🎬'][i % 12],
-        uploadedDate: `2025-${String(idx + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28 + 1)).padStart(2, '0')}`
-      });
-    }
-  });
-
-  const months2026 = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'];
-  months2026.forEach((month, idx) => {
-    for (let i = 0; i < 8; i++) {
-      videos.push({
-        id: id++,
-        title: `${month} 2026 - Class ${i + 1}`,
-        month,
-        year: 2026,
-        monthNum: idx + 1,
-        description: `Learning materials for ${month} 2026`,
-        duration: `${Math.floor(Math.random() * 30 + 10)}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
-        views: Math.floor(Math.random() * 6000 + 1500),
-        source: i % 2 === 0 ? 'mediamayura' : 'youtube',
-        url: i % 2 === 0 ? 'https://www.mediamayura.lk/student/home.php' : 'https://youtube.com/watch?v=dQw4w9WgXcQ',
-        thumbnail: ['🎓', '📚', '💻', '🔬', '🎨', '🌍', '📊', '🎯'][i % 8],
-        uploadedDate: `2026-${String(idx + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28 + 1)).padStart(2, '0')}`
-      });
-    }
-  });
-
-  return videos;
-};
-
-export default function KeduPortal() {
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loginData, setLoginData] = useState({ username: '', password: '' });
-  const [loginError, setLoginError] = useState('');
-  
-  const [videos, setVideos] = useState(() => generateVideos());
-  const [selectedYear, setSelectedYear] = useState(2025);
-  const [viewAllMonth, setViewAllMonth] = useState(null);
-  const [selectedVideo, setSelectedVideo] = useState(null);
-  const [videoIndex, setVideoIndex] = useState(0);
-  
-  const [showAddVideo, setShowAddVideo] = useState(false);
-  const [showUserManagement, setShowUserManagement] = useState(false);
-  const [newVideo, setNewVideo] = useState({
-    title: '',
-    month: 'January',
-    year: 2025,
-    description: '',
-    url: '',
-    source: 'youtube'
-  });
-
-  const [searchTerm, setSearchTerm] = useState('');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const handleLogin = () => {
-    const user = USERS[loginData.username];
-    if (user && user.password === loginData.password) {
-      setCurrentUser({ username: loginData.username, ...user });
-      setLoginError('');
-      setLoginData({ username: '', password: '' });
-    } else {
-      setLoginError('Invalid username or password');
-    }
-  };
-
-  const handleLogout = () => {
-    setCurrentUser(null);
-    setSelectedYear(2025);
-    setSelectedVideo(null);
-  };
-
-  const handleAddVideo = () => {
-    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const newVid = {
-      id: Math.max(...videos.map(v => v.id)) + 1,
-      ...newVideo,
-      monthNum: monthNames.indexOf(newVideo.month) + 1,
-      duration: '15:00',
-      views: 0,
-      thumbnail: '🎬',
-      uploadedDate: new Date().toISOString().split('T')[0]
-    };
-    setVideos([...videos, newVid]);
-    setShowAddVideo(false);
-    setNewVideo({
-      title: '',
-      month: 'January',
-      year: 2025,
-      description: '',
-      url: '',
-      source: 'youtube'
-    });
-  };
-
-  const handleDeleteVideo = (id) => {
-    if (window.confirm('Are you sure you want to delete this video?')) {
-      setVideos(videos.filter(v => v.id !== id));
-      setSelectedVideo(null);
-    }
-  };
-
-  const getVideosByYear = (year) => {
-    return videos.filter(v => v.year === year);
-  };
-
-  const getVideosByMonth = (year, month) => {
-    return videos.filter(v => v.year === year && v.month === month);
-  };
-
-  const getMonthsForYear = (year) => {
-    const vids = getVideosByYear(year);
-    const months = [...new Set(vids.map(v => v.month))];
-    return months.sort((a, b) => {
-      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-      return monthNames.indexOf(a) - monthNames.indexOf(b);
-    });
-  };
-
-  const openVideoModal = (video, monthVideos) => {
-    setSelectedVideo(video);
-    setVideoIndex(monthVideos.findIndex(v => v.id === video.id));
-  };
-
-  const navigateVideo = (direction, monthVideos) => {
-    const newIndex = videoIndex + direction;
-    if (newIndex >= 0 && newIndex < monthVideos.length) {
-      setVideoIndex(newIndex);
-      setSelectedVideo(monthVideos[newIndex]);
-    }
-  };
-
-  if (!currentUser) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-4">
-        <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
-          <div className="text-center mb-8">
-            <div className="text-6xl mb-4">📚</div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome to Kedu</h1>
-            <p className="text-gray-600">Class Portal & Video Management</p>
-          </div>
-
-          {loginError && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
-              {loginError}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kedu - Class Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .video-card {
+            transition: all 0.3s ease;
+        }
+        
+        .video-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .nav-item {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #667eea;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-item:hover::after,
+        .nav-item.active::after {
+            width: 100%;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .hidden-section {
+            display: none;
+        }
+        
+        .active-section {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Login Page -->
+    <div id="loginPage" class="min-h-screen flex items-center justify-center gradient-bg">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md fade-in">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-gray-800 mb-2">Kedu</h1>
+                <p class="text-gray-600">Class Portal</p>
             </div>
-          )}
-
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Username</label>
-              <input
-                type="text"
-                value={loginData.username}
-                onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
-                onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="Enter username"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
-              <input
-                type="password"
-                value={loginData.password}
-                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
-                onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                placeholder="Enter password"
-              />
-            </div>
-            <button
-              onClick={handleLogin}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg font-semibold transition"
-            >
-              Login
-            </button>
-          </div>
-
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-            <p className="text-xs text-gray-600 mb-2 font-semibold">Demo Accounts:</p>
-            <div className="space-y-1 text-xs text-gray-600">
-              <p>Admin: admin / admin</p>
-              <p>Student: student3 / student3</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const months = getMonthsForYear(selectedYear);
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-3">
-              <div className="text-3xl">📚</div>
-              <h1 className="text-2xl font-bold">Kedu Portal</h1>
-            </div>
-
-            <div className="hidden md:flex items-center space-x-6">
-              <div className="flex items-center space-x-2 bg-white/20 px-4 py-2 rounded-lg">
-                <User size={18} />
-                <span className="font-semibold">{currentUser.name}</span>
-                {currentUser.role === 'admin' && (
-                  <span className="bg-yellow-400 text-indigo-900 px-2 py-0.5 rounded text-xs font-bold">ADMIN</span>
-                )}
-              </div>
-              <button
-                onClick={handleLogout}
-                className="flex items-center space-x-2 hover:bg-white/10 px-4 py-2 rounded-lg transition"
-              >
-                <LogOut size={18} />
-                <span>Logout</span>
-              </button>
-            </div>
-
-            <button
-              className="md:hidden"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-
-          {mobileMenuOpen && (
-            <div className="md:hidden py-4 space-y-2">
-              <div className="bg-white/20 px-4 py-2 rounded-lg">
-                <p className="font-semibold">{currentUser.name}</p>
-                {currentUser.role === 'admin' && (
-                  <span className="bg-yellow-400 text-indigo-900 px-2 py-0.5 rounded text-xs font-bold">ADMIN</span>
-                )}
-              </div>
-              <button
-                onClick={() => {
-                  handleLogout();
-                  setMobileMenuOpen(false);
-                }}
-                className="flex items-center space-x-2 w-full px-4 py-2 hover:bg-white/10 rounded"
-              >
-                <LogOut size={18} />
-                <span>Logout</span>
-              </button>
-            </div>
-          )}
-        </div>
-      </nav>
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {currentUser.role === 'admin' && (
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
-            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center space-x-2">
-              <Settings size={24} className="text-indigo-600" />
-              <span>Admin Controls</span>
-            </h3>
-            <div className="flex flex-wrap gap-3">
-              <button
-                onClick={() => setShowAddVideo(true)}
-                className="flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-semibold transition"
-              >
-                <Plus size={18} />
-                <span>Add Video</span>
-              </button>
-              <button
-                onClick={() => setShowUserManagement(true)}
-                className="flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-semibold transition"
-              >
-                <Users size={18} />
-                <span>Manage Users</span>
-              </button>
-            </div>
-          </div>
-        )}
-
-        <div className="grid lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-lg p-4 sticky top-24">
-              <h3 className="text-lg font-bold text-gray-800 mb-4">Select Year</h3>
-              <div className="space-y-2">
-                {[2024, 2025, 2026].map(year => {
-                  const videoCount = getVideosByYear(year).length;
-                  return (
-                    <button
-                      key={year}
-                      onClick={() => {
-                        setSelectedYear(year);
-                        setViewAllMonth(null);
-                      }}
-                      className={`w-full text-left px-4 py-3 rounded-lg font-semibold transition ${
-                        selectedYear === year
-                          ? 'bg-indigo-600 text-white'
-                          : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
-                      }`}
-                    >
-                      <div className="flex justify-between items-center">
-                        <span className="text-lg">{year}</span>
-                        <span className={`text-sm ${selectedYear === year ? 'text-white/80' : 'text-gray-500'}`}>
-                          {videoCount} videos
-                        </span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          <div className="lg:col-span-3 space-y-6">
-            <div className="flex items-center justify-between">
-              <h2 className="text-3xl font-bold text-gray-800">{selectedYear} Videos</h2>
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
-                <input
-                  type="text"
-                  placeholder="Search videos..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                />
-              </div>
-            </div>
-
-            {months.length === 0 ? (
-              <div className="bg-gray-50 rounded-xl p-12 text-center">
-                <div className="text-6xl mb-4">📹</div>
-                <p className="text-gray-600">No videos available for {selectedYear}</p>
-              </div>
-            ) : (
-              <div className="space-y-6">
-                {months.map(month => {
-                  const monthVideos = getVideosByMonth(selectedYear, month);
-                  const displayVideos = viewAllMonth === month ? monthVideos : monthVideos.slice(0, 5);
-                  const hasMore = monthVideos.length > 5;
-
-                  return (
-                    <div key={month} className="bg-white rounded-xl shadow-lg overflow-hidden">
-                      <div className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white p-4 flex justify-between items-center">
-                        <div className="flex items-center space-x-3">
-                          <Calendar size={24} />
-                          <h3 className="text-xl font-bold">{month} {selectedYear}</h3>
-                        </div>
-                        <span className="bg-white/20 px-4 py-1 rounded-full font-semibold">
-                          {monthVideos.length} videos
-                        </span>
-                      </div>
-
-                      <div className="p-4">
-                        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
-                          {displayVideos.map(video => (
-                            <div
-                              key={video.id}
-                              onClick={() => openVideoModal(video, monthVideos)}
-                              className="bg-gray-50 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition group"
-                            >
-                              <div className="bg-gradient-to-br from-indigo-400 to-purple-500 h-32 flex items-center justify-center text-5xl group-hover:scale-105 transition">
-                                {video.thumbnail}
-                              </div>
-                              <div className="p-3 space-y-2">
-                                <h4 className="font-semibold text-gray-800 text-sm line-clamp-2">{video.title}</h4>
-                                <div className="flex items-center justify-between text-xs text-gray-600">
-                                  <span className="flex items-center space-x-1">
-                                    <PlayCircle size={14} />
-                                    <span>{video.duration}</span>
-                                  </span>
-                                  <span className="flex items-center space-x-1">
-                                    <Eye size={14} />
-                                    <span>{video.views}</span>
-                                  </span>
-                                </div>
-                                <div className="flex items-center space-x-1 text-xs">
-                                  {video.source === 'youtube' ? (
-                                    <span className="bg-red-500 text-white px-2 py-0.5 rounded">YouTube</span>
-                                  ) : (
-                                    <span className="bg-blue-500 text-white px-2 py-0.5 rounded">Media Mayura</span>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-
-                        {hasMore && (
-                          <button
-                            onClick={() => setViewAllMonth(viewAllMonth === month ? null : month)}
-                            className="mt-4 w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-600 py-2 rounded-lg font-semibold transition"
-                          >
-                            {viewAllMonth === month ? 'Show Less' : `View All (${monthVideos.length})`}
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </div>
-      </main>
-
-      {selectedVideo && (
-        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-4">
+            
+            <form id="loginForm" class="space-y-6">
                 <div>
-                  <h3 className="text-2xl font-bold text-gray-800">{selectedVideo.title}</h3>
-                  <p className="text-gray-600">{selectedVideo.month} {selectedVideo.year}</p>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                    <input type="text" id="username" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition" placeholder="Enter username" required>
                 </div>
-                <button
-                  onClick={() => setSelectedVideo(null)}
-                  className="text-gray-500 hover:text-gray-700"
-                >
-                  <X size={28} />
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                    <input type="password" id="password" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition" placeholder="Enter password" required>
+                </div>
+                
+                <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition transform hover:scale-105">
+                    Login
                 </button>
-              </div>
-
-              <div className="bg-gray-900 rounded-lg overflow-hidden mb-4">
-                {selectedVideo.source === 'youtube' ? (
-                  <div className="aspect-video bg-gradient-to-br from-red-400 to-pink-500 flex items-center justify-center">
-                    <div className="text-center text-white space-y-4">
-                      <div className="text-8xl">▶️</div>
-                      <p className="text-xl font-semibold">YouTube Video Player</p>
-                      <a
-                        href={selectedVideo.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center space-x-2 bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg font-semibold transition"
-                      >
-                        <ExternalLink size={20} />
-                        <span>Watch on YouTube</span>
-                      </a>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="aspect-video bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
-                    <div className="text-center text-white space-y-4">
-                      <div className="text-8xl">🎓</div>
-                      <p className="text-xl font-semibold">Media Mayura Video Player</p>
-                      <a
-                        href={selectedVideo.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition"
-                      >
-                        <ExternalLink size={20} />
-                        <span>Open in Media Mayura</span>
-                      </a>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4 text-sm text-gray-600">
-                    <span className="flex items-center space-x-1">
-                      <PlayCircle size={16} />
-                      <span>{selectedVideo.duration}</span>
-                    </span>
-                    <span className="flex items-center space-x-1">
-                      <Eye size={16} />
-                      <span>{selectedVideo.views} views</span>
-                    </span>
-                    <span className="flex items-center space-x-1">
-                      <Calendar size={16} />
-                      <span>{selectedVideo.uploadedDate}</span>
-                    </span>
-                  </div>
-                  {currentUser.role === 'admin' && (
-                    <button
-                      onClick={() => handleDeleteVideo(selectedVideo.id)}
-                      className="flex items-center space-x-2 text-red-600 hover:bg-red-50 px-3 py-1 rounded transition"
-                    >
-                      <Trash2 size={16} />
-                      <span>Delete</span>
-                    </button>
-                  )}
+                
+                <div id="loginError" class="text-red-500 text-sm text-center hidden">
+                    Invalid username or password
                 </div>
-
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <h4 className="font-semibold text-gray-800 mb-2">Description</h4>
-                  <p className="text-gray-600">{selectedVideo.description}</p>
-                </div>
-
-                <div className="flex justify-between items-center pt-4 border-t">
-                  <button
-                    onClick={() => navigateVideo(-1, getVideosByMonth(selectedVideo.year, selectedVideo.month))}
-                    disabled={videoIndex === 0}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-semibold transition ${
-                      videoIndex === 0
-                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                        : 'bg-indigo-600 hover:bg-indigo-700 text-white'
-                    }`}
-                  >
-                    <ChevronLeft size={20} />
-                    <span>Previous</span>
-                  </button>
-
-                  <span className="text-gray-600">
-                    Video {videoIndex + 1} of {getVideosByMonth(selectedVideo.year, selectedVideo.month).length}
-                  </span>
-
-                  <button
-                    onClick={() => navigateVideo(1, getVideosByMonth(selectedVideo.year, selectedVideo.month))}
-                    disabled={videoIndex === getVideosByMonth(selectedVideo.year, selectedVideo.month).length - 1}
-                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-semibold transition ${
-                      videoIndex === getVideosByMonth(selectedVideo.year, selectedVideo.month).length - 1
-                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                        : 'bg-indigo-600 hover:bg-indigo-700 text-white'
-                    }`}
-                  >
-                    <span>Next</span>
-                    <ChevronRight size={20} />
-                  </button>
-                </div>
-              </div>
+            </form>
+            
+            <div class="mt-6 text-center text-sm text-gray-600">
+                <p>Use any of these credentials:</p>
+                <p class="mt-2">admin/admin, admin1/admin1, ..., admin9/admin9</p>
             </div>
-          </div>
         </div>
-      )}
-
-      {showAddVideo && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-8 max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-gray-800">Add New Video</h3>
-              <button onClick={() => setShowAddVideo(false)} className="text-gray-500 hover:text-gray-700">
-                <X size={24} />
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Title</label>
-                <input
-                  type="text"
-                  value={newVideo.title}
-                  onChange={(e) => setNewVideo({ ...newVideo, title: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="Enter video title"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Video URL</label>
-                <input
-                  type="text"
-                  value={newVideo.url}
-                  onChange={(e) => setNewVideo({ ...newVideo, url: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  placeholder="https://youtube.com/watch?v=..."
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Month</label>
-                  <select
-                    value={newVideo.month}
-                    onChange={(e) => setNewVideo({ ...newVideo, month: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  >
-                    {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(m => (
-                      <option key={m} value={m}>{m}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Year</label>
-                  <select
-                    value={newVideo.year}
-                    onChange={(e) => setNewVideo({ ...newVideo, year: parseInt(e.target.value) })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  >
-                    <option value={2024}>2024</option>
-                    <option value={2025}>2025</option>
-                    <option value={2026}>2026</option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Source</label>
-                <div className="flex gap-4">
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      value="youtube"
-                      checked={newVideo.source === 'youtube'}
-                      onChange={(e) => setNewVideo({ ...newVideo, source: e.target.value })}
-                      className="w-4 h-4 text-indigo-600"
-                    />
-                    <span className="text-gray-700">YouTube</span>
-                  </label>
-                  <label className="flex items-center space-x-2 cursor-pointer">
-                    <input
-                      type="radio"
-                      value="mediamayura"
-                      checked={newVideo.source === 'mediamayura'}
-                      onChange={(e) => setNewVideo({ ...newVideo, source: e.target.value })}
-                      className="w-4 h-4 text-indigo-600"
-                    />
-                    <span className="text-gray-700">Media Mayura</span>
-                  </label>
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
-                <textarea
-                  value={newVideo.description}
-                  onChange={(e) => setNewVideo({ ...newVideo, description: e.target.value })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                  rows={4}
-                  placeholder="Enter video description"
-                />
-              </div>
-              <button
-                onClick={handleAddVideo}
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg font-semibold transition"
-              >
-                Add Video
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showUserManagement && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full p-8 max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h3 className="text-2xl font-bold text-gray-800">User Management</h3>
-              <button onClick={() => setShowUserManagement(false)} className="text-gray-500 hover:text-gray-700">
-                <X size={24} />
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              {Object.entries(USERS).map(([username, userData]) => (
-                <div key={username} className="bg-gray-50 rounded-lg p-4 flex justify-between items-center">
-                  <div>
-                    <h4 className="font-semibold text-gray-800">{userData.name}</h4>
-                    <p className="text-sm text-gray-600">Username: {username}</p>
-                    <span className={`inline-block mt-1 text-xs px-2 py-1 rounded ${
-                      userData.role === 'admin' ? 'bg-yellow-400 text-indigo-900' : 'bg-blue-100 text-blue-800'
-                    }`}>
-                      {userData.role.toUpperCase()}
-                    </span>
-                  </div>
-                  <button className="text-indigo-600 hover:bg-indigo-50 px-3 py-1 rounded transition text-sm">
-                    Reset Password
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
     </div>
-  );
-}
+
+    <!-- Main Application -->
+    <div id="mainApp" class="hidden">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-lg sticky top-0 z-50">
+            <div class="container mx-auto px-4">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center space-x-4">
+                        <h1 class="text-2xl font-bold text-purple-600">Kedu</h1>
+                        <span class="text-gray-600 hidden md:block">Class Portal</span>
+                    </div>
+                    
+                    <div class="flex items-center space-x-6">
+                        <a href="#" class="nav-item text-gray-700 hover:text-purple-600 font-medium" onclick="showSection('home')">Home</a>
+                        <a href="#" class="nav-item text-gray-700 hover:text-purple-600 font-medium" onclick="showSection('classes')">Classes</a>
+                        <a href="#" class="nav-item text-gray-700 hover:text-purple-600 font-medium" onclick="showSection('courses')">Courses</a>
+                        <a href="#" class="nav-item text-gray-700 hover:text-purple-600 font-medium" onclick="showSection('about')">About</a>
+                        <a href="#" class="nav-item text-gray-700 hover:text-purple-600 font-medium" onclick="showSection('contact')">Contact</a>
+                        <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Home Section -->
+        <section id="home" class="active-section container mx-auto px-4 py-8">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Welcome to Kedu Class Portal</h2>
+                <p class="text-gray-600">Access your class materials, videos, and resources all in one place.</p>
+            </div>
+
+            <!-- Video Categories -->
+            <div class="space-y-8">
+                <!-- August 2024 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 fade-in">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-calendar-alt mr-3 text-purple-600"></i>
+                        August 2024
+                    </h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Theory Section -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-semibold text-gray-700 flex items-center">
+                                <i class="fas fa-book mr-2 text-blue-500"></i>
+                                Theory
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">Introduction to Programming</p>
+                                            <p class="text-sm text-gray-600">45 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">Data Structures Basics</p>
+                                            <p class="text-sm text-gray-600">60 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Revision Section -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-semibold text-gray-700 flex items-center">
+                                <i class="fas fa-redo mr-2 text-green-500"></i>
+                                Revision
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">Quick Review Session 1</p>
+                                            <p class="text-sm text-gray-600">30 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">Practice Problems</p>
+                                            <p class="text-sm text-gray-600">40 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Paper Class Section -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-semibold text-gray-700 flex items-center">
+                                <i class="fas fa-file-alt mr-2 text-orange-500"></i>
+                                Paper Class
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">Past Paper Discussion</p>
+                                            <p class="text-sm text-gray-600">90 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- December 2025 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 fade-in">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-calendar-alt mr-3 text-purple-600"></i>
+                        December 2025
+                    </h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Theory Section -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-semibold text-gray-700 flex items-center">
+                                <i class="fas fa-book mr-2 text-blue-500"></i>
+                                Theory
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">Advanced Concepts</p>
+                                            <p class="text-sm text-gray-600">75 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">New Technologies</p>
+                                            <p class="text-sm text-gray-600">50 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Revision Section -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-semibold text-gray-700 flex items-center">
+                                <i class="fas fa-redo mr-2 text-green-500"></i>
+                                Revision
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">Comprehensive Review</p>
+                                            <p class="text-sm text-gray-600">120 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Paper Class Section -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-semibold text-gray-700 flex items-center">
+                                <i class="fas fa-file-alt mr-2 text-orange-500"></i>
+                                Paper Class
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">Model Paper Solutions</p>
+                                            <p class="text-sm text-gray-600">100 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- August 2026 -->
+                <div class="bg-white rounded-xl shadow-lg p-6 fade-in">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6 flex items-center">
+                        <i class="fas fa-calendar-alt mr-3 text-purple-600"></i>
+                        August 2026
+                    </h3>
+                    
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Theory Section -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-semibold text-gray-700 flex items-center">
+                                <i class="fas fa-book mr-2 text-blue-500"></i>
+                                Theory
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">Future Trends</p>
+                                            <p class="text-sm text-gray-600">55 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">Industry Practices</p>
+                                            <p class="text-sm text-gray-600">65 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Revision Section -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-semibold text-gray-700 flex items-center">
+                                <i class="fas fa-redo mr-2 text-green-500"></i>
+                                Revision
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">Final Preparation</p>
+                                            <p class="text-sm text-gray-600">80 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Paper Class Section -->
+                        <div class="space-y-4">
+                            <h4 class="text-lg font-semibold text-gray-700 flex items-center">
+                                <i class="fas fa-file-alt mr-2 text-orange-500"></i>
+                                Paper Class
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="video-card bg-gray-50 rounded-lg p-4 cursor-pointer" onclick="playVideo('dQw4w9WgXcQ')">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fab fa-youtube text-red-500 text-2xl"></i>
+                                        <div>
+                                            <p class="font-medium">Exam Strategies</p>
+                                            <p class="text-sm text-gray-600">70 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Classes Section -->
+        <section id="classes" class="hidden-section container mx-auto px-4 py-8">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Classes</h2>
+                <p class="text-gray-600">Access your class materials and external resources.</p>
+            </div>
+
+            <!-- External Links -->
+            <div class="mb-8">
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">External Resources</h3>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <a href="https://www.mediamayura.lk/student/home.php" target="_blank" class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-external-link-alt text-purple-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">Media Mayura</h4>
+                                <p class="text-sm text-gray-600">Student Portal</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://ictfromabc.com" target="_blank" class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-external-link-alt text-purple-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">ICT from ABC</h4>
+                                <p class="text-sm text-gray-600">Learning Platform</p>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="https://futureway.edu.lk" target="_blank" class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-external-link-alt text-purple-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">FutureWay</h4>
+                                <p class="text-sm text-gray-600">Educational Institute</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Dummy Class Links -->
+            <div>
+                <h3 class="text-xl font-semibold text-gray-700 mb-4">Class Links</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl cursor-pointer">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-video text-blue-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">Class 101</h4>
+                                <p class="text-sm text-gray-600">Introduction to Basics</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl cursor-pointer">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-video text-blue-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">Class 102</h4>
+                                <p class="text-sm text-gray-600">Intermediate Concepts</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl cursor-pointer">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-video text-blue-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">Class 103</h4>
+                                <p class="text-sm text-gray-600">Advanced Topics</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl cursor-pointer">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-video text-blue-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">Class 104</h4>
+                                <p class="text-sm text-gray-600">Practical Sessions</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl cursor-pointer">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-video text-blue-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">Class 105</h4>
+                                <p class="text-sm text-gray-600">Workshop Series</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl cursor-pointer">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-video text-blue-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">Class 106</h4>
+                                <p class="text-sm text-gray-600">Project Work</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl cursor-pointer">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-video text-blue-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">Class 107</h4>
+                                <p class="text-sm text-gray-600">Guest Lectures</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl cursor-pointer">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-video text-blue-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">Class 108</h4>
+                                <p class="text-sm text-gray-600">Study Groups</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl cursor-pointer">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-video text-blue-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">Class 109</h4>
+                                <p class="text-sm text-gray-600">Exam Preparation</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-hover bg-white p-6 rounded-lg shadow-md hover:shadow-xl cursor-pointer">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-video text-blue-600 text-2xl"></i>
+                            <div>
+                                <h4 class="font-semibold">Class 110</h4>
+                                <p class="text-sm text-gray-600">Career Guidance</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Courses Section -->
+        <section id="courses" class="hidden-section container mx-auto px-4 py-8">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Courses</h2>
+                <p class="text-gray-600">Explore our wide range of courses designed to enhance your learning experience.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card-hover bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-network-wired text-5xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Networking</h3>
+                    <p class="text-gray-600 mb-4">Learn the fundamentals of computer networks, protocols, and infrastructure.</p>
+                    <button class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+                        Enroll Now
+                    </button>
+                </div>
+
+                <div class="card-hover bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-shield-alt text-5xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Cybersecurity</h3>
+                    <p class="text-gray-600 mb-4">Master the art of protecting systems, networks, and data from digital attacks.</p>
+                    <button class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition">
+                        Enroll Now
+                    </button>
+                </div>
+
+                <div class="card-hover bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fab fa-python text-5xl text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Python</h3>
+                    <p class="text-gray-600 mb-4">Dive into one of the most popular programming languages for beginners and experts.</p>
+                    <button class="w-full bg-yellow-600 text-white py-2 rounded-lg hover:bg-yellow-700 transition">
+                        Enroll Now
+                    </button>
+                </div>
+
+                <div class="card-hover bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-code text-5xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Web Design</h3>
+                    <p class="text-gray-600 mb-4">Create stunning websites with modern design principles and technologies.</p>
+                    <button class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
+                        Enroll Now
+                    </button>
+                </div>
+
+                <div class="card-hover bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-language text-5xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">English</h3>
+                    <p class="text-gray-600 mb-4">Improve your English language skills for academic and professional success.</p>
+                    <button class="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 transition">
+                        Enroll Now
+                    </button>
+                </div>
+
+                <div class="card-hover bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-book-open text-5xl text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Sinhala</h3>
+                    <p class="text-gray-600 mb-4">Learn the Sinhala language and explore Sri Lankan culture and literature.</p>
+                    <button class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">
+                        Enroll Now
+                    </button>
+                </div>
+
+                <div class="card-hover bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-globe-asia text-5xl text-pink-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Korean</h3>
+                    <p class="text-gray-600 mb-4">Start your journey in learning the Korean language and culture.</p>
+                    <button class="w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition">
+                        Enroll Now
+                    </button>
+                </div>
+
+                <div class="card-hover bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-torii-gate text-5xl text-orange-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Japanese</h3>
+                    <p class="text-gray-600 mb-4">Explore the Japanese language and its rich cultural heritage.</p>
+                    <button class="w-full bg-orange-600 text-white py-2 rounded-lg hover:bg-orange-700 transition">
+                        Enroll Now
+                    </button>
+                </div>
+
+                <div class="card-hover bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-camera text-5xl text-teal-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Media</h3>
+                    <p class="text-gray-600 mb-4">Study media production, journalism, and digital content creation.</p>
+                    <button class="w-full bg-teal-600 text-white py-2 rounded-lg hover:bg-teal-700 transition">
+                        Enroll Now
+                    </button>
+                </div>
+
+                <div class="card-hover bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-laptop-code text-5xl text-cyan-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">ICT</h3>
+                    <p class="text-gray-600 mb-4">Comprehensive Information and Communication Technology course.</p>
+                    <button class="w-full bg-cyan-600 text-white py-2 rounded-lg hover:bg-cyan-700 transition">
+                        Enroll Now
+                    </button>
+                </div>
+
+                <div class="card-hover bg-white rounded-xl shadow-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-calculator text-5xl text-gray-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Maths</h3>
+                    <p class="text-gray-600 mb-4">Strengthen your mathematical skills from basics to advanced concepts.</p>
+                    <button class="w-full bg-gray-600 text-white py-2 rounded-lg hover:bg-gray-700 transition">
+                        Enroll Now
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="hidden-section container mx-auto px-4 py-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">About Kedu</h2>
+                
+                <div class="bg-white rounded-xl shadow-lg p-8">
+                    <div class="prose prose-lg text-gray-600">
+                        <p class="mb-4">
+                            Welcome to Kedu, your comprehensive class portal designed to revolutionize the way students access educational content and resources. Our platform is built with the vision of creating a seamless learning experience that bridges the gap between traditional classroom education and modern digital learning.
+                        </p>
+                        
+                        <p class="mb-4">
+                            At Kedu, we understand that every student has unique learning needs and preferences. That's why we've developed a user-friendly interface that organizes educational materials by month and year, making it easy for students to track their progress and revisit lessons whenever needed. Our video library is carefully categorized into Theory, Revision, and Paper Class sections to cater to different learning objectives.
+                        </p>
+                        
+                        <p class="mb-4">
+                            Our mission is to provide quality education that is accessible, engaging, and effective. We partner with leading educational platforms like Media Mayura, ICT from ABC, and FutureWay to bring you the best learning resources from around the web. Whether you're preparing for exams, revising concepts, or exploring new subjects, Kedu is here to support your educational journey.
+                        </p>
+                        
+                        <p>
+                            Join thousands of students who have already transformed their learning experience with Kedu. Together, let's build a brighter future through education.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-8 grid md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="bg-purple-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-graduation-cap text-purple-600 text-3xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-gray-800 mb-2">Quality Education</h3>
+                            <p class="text-sm text-gray-600">Access to premium educational content</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="bg-blue-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-users text-blue-600 text-3xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-gray-800 mb-2">Community Support</h3>
+                            <p class="text-sm text-gray-600">Learn with peers and mentors</p>
+                        </div>
+                        
+                        <div class="text-center">
+                            <div class="bg-green-100 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-chart-line text-green-600 text-3xl"></i>
+                            </div>
+                            <h3 class="font-semibold text-gray-800 mb-2">Track Progress</h3>
+                            <p class="text-sm text-gray-600">Monitor your learning journey</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="hidden-section container mx-auto px-4 py-8">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Contact Us</h2>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Contact Form -->
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Send Message</h3>
+                        
+                        <form id="contactForm" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Name</label>
+                                <input type="text" id="contactName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                <input type="email" id="contactEmail" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Subject</label>
+                                <input type="text" id="contactSubject" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" required>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                <textarea id="contactMessage" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition">
+                                Send Message
+                            </button>
+                        </form>
+                        
+                        <div id="contactSuccess" class="mt-4 p-4 bg-green-100 text-green-700 rounded-lg hidden">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Your message has been sent successfully!
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Information -->
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-xl shadow-lg p-8">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Get in Touch</h3>
+                            
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+                                    <div>
+                                        <p class="font-medium">WhatsApp</p>
+                                        <p class="text-gray-600">0775048455</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-envelope text-purple-500 text-2xl"></i>
+                                    <div>
+                                        <p class="font-medium">Email</p>
+                                        <p class="text-gray-600">dmkaawya@gmail.com</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-globe text-blue-500 text-2xl"></i>
+                                    <div>
+                                        <p class="font-medium">Location</p>
+                                        <p class="text-gray-600">Online</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl shadow-lg p-8 text-white">
+                            <h3 class="text-xl font-semibold mb-4">Founder</h3>
+                            <p class="text-lg">DM Kaawya</p>
+                            <p class="mt-2 opacity-90">Dedicated to providing quality education and fostering a love for learning.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Modal -->
+        <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-75 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-white rounded-xl max-w-4xl w-full">
+                <div class="p-4 border-b flex justify-between items-center">
+                    <h3 class="text-xl font-semibold">Video Player</h3>
+                    <button onclick="closeVideo()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                <div class="p-4">
+                    <iframe id="videoFrame" width="100%" height="500" src="" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-8 mt-12">
+            <div class="container mx-auto px-4">
+                <div class="text-center">
+                    <p class="mb-2">© Copyright by 2025</p>
+                    <p class="mb-2">Founder: DM Kaawya</p>
+                    <div class="flex justify-center space-x-6 mt-4">
+                        <div class="flex items-center space-x-2">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp: 0775048455</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-envelope"></i>
+                            <span>Email: dmkaawya@gmail.com</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Location: Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // User credentials
+        const users = [
+            { username: 'admin', password: 'admin' },
+            { username: 'admin1', password: 'admin1' },
+            { username: 'admin2', password: 'admin2' },
+            { username: 'admin3', password: 'admin3' },
+            { username: 'admin4', password: 'admin4' },
+            { username: 'admin5', password: 'admin5' },
+            { username: 'admin6', password: 'admin6' },
+            { username: 'admin7', password: 'admin7' },
+            { username: 'admin8', password: 'admin8' },
+            { username: 'admin9', password: 'admin9' }
+        ];
+
+        // Login functionality
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const loginError = document.getElementById('loginError');
+            
+            const user = users.find(u => u.username === username && u.password === password);
+            
+            if (user) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('currentUser', username);
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('mainApp').classList.remove('hidden');
+                loginError.classList.add('hidden');
+            } else {
+                loginError.classList.remove('hidden');
+            }
+        });
+
+        // Check if user is logged in
+        window.addEventListener('load', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn === 'true') {
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('mainApp').classList.remove('hidden');
+            }
+        });
+
+        // Logout functionality
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('currentUser');
+            document.getElementById('mainApp').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        // Section navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.add('hidden-section');
+                section.classList.remove('active-section');
+            });
+            
+            // Show selected section
+            const selectedSection = document.getElementById(sectionId);
+            selectedSection.classList.remove('hidden-section');
+            selectedSection.classList.add('active-section');
+            
+            // Update active nav item
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('onclick').includes(sectionId)) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        // Video player functionality
+        function playVideo(videoId) {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('videoFrame');
+            iframe.src = `https://www.youtube.com/embed/${videoId}`;
+            modal.classList.remove('hidden');
+        }
+
+        function closeVideo() {
+            const modal = document.getElementById('videoModal');
+            const iframe = document.getElementById('videoFrame');
+            iframe.src = '';
+            modal.classList.add('hidden');
+        }
+
+        // Contact form functionality
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate form submission
+            const successMessage = document.getElementById('contactSuccess');
+            successMessage.classList.remove('hidden');
+            
+            // Reset form
+            this.reset();
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 5000);
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeVideo();
+            }
+        });
+    </script>
+</body>
+</html>

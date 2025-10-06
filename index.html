@@ -1,1507 +1,714 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K-Edu - Educational Platform</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #3B82F6;
-            --secondary: #10B981;
-            --accent: #8B5CF6;
-            --dark: #1F2937;
-            --light: #F3F4F6;
-            --white: #FFFFFF;
-            --danger: #EF4444;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-        }
-        
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header & Navigation */
-        header {
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-        
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-        
-        .logo i {
-            margin-right: 0.5rem;
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 1.5rem;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: color 0.3s;
-            position: relative;
-        }
-        
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-        
-        .nav-links a.active::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background-color: var(--primary);
-        }
-        
-        .hamburger {
-            display: none;
-            cursor: pointer;
-        }
-        
-        .hamburger span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: var(--dark);
-            margin: 5px 0;
-            transition: 0.3s;
-        }
-        
-        /* Main Content */
-        main {
-            min-height: calc(100vh - 120px);
-            padding: 2rem 0;
-        }
-        
-        .page {
-            display: none;
-        }
-        
-        .page.active {
-            display: block;
-            animation: fadeIn 0.5s;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Home Page */
-        .hero {
-            text-align: center;
-            padding: 4rem 0;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: var(--white);
-            border-radius: 10px;
-            margin-bottom: 3rem;
-        }
-        
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto 2rem;
-        }
-        
-        .btn {
-            display: inline-block;
-            background-color: var(--white);
-            color: var(--primary);
-            padding: 0.75rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            color: var(--white);
-        }
-        
-        .btn-primary:hover {
-            background-color: #2563EB;
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .feature-card {
-            background-color: var(--white);
-            border-radius: 10px;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .feature-card i {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        
-        /* Categories Page */
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-        
-        .category-card {
-            background-color: var(--white);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .category-header {
-            padding: 1.5rem;
-            color: var(--white);
-            text-align: center;
-        }
-        
-        .category-header.ict {
-            background-color: var(--primary);
-        }
-        
-        .category-header.english {
-            background-color: var(--secondary);
-        }
-        
-        .category-header.korean {
-            background-color: #EF4444;
-        }
-        
-        .category-header.maths {
-            background-color: #F59E0B;
-        }
-        
-        .category-header.media {
-            background-color: var(--accent);
-        }
-        
-        .category-header i {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-        
-        .category-body {
-            padding: 1.5rem;
-        }
-        
-        /* Lessons Page */
-        .lessons-container {
-            display: none;
-            margin-top: 3rem;
-        }
-        
-        .lessons-container.active {
-            display: block;
-        }
-        
-        .lessons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .lesson-card {
-            background-color: var(--white);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s;
-            cursor: pointer;
-        }
-        
-        .lesson-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .lesson-thumbnail {
-            height: 180px;
-            background-color: var(--dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-        }
-        
-        .lesson-thumbnail i {
-            font-size: 3rem;
-        }
-        
-        .lesson-body {
-            padding: 1.5rem;
-        }
-        
-        .lesson-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .lesson-description {
-            color: #6B7280;
-            margin-bottom: 1rem;
-        }
-        
-        .lesson-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .lesson-type {
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-        }
-        
-        .lesson-type.free {
-            background-color: #D1FAE5;
-            color: #065F46;
-        }
-        
-        .lesson-type.paid {
-            background-color: #FEF3C7;
-            color: #92400E;
-        }
-        
-        .lesson-duration {
-            color: #6B7280;
-            font-size: 0.9rem;
-        }
-        
-        /* Lesson Detail Page */
-        .lesson-detail {
-            display: none;
-            background-color: var(--white);
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .lesson-detail.active {
-            display: block;
-        }
-        
-        .lesson-header {
-            margin-bottom: 2rem;
-        }
-        
-        .lesson-title-large {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        
-        .lesson-meta-large {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .video-container {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            margin-bottom: 2rem;
-        }
-        
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 8px;
-        }
-        
-        .lesson-description-large {
-            margin-bottom: 2rem;
-            line-height: 1.8;
-        }
-        
-        .lesson-actions {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .btn-visit {
-            background-color: var(--primary);
-            color: var(--white);
-        }
-        
-        .btn-request {
-            background-color: var(--secondary);
-            color: var(--white);
-        }
-        
-        /* About Page */
-        .about-content {
-            background-color: var(--white);
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            line-height: 1.8;
-        }
-        
-        .about-content h2 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        
-        /* Contact Page */
-        .contact-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-        
-        .contact-info, .contact-form {
-            background-color: var(--white);
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .contact-info h2, .contact-form h2 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-        
-        .info-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 1.5rem;
-        }
-        
-        .info-item i {
-            font-size: 1.5rem;
-            color: var(--primary);
-            margin-right: 1rem;
-            margin-top: 0.25rem;
-        }
-        
-        .info-item h3 {
-            margin-bottom: 0.25rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-        
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #E5E7EB;
-            border-radius: 5px;
-            font-family: inherit;
-        }
-        
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-        
-        .form-message {
-            margin-top: 1rem;
-            padding: 0.75rem;
-            border-radius: 5px;
-            display: none;
-        }
-        
-        .form-message.success {
-            background-color: #D1FAE5;
-            color: #065F46;
-        }
-        
-        .form-message.error {
-            background-color: #FEE2E2;
-            color: #B91C1C;
-        }
-        
-        /* Login Page */
-        .login-container {
-            max-width: 400px;
-            margin: 3rem auto;
-            background-color: var(--white);
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-        
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        
-        .login-header i {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        
-        .login-form .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .login-error {
-            background-color: #FEE2E2;
-            color: #B91C1C;
-            padding: 0.75rem;
-            border-radius: 5px;
-            margin-bottom: 1.5rem;
-            display: none;
-        }
-        
-        /* Admin Dashboard */
-        .admin-dashboard {
-            display: none;
-        }
-        
-        .admin-dashboard.active {
-            display: block;
-        }
-        
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2rem;
-        }
-        
-        .admin-header h1 {
-            color: var(--primary);
-        }
-        
-        .admin-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-        
-        .stat-card {
-            background-color: var(--white);
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            display: flex;
-            align-items: center;
-        }
-        
-        .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-        }
-        
-        .stat-icon.blue {
-            background-color: #DBEAFE;
-            color: var(--primary);
-        }
-        
-        .stat-icon.green {
-            background-color: #D1FAE5;
-            color: var(--secondary);
-        }
-        
-        .stat-icon.purple {
-            background-color: #EDE9FE;
-            color: var(--accent);
-        }
-        
-        .stat-icon.red {
-            background-color: #FEE2E2;
-            color: var(--danger);
-        }
-        
-        .stat-icon i {
-            font-size: 1.5rem;
-        }
-        
-        .stat-info h3 {
-            font-size: 0.9rem;
-            color: #6B7280;
-            margin-bottom: 0.25rem;
-        }
-        
-        .stat-info p {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--dark);
-        }
-        
-        .admin-section {
-            background-color: var(--white);
-            border-radius: 10px;
-            padding: 1.5rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            margin-bottom: 2rem;
-        }
-        
-        .admin-section h2 {
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 1px solid #E5E7EB;
-        }
-        
-        .admin-form {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1.5rem;
-        }
-        
-        .admin-table th, .admin-table td {
-            padding: 0.75rem;
-            text-align: left;
-            border-bottom: 1px solid #E5E7EB;
-        }
-        
-        .admin-table th {
-            background-color: #F9FAFB;
-            font-weight: 600;
-            color: var(--dark);
-        }
-        
-        .admin-table tr:last-child td {
-            border-bottom: none;
-        }
-        
-        .btn-small {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-        }
-        
-        .btn-danger {
-            background-color: var(--danger);
-            color: var(--white);
-        }
-        
-        .btn-danger:hover {
-            background-color: #DC2626;
-        }
-        
-        /* Footer */
-        footer {
-            background-color: var(--dark);
-            color: var(--white);
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 3rem;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                position: absolute;
-                top: 70px;
-                left: 0;
-                width: 100%;
-                background-color: var(--white);
-                flex-direction: column;
-                align-items: center;
-                padding: 1rem 0;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-                display: none;
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .nav-links li {
-                margin: 0.5rem 0;
-            }
-            
-            .hamburger {
-                display: block;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .contact-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .lesson-meta-large {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .lesson-actions {
-                flex-direction: column;
-            }
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <div class="container">
-            <nav class="navbar">
-                <div class="logo">
-                    <i class="fas fa-graduation-cap"></i>
-                    <span>K-Edu</span>
-                </div>
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#" data-page="home" class="nav-link active">Home</a></li>
-                    <li><a href="#" data-page="categories" class="nav-link">Categories</a></li>
-                    <li><a href="#" data-page="about" class="nav-link">About</a></li>
-                    <li><a href="#" data-page="contact" class="nav-link">Contact</a></li>
-                    <li><a href="#" data-page="login" class="nav-link">Admin</a></li>
-                </ul>
-                <div class="hamburger" id="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-            </nav>
+import React, { useState } from 'react';
+import { Search, PlayCircle, Eye, Calendar, ChevronLeft, ChevronRight, LogOut, User, Plus, Trash2, Users, Settings, X, ExternalLink, Menu } from 'lucide-react';
+
+const USERS = {
+  admin: { password: 'admin', role: 'admin', name: 'Administrator' },
+  admin1: { password: 'admin1', role: 'admin', name: 'Admin User 1' },
+  admin2: { password: 'admin2', role: 'admin', name: 'Admin User 2' },
+  student3: { password: 'student3', role: 'student', name: 'Student 3' },
+  student4: { password: 'student4', role: 'student', name: 'Student 4' },
+  student5: { password: 'student5', role: 'student', name: 'Student 5' },
+  student6: { password: 'student6', role: 'student', name: 'Student 6' },
+  student7: { password: 'student7', role: 'student', name: 'Student 7' },
+  student8: { password: 'student8', role: 'student', name: 'Student 8' },
+  student9: { password: 'student9', role: 'student', name: 'Student 9' }
+};
+
+const generateVideos = () => {
+  const videos = [];
+  let id = 1;
+
+  const months2024 = ['June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  months2024.forEach((month, idx) => {
+    for (let i = 0; i < 8; i++) {
+      videos.push({
+        id: id++,
+        title: `${month} 2024 - Lesson ${i + 1}`,
+        month,
+        year: 2024,
+        monthNum: idx + 6,
+        description: `Educational content for ${month} 2024`,
+        duration: `${Math.floor(Math.random() * 20 + 10)}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
+        views: Math.floor(Math.random() * 5000 + 1000),
+        source: i % 2 === 0 ? 'mediamayura' : 'youtube',
+        url: i % 2 === 0 ? 'https://www.mediamayura.lk/student/home.php' : 'https://youtube.com/watch?v=dQw4w9WgXcQ',
+        thumbnail: ['🎓', '📚', '💻', '🔬', '🎨', '🌍', '📊', '🎯'][i % 8],
+        uploadedDate: `2024-${String(idx + 6).padStart(2, '0')}-${String(Math.floor(Math.random() * 28 + 1)).padStart(2, '0')}`
+      });
+    }
+  });
+
+  const months2025 = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  months2025.forEach((month, idx) => {
+    for (let i = 0; i < 12; i++) {
+      videos.push({
+        id: id++,
+        title: `${month} 2025 - Tutorial ${i + 1}`,
+        month,
+        year: 2025,
+        monthNum: idx + 1,
+        description: `Comprehensive guide for ${month} 2025`,
+        duration: `${Math.floor(Math.random() * 25 + 15)}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
+        views: Math.floor(Math.random() * 8000 + 2000),
+        source: i % 3 === 0 ? 'mediamayura' : 'youtube',
+        url: i % 3 === 0 ? 'https://www.mediamayura.lk/student/home.php' : 'https://youtube.com/watch?v=dQw4w9WgXcQ',
+        thumbnail: ['🎓', '📚', '💻', '🔬', '🎨', '🌍', '📊', '🎯', '🧮', '🎭', '🎪', '🎬'][i % 12],
+        uploadedDate: `2025-${String(idx + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28 + 1)).padStart(2, '0')}`
+      });
+    }
+  });
+
+  const months2026 = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August'];
+  months2026.forEach((month, idx) => {
+    for (let i = 0; i < 8; i++) {
+      videos.push({
+        id: id++,
+        title: `${month} 2026 - Class ${i + 1}`,
+        month,
+        year: 2026,
+        monthNum: idx + 1,
+        description: `Learning materials for ${month} 2026`,
+        duration: `${Math.floor(Math.random() * 30 + 10)}:${String(Math.floor(Math.random() * 60)).padStart(2, '0')}`,
+        views: Math.floor(Math.random() * 6000 + 1500),
+        source: i % 2 === 0 ? 'mediamayura' : 'youtube',
+        url: i % 2 === 0 ? 'https://www.mediamayura.lk/student/home.php' : 'https://youtube.com/watch?v=dQw4w9WgXcQ',
+        thumbnail: ['🎓', '📚', '💻', '🔬', '🎨', '🌍', '📊', '🎯'][i % 8],
+        uploadedDate: `2026-${String(idx + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28 + 1)).padStart(2, '0')}`
+      });
+    }
+  });
+
+  return videos;
+};
+
+export default function KeduPortal() {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loginData, setLoginData] = useState({ username: '', password: '' });
+  const [loginError, setLoginError] = useState('');
+  
+  const [videos, setVideos] = useState(() => generateVideos());
+  const [selectedYear, setSelectedYear] = useState(2025);
+  const [viewAllMonth, setViewAllMonth] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+  const [videoIndex, setVideoIndex] = useState(0);
+  
+  const [showAddVideo, setShowAddVideo] = useState(false);
+  const [showUserManagement, setShowUserManagement] = useState(false);
+  const [newVideo, setNewVideo] = useState({
+    title: '',
+    month: 'January',
+    year: 2025,
+    description: '',
+    url: '',
+    source: 'youtube'
+  });
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleLogin = () => {
+    const user = USERS[loginData.username];
+    if (user && user.password === loginData.password) {
+      setCurrentUser({ username: loginData.username, ...user });
+      setLoginError('');
+      setLoginData({ username: '', password: '' });
+    } else {
+      setLoginError('Invalid username or password');
+    }
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    setSelectedYear(2025);
+    setSelectedVideo(null);
+  };
+
+  const handleAddVideo = () => {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const newVid = {
+      id: Math.max(...videos.map(v => v.id)) + 1,
+      ...newVideo,
+      monthNum: monthNames.indexOf(newVideo.month) + 1,
+      duration: '15:00',
+      views: 0,
+      thumbnail: '🎬',
+      uploadedDate: new Date().toISOString().split('T')[0]
+    };
+    setVideos([...videos, newVid]);
+    setShowAddVideo(false);
+    setNewVideo({
+      title: '',
+      month: 'January',
+      year: 2025,
+      description: '',
+      url: '',
+      source: 'youtube'
+    });
+  };
+
+  const handleDeleteVideo = (id) => {
+    if (window.confirm('Are you sure you want to delete this video?')) {
+      setVideos(videos.filter(v => v.id !== id));
+      setSelectedVideo(null);
+    }
+  };
+
+  const getVideosByYear = (year) => {
+    return videos.filter(v => v.year === year);
+  };
+
+  const getVideosByMonth = (year, month) => {
+    return videos.filter(v => v.year === year && v.month === month);
+  };
+
+  const getMonthsForYear = (year) => {
+    const vids = getVideosByYear(year);
+    const months = [...new Set(vids.map(v => v.month))];
+    return months.sort((a, b) => {
+      const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      return monthNames.indexOf(a) - monthNames.indexOf(b);
+    });
+  };
+
+  const openVideoModal = (video, monthVideos) => {
+    setSelectedVideo(video);
+    setVideoIndex(monthVideos.findIndex(v => v.id === video.id));
+  };
+
+  const navigateVideo = (direction, monthVideos) => {
+    const newIndex = videoIndex + direction;
+    if (newIndex >= 0 && newIndex < monthVideos.length) {
+      setVideoIndex(newIndex);
+      setSelectedVideo(monthVideos[newIndex]);
+    }
+  };
+
+  if (!currentUser) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
+          <div className="text-center mb-8">
+            <div className="text-6xl mb-4">📚</div>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Welcome to Kedu</h1>
+            <p className="text-gray-600">Class Portal & Video Management</p>
+          </div>
+
+          {loginError && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
+              {loginError}
+            </div>
+          )}
+
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Username</label>
+              <input
+                type="text"
+                value={loginData.username}
+                onChange={(e) => setLoginData({ ...loginData, username: e.target.value })}
+                onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter username"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+              <input
+                type="password"
+                value={loginData.password}
+                onChange={(e) => setLoginData({ ...loginData, password: e.target.value })}
+                onKeyPress={(e) => e.key === 'Enter' && handleLogin()}
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                placeholder="Enter password"
+              />
+            </div>
+            <button
+              onClick={handleLogin}
+              className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg font-semibold transition"
+            >
+              Login
+            </button>
+          </div>
+
+          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+            <p className="text-xs text-gray-600 mb-2 font-semibold">Demo Accounts:</p>
+            <div className="space-y-1 text-xs text-gray-600">
+              <p>Admin: admin / admin</p>
+              <p>Student: student3 / student3</p>
+            </div>
+          </div>
         </div>
-    </header>
+      </div>
+    );
+  }
 
-    <main class="container">
-        <!-- Home Page -->
-        <div id="home" class="page active">
-            <section class="hero">
-                <h1>Welcome to K-Edu</h1>
-                <p>Your gateway to quality education in ALL Subject</p>
-                <a href="#" class="btn" id="exploreBtn">Explore Courses</a>
-            </section>
-            
-            <section class="features">
-                <div class="feature-card">
-                    <i class="fas fa-book"></i>
-                    <h3>Comprehensive Courses</h3>
-                    <p>Access a wide range of subjects taught by expert instructors</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-video"></i>
-                    <h3>Video Lessons</h3>
-                    <p>Learn at your own pace with high-quality video content</p>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-users"></i>
-                    <h3>Expert Instructors</h3>
-                    <p>Learn from qualified professionals in each field</p>
-                </div>
-            </section>
+  const months = getMonthsForYear(selectedYear);
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <nav className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-lg sticky top-0 z-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center space-x-3">
+              <div className="text-3xl">📚</div>
+              <h1 className="text-2xl font-bold">Kedu Portal</h1>
+            </div>
+
+            <div className="hidden md:flex items-center space-x-6">
+              <div className="flex items-center space-x-2 bg-white/20 px-4 py-2 rounded-lg">
+                <User size={18} />
+                <span className="font-semibold">{currentUser.name}</span>
+                {currentUser.role === 'admin' && (
+                  <span className="bg-yellow-400 text-indigo-900 px-2 py-0.5 rounded text-xs font-bold">ADMIN</span>
+                )}
+              </div>
+              <button
+                onClick={handleLogout}
+                className="flex items-center space-x-2 hover:bg-white/10 px-4 py-2 rounded-lg transition"
+              >
+                <LogOut size={18} />
+                <span>Logout</span>
+              </button>
+            </div>
+
+            <button
+              className="md:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+
+          {mobileMenuOpen && (
+            <div className="md:hidden py-4 space-y-2">
+              <div className="bg-white/20 px-4 py-2 rounded-lg">
+                <p className="font-semibold">{currentUser.name}</p>
+                {currentUser.role === 'admin' && (
+                  <span className="bg-yellow-400 text-indigo-900 px-2 py-0.5 rounded text-xs font-bold">ADMIN</span>
+                )}
+              </div>
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setMobileMenuOpen(false);
+                }}
+                className="flex items-center space-x-2 w-full px-4 py-2 hover:bg-white/10 rounded"
+              >
+                <LogOut size={18} />
+                <span>Logout</span>
+              </button>
+            </div>
+          )}
         </div>
+      </nav>
 
-        <!-- Categories Page -->
-        <div id="categories" class="page">
-            <h1 style="margin-bottom: 2rem;">Course Categories</h1>
-            <div class="categories-grid">
-                <div class="category-card" data-category="ict">
-                    <div class="category-header ict">
-                        <i class="fas fa-laptop-code"></i>
-                        <h3>ICT</h3>
-                    </div>
-                    <div class="category-body">
-                        <p>Information and Communication Technology courses covering programming, networking, and more.</p>
-                    </div>
-                </div>
-                
-                <div class="category-card" data-category="english">
-                    <div class="category-header english">
-                        <i class="fas fa-language"></i>
-                        <h3>English</h3>
-                    </div>
-                    <div class="category-body">
-                        <p>Comprehensive English language courses for all levels, from basics to advanced.</p>
-                    </div>
-                </div>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {currentUser.role === 'admin' && (
+          <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
+            <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center space-x-2">
+              <Settings size={24} className="text-indigo-600" />
+              <span>Admin Controls</span>
+            </h3>
+            <div className="flex flex-wrap gap-3">
+              <button
+                onClick={() => setShowAddVideo(true)}
+                className="flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-semibold transition"
+              >
+                <Plus size={18} />
+                <span>Add Video</span>
+              </button>
+              <button
+                onClick={() => setShowUserManagement(true)}
+                className="flex items-center space-x-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-semibold transition"
+              >
+                <Users size={18} />
+                <span>Manage Users</span>
+              </button>
+            </div>
+          </div>
+        )}
 
-                <div class="category-card" data-category="network">
-                    <div class="category-header network">
-                        <i class="fas fa-network"></i>
-                        <h3>Networking</h3>
-                    </div>
-                    <div class="category-body">
-                        <p>a system of interconnected people, devices, or things that communicate and share resources.</p>
-                    </div>
-                </div>
-                
-                <div class="category-card" data-category="korean">
-                    <div class="category-header korean">
-                        <i class="fas fa-yin-yang"></i>
-                        <h3>Korean</h3>
-                    </div>
-                    <div class="category-body">
-                        <p>Learn Korean language and culture with native speakers and interactive lessons.</p>
-                    </div>
-                </div>
-                
-                <div class="category-card" data-category="maths">
-                    <div class="category-header maths">
-                        <i class="fas fa-calculator"></i>
-                        <h3>Maths</h3>
-                    </div>
-                    <div class="category-body">
-                        <p>Mathematics courses from basic arithmetic to advanced calculus and statistics.</p>
-                    </div>
-                </div>
-                
-                <div class="category-card" data-category="media">
-                    <div class="category-header media">
-                        <i class="fas fa-film"></i>
-                        <h3>Media Studies</h3>
-                    </div>
-                    <div class="category-body">
-                        <p>Explore digital media, film production, journalism, and communication studies.</p>
-                    </div>
-                </div>
+        <div className="grid lg:grid-cols-4 gap-6">
+          <div className="lg:col-span-1">
+            <div className="bg-white rounded-xl shadow-lg p-4 sticky top-24">
+              <h3 className="text-lg font-bold text-gray-800 mb-4">Select Year</h3>
+              <div className="space-y-2">
+                {[2024, 2025, 2026].map(year => {
+                  const videoCount = getVideosByYear(year).length;
+                  return (
+                    <button
+                      key={year}
+                      onClick={() => {
+                        setSelectedYear(year);
+                        setViewAllMonth(null);
+                      }}
+                      className={`w-full text-left px-4 py-3 rounded-lg font-semibold transition ${
+                        selectedYear === year
+                          ? 'bg-indigo-600 text-white'
+                          : 'bg-gray-50 hover:bg-gray-100 text-gray-800'
+                      }`}
+                    >
+                      <div className="flex justify-between items-center">
+                        <span className="text-lg">{year}</span>
+                        <span className={`text-sm ${selectedYear === year ? 'text-white/80' : 'text-gray-500'}`}>
+                          {videoCount} videos
+                        </span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            
-            <div class="lessons-container" id="lessonsContainer">
-                <h2 id="categoryTitle" style="margin-bottom: 1.5rem;"></h2>
-                <div class="lessons-grid" id="lessonsGrid"></div>
+          </div>
+
+          <div className="lg:col-span-3 space-y-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-3xl font-bold text-gray-800">{selectedYear} Videos</h2>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                <input
+                  type="text"
+                  placeholder="Search videos..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+              </div>
             </div>
+
+            {months.length === 0 ? (
+              <div className="bg-gray-50 rounded-xl p-12 text-center">
+                <div className="text-6xl mb-4">📹</div>
+                <p className="text-gray-600">No videos available for {selectedYear}</p>
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {months.map(month => {
+                  const monthVideos = getVideosByMonth(selectedYear, month);
+                  const displayVideos = viewAllMonth === month ? monthVideos : monthVideos.slice(0, 5);
+                  const hasMore = monthVideos.length > 5;
+
+                  return (
+                    <div key={month} className="bg-white rounded-xl shadow-lg overflow-hidden">
+                      <div className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white p-4 flex justify-between items-center">
+                        <div className="flex items-center space-x-3">
+                          <Calendar size={24} />
+                          <h3 className="text-xl font-bold">{month} {selectedYear}</h3>
+                        </div>
+                        <span className="bg-white/20 px-4 py-1 rounded-full font-semibold">
+                          {monthVideos.length} videos
+                        </span>
+                      </div>
+
+                      <div className="p-4">
+                        <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
+                          {displayVideos.map(video => (
+                            <div
+                              key={video.id}
+                              onClick={() => openVideoModal(video, monthVideos)}
+                              className="bg-gray-50 rounded-lg overflow-hidden cursor-pointer hover:shadow-lg transition group"
+                            >
+                              <div className="bg-gradient-to-br from-indigo-400 to-purple-500 h-32 flex items-center justify-center text-5xl group-hover:scale-105 transition">
+                                {video.thumbnail}
+                              </div>
+                              <div className="p-3 space-y-2">
+                                <h4 className="font-semibold text-gray-800 text-sm line-clamp-2">{video.title}</h4>
+                                <div className="flex items-center justify-between text-xs text-gray-600">
+                                  <span className="flex items-center space-x-1">
+                                    <PlayCircle size={14} />
+                                    <span>{video.duration}</span>
+                                  </span>
+                                  <span className="flex items-center space-x-1">
+                                    <Eye size={14} />
+                                    <span>{video.views}</span>
+                                  </span>
+                                </div>
+                                <div className="flex items-center space-x-1 text-xs">
+                                  {video.source === 'youtube' ? (
+                                    <span className="bg-red-500 text-white px-2 py-0.5 rounded">YouTube</span>
+                                  ) : (
+                                    <span className="bg-blue-500 text-white px-2 py-0.5 rounded">Media Mayura</span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+
+                        {hasMore && (
+                          <button
+                            onClick={() => setViewAllMonth(viewAllMonth === month ? null : month)}
+                            className="mt-4 w-full bg-indigo-50 hover:bg-indigo-100 text-indigo-600 py-2 rounded-lg font-semibold transition"
+                          >
+                            {viewAllMonth === month ? 'Show Less' : `View All (${monthVideos.length})`}
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
+      </main>
 
-        <!-- About Page -->
-        <div id="about" class="page">
-            <div class="about-content">
-                <h2>About K-Edu</h2>
-                <p>
-                    K-Edu is a comprehensive online educational platform dedicated to providing high-quality learning experiences across multiple disciplines. Our mission is to make education accessible, engaging, and effective for learners of all ages and backgrounds.
-                </p>
-                <p>
-                    Founded with the vision of bridging educational gaps, K-Edu offers carefully curated courses in Information and Communication Technology, English Language, Korean Language, Mathematics, and Media Studies. Each course is designed by expert educators and delivered through interactive video lessons, ensuring an immersive learning experience.
-                </p>
-                <p>
-                    Whether you're looking to enhance your professional skills, learn a new language, or explore creative fields, K-Edu provides the tools and resources you need to succeed in your educational journey.
-                </p>
+      {selectedVideo && (
+        <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-800">{selectedVideo.title}</h3>
+                  <p className="text-gray-600">{selectedVideo.month} {selectedVideo.year}</p>
+                </div>
+                <button
+                  onClick={() => setSelectedVideo(null)}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  <X size={28} />
+                </button>
+              </div>
+
+              <div className="bg-gray-900 rounded-lg overflow-hidden mb-4">
+                {selectedVideo.source === 'youtube' ? (
+                  <div className="aspect-video bg-gradient-to-br from-red-400 to-pink-500 flex items-center justify-center">
+                    <div className="text-center text-white space-y-4">
+                      <div className="text-8xl">▶️</div>
+                      <p className="text-xl font-semibold">YouTube Video Player</p>
+                      <a
+                        href={selectedVideo.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-2 bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg font-semibold transition"
+                      >
+                        <ExternalLink size={20} />
+                        <span>Watch on YouTube</span>
+                      </a>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="aspect-video bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
+                    <div className="text-center text-white space-y-4">
+                      <div className="text-8xl">🎓</div>
+                      <p className="text-xl font-semibold">Media Mayura Video Player</p>
+                      <a
+                        href={selectedVideo.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-lg font-semibold transition"
+                      >
+                        <ExternalLink size={20} />
+                        <span>Open in Media Mayura</span>
+                      </a>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4 text-sm text-gray-600">
+                    <span className="flex items-center space-x-1">
+                      <PlayCircle size={16} />
+                      <span>{selectedVideo.duration}</span>
+                    </span>
+                    <span className="flex items-center space-x-1">
+                      <Eye size={16} />
+                      <span>{selectedVideo.views} views</span>
+                    </span>
+                    <span className="flex items-center space-x-1">
+                      <Calendar size={16} />
+                      <span>{selectedVideo.uploadedDate}</span>
+                    </span>
+                  </div>
+                  {currentUser.role === 'admin' && (
+                    <button
+                      onClick={() => handleDeleteVideo(selectedVideo.id)}
+                      className="flex items-center space-x-2 text-red-600 hover:bg-red-50 px-3 py-1 rounded transition"
+                    >
+                      <Trash2 size={16} />
+                      <span>Delete</span>
+                    </button>
+                  )}
+                </div>
+
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <h4 className="font-semibold text-gray-800 mb-2">Description</h4>
+                  <p className="text-gray-600">{selectedVideo.description}</p>
+                </div>
+
+                <div className="flex justify-between items-center pt-4 border-t">
+                  <button
+                    onClick={() => navigateVideo(-1, getVideosByMonth(selectedVideo.year, selectedVideo.month))}
+                    disabled={videoIndex === 0}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-semibold transition ${
+                      videoIndex === 0
+                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                        : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                    }`}
+                  >
+                    <ChevronLeft size={20} />
+                    <span>Previous</span>
+                  </button>
+
+                  <span className="text-gray-600">
+                    Video {videoIndex + 1} of {getVideosByMonth(selectedVideo.year, selectedVideo.month).length}
+                  </span>
+
+                  <button
+                    onClick={() => navigateVideo(1, getVideosByMonth(selectedVideo.year, selectedVideo.month))}
+                    disabled={videoIndex === getVideosByMonth(selectedVideo.year, selectedVideo.month).length - 1}
+                    className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-semibold transition ${
+                      videoIndex === getVideosByMonth(selectedVideo.year, selectedVideo.month).length - 1
+                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                        : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                    }`}
+                  >
+                    <span>Next</span>
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
+      )}
 
-        <!-- Contact Page -->
-        <div id="contact" class="page">
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h2>Contact Information</h2>
-                    <div class="info-item">
-                        <i class="fas fa-user"></i>
-                        <div>
-                            <h3>Name</h3>
-                            <p>D.M.Kaawya</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h3>Email</h3>
-                            <p>dmkaawya@gmail.com</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-phone"></i>
-                        <div>
-                            <h3>Phone</h3>
-                            <p>0775048455 (WhatsApp/Telegram)</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-globe"></i>
-                        <div>
-                            <h3>Website</h3>
-                            <p>dmkaawya.vercel.app</p>
-                        </div>
-                    </div>
-                    <div class="info-item">
-                        <i class="fas fa-share-alt"></i>
-                        <div>
-                            <h3>Social Media</h3>
-                            <p>dmkaawya</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="contact-form">
-                    <h2>Send a Message</h2>
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Your Name</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Your Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                        <div class="form-message" id="formMessage"></div>
-                    </form>
-                </div>
+      {showAddVideo && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full p-8 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-gray-800">Add New Video</h3>
+              <button onClick={() => setShowAddVideo(false)} className="text-gray-500 hover:text-gray-700">
+                <X size={24} />
+              </button>
             </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Title</label>
+                <input
+                  type="text"
+                  value={newVideo.title}
+                  onChange={(e) => setNewVideo({ ...newVideo, title: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="Enter video title"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Video URL</label>
+                <input
+                  type="text"
+                  value={newVideo.url}
+                  onChange={(e) => setNewVideo({ ...newVideo, url: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  placeholder="https://youtube.com/watch?v=..."
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Month</label>
+                  <select
+                    value={newVideo.month}
+                    onChange={(e) => setNewVideo({ ...newVideo, month: e.target.value })}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  >
+                    {['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'].map(m => (
+                      <option key={m} value={m}>{m}</option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">Year</label>
+                  <select
+                    value={newVideo.year}
+                    onChange={(e) => setNewVideo({ ...newVideo, year: parseInt(e.target.value) })}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  >
+                    <option value={2024}>2024</option>
+                    <option value={2025}>2025</option>
+                    <option value={2026}>2026</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Source</label>
+                <div className="flex gap-4">
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      value="youtube"
+                      checked={newVideo.source === 'youtube'}
+                      onChange={(e) => setNewVideo({ ...newVideo, source: e.target.value })}
+                      className="w-4 h-4 text-indigo-600"
+                    />
+                    <span className="text-gray-700">YouTube</span>
+                  </label>
+                  <label className="flex items-center space-x-2 cursor-pointer">
+                    <input
+                      type="radio"
+                      value="mediamayura"
+                      checked={newVideo.source === 'mediamayura'}
+                      onChange={(e) => setNewVideo({ ...newVideo, source: e.target.value })}
+                      className="w-4 h-4 text-indigo-600"
+                    />
+                    <span className="text-gray-700">Media Mayura</span>
+                  </label>
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                <textarea
+                  value={newVideo.description}
+                  onChange={(e) => setNewVideo({ ...newVideo, description: e.target.value })}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  rows={4}
+                  placeholder="Enter video description"
+                />
+              </div>
+              <button
+                onClick={handleAddVideo}
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3 rounded-lg font-semibold transition"
+              >
+                Add Video
+              </button>
+            </div>
+          </div>
         </div>
+      )}
 
-        <!-- Login Page -->
-        <div id="login" class="page">
-            <div class="login-container">
-                <div class="login-header">
-                    <i class="fas fa-user-shield"></i>
-                    <h1>Admin Login</h1>
-                </div>
-                <div class="login-error" id="loginError">Invalid username or password</div>
-                <form id="loginForm" class="login-form">
-                    <div class="form-group">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
-                </form>
-                <p style="text-align: center; margin-top: 1rem; color: #6B7280;">
-                    username-admin / password-admin123
-                </p>
+      {showUserManagement && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full p-8 max-h-[90vh] overflow-y-auto">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-gray-800">User Management</h3>
+              <button onClick={() => setShowUserManagement(false)} className="text-gray-500 hover:text-gray-700">
+                <X size={24} />
+              </button>
             </div>
+
+            <div className="space-y-4">
+              {Object.entries(USERS).map(([username, userData]) => (
+                <div key={username} className="bg-gray-50 rounded-lg p-4 flex justify-between items-center">
+                  <div>
+                    <h4 className="font-semibold text-gray-800">{userData.name}</h4>
+                    <p className="text-sm text-gray-600">Username: {username}</p>
+                    <span className={`inline-block mt-1 text-xs px-2 py-1 rounded ${
+                      userData.role === 'admin' ? 'bg-yellow-400 text-indigo-900' : 'bg-blue-100 text-blue-800'
+                    }`}>
+                      {userData.role.toUpperCase()}
+                    </span>
+                  </div>
+                  <button className="text-indigo-600 hover:bg-indigo-50 px-3 py-1 rounded transition text-sm">
+                    Reset Password
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-
-        <!-- Admin Dashboard -->
-        <div id="admin" class="page admin-dashboard">
-            <div class="admin-header">
-                <h1>Admin Dashboard</h1>
-                <button class="btn btn-danger" id="logoutBtn">Logout</button>
-            </div>
-            
-            <div class="admin-stats">
-                <div class="stat-card">
-                    <div class="stat-icon blue">
-                        <i class="fas fa-folder"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Categories</h3>
-                        <p id="categoryCount">5</p>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon green">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Videos</h3>
-                        <p id="videoCount">15</p>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon purple">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Staff</h3>
-                        <p id="staffCount">8</p>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon red">
-                        <i class="fas fa-user-shield"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Admins</h3>
-                        <p>3</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="admin-section">
-                <h2>Add New Category</h2>
-                <form id="categoryForm" class="admin-form">
-                    <div class="form-group">
-                        <label for="catName">Category Name</label>
-                        <input type="text" id="catName" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="catDescription">Description</label>
-                        <input type="text" id="catDescription" name="description" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="catIcon">Icon Class</label>
-                        <input type="text" id="catIcon" name="icon" placeholder="e.g., fas fa-laptop-code">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Category</button>
-                </form>
-            </div>
-            
-            <div class="admin-section">
-                <h2>Add New Video</h2>
-                <form id="videoForm" class="admin-form">
-                    <div class="form-group">
-                        <label for="videoTitle">Video Title</label>
-                        <input type="text" id="videoTitle" name="title" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoDescription">Description</label>
-                        <input type="text" id="videoDescription" name="description" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoCategory">Category</label>
-                        <select id="videoCategory" name="category" required>
-                            <option value="ict">ICT</option>
-                            <option value="english">English</option>
-                            <option value="korean">Korean</option>
-                            <option value="maths">Maths</option>
-                            <option value="media">Media Studies</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoDuration">Duration</label>
-                        <input type="text" id="videoDuration" name="duration" placeholder="e.g., 45 min" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoUrl">YouTube URL</label>
-                        <input type="text" id="videoUrl" name="url" placeholder="https://www.youtube.com/embed/VIDEO_ID" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoType">Access Type</label>
-                        <select id="videoType" name="type" required>
-                            <option value="free">Free</option>
-                            <option value="paid">Paid</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="buttonType">Button Type</label>
-                        <select id="buttonType" name="buttonType" required>
-                            <option value="visit">Visit</option>
-                            <option value="request">Request Access</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Video</button>
-                </form>
-            </div>
-            
-            <div class="admin-section">
-                <h2>Add New Staff</h2>
-                <form id="staffForm" class="admin-form">
-                    <div class="form-group">
-                        <label for="staffName">Full Name</label>
-                        <input type="text" id="staffName" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="staffEmail">Email</label>
-                        <input type="email" id="staffEmail" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="staffPosition">Position</label>
-                        <input type="text" id="staffPosition" name="position" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="staffDepartment">Department</label>
-                        <select id="staffDepartment" name="department" required>
-                            <option value="ict">ICT</option>
-                            <option value="english">English</option>
-                            <option value="korean">Korean</option>
-                            <option value="maths">Maths</option>
-                            <option value="media">Media Studies</option>
-                            <option value="administration">Administration</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Add Staff</button>
-                </form>
-            </div>
-            
-            <div class="admin-section">
-                <h2>Manage Categories</h2>
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Icon</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="categoryTableBody">
-                        <tr>
-                            <td>ICT</td>
-                            <td>Information and Communication Technology</td>
-                            <td>fas fa-laptop-code</td>
-                            <td>
-                                <button class="btn btn-danger btn-small">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>English</td>
-                            <td>English Language Courses</td>
-                            <td>fas fa-language</td>
-                            <td>
-                                <button class="btn btn-danger btn-small">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Korean</td>
-                            <td>Korean Language and Culture</td>
-                            <td>fas fa-yin-yang</td>
-                            <td>
-                                <button class="btn btn-danger btn-small">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Maths</td>
-                            <td>Mathematics Courses</td>
-                            <td>fas fa-calculator</td>
-                            <td>
-                                <button class="btn btn-danger btn-small">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Media Studies</td>
-                            <td>Media and Communication</td>
-                            <td>fas fa-film</td>
-                            <td>
-                                <button class="btn btn-danger btn-small">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            <p>Developed by D.M.Kaawya</p>
-            <p>&copy; 2025 K-Edu. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script>
-        // Sample data
-        const lessonsData = {
-            ict: [
-                { id: 1, title: "Introduction to Programming", description: "Learn the basics of programming with Python", type: "free", duration: "45 min", url: "https://www.youtube.com/embed/_uQrJ0TkZlc" },
-                { id: 2, title: "Web Development Fundamentals", description: "HTML, CSS, and JavaScript basics", type: "paid", duration: "1h 30min", url: "https://www.youtube.com/embed/UB1O30fR-EE" },
-                { id: 3, title: "Database Design", description: "Learn SQL and database concepts", type: "free", duration: "1h", url: "https://www.youtube.com/embed/FR4QIeZaPeM" }
-            ],
-            english: [
-                { id: 4, title: "English Grammar Basics", description: "Master essential grammar rules", type: "free", duration: "30 min", url: "https://www.youtube.com/embed/pxu7a1fx8gI" },
-                { id: 5, title: "Business English", description: "Professional communication skills", type: "paid", duration: "2h", url: "https://www.youtube.com/embed/0eUOsWVBqoM" },
-                { id: 6, title: "IELTS Preparation", description: "Comprehensive IELTS exam guide", type: "paid", duration: "3h", url: "https://www.youtube.com/embed/1T8fCqg9Zg4" }
-            ],
-            korean: [
-                { id: 7, title: "Korean Alphabet (Hangul)", description: "Learn to read and write Korean", type: "free", duration: "45 min", url: "https://www.youtube.com/embed/suVnT_lBfHg" },
-                { id: 8, title: "Basic Korean Phrases", description: "Essential phrases for beginners", type: "free", duration: "1h", url: "https://www.youtube.com/embed/UC6im0qO8u0" },
-                { id: 9, title: "Korean Culture", description: "Understanding Korean traditions", type: "paid", duration: "1h 15min", url: "https://www.youtube.com/embed/5yHlHJl_BqE" }
-            ],
-             network: [
-                { id: 10, title: "Network Engineer Roadmap(2025)", description: "How to Become a Network Engineer - Beginner to Advanced", type: "free", duration: "11 min", url: "https://youtu.be/pwWeoqNMmAo?si=yiR3xfYcDZf1IyFc" },
-                { id: 11, title: "what is an IP Address?", description: "You SUCK at Subnetting EP 01", type: "free", duration: "19 Min", url: "https://youtu.be/5WfiTHiU4x8?si=fVMZ3G2GGsexpA1L" },
-                { id: 12, title: "you need to learn Python RIGHT NOW!!", description: "Python Start EP 01", type: "Free", duration: "18min", url: "https://youtu.be/mRMmlo_Uqcs?si=fXPjXbfLDl-CVYk0" }
-            ],
-            maths: [
-                { id: 13, title: "Algebra Fundamentals", description: "Master algebraic concepts", type: "free", duration: "1h", url: "https://www.youtube.com/embed/3DyBj7dOyNk" },
-                { id: 14, title: "Calculus Introduction", description: "Limits, derivatives, and integrals", type: "paid", duration: "2h 30min", url: "https://www.youtube.com/embed/WUvTyaaNkzM" },
-                { id: 15, title: "Statistics for Beginners", description: "Basic statistical concepts", type: "free", duration: "1h 15min", url: "https://www.youtube.com/embed/TMZ3uF6XG1c" }
-            ],
-            media: [
-                { id: 16, title: "Digital Photography", description: "Master your camera skills", type: "paid", duration: "2h", url: "https://www.youtube.com/embed/7o2V5LjH4sE" },
-                { id: 17, title: "Video Editing Basics", description: "Learn professional editing techniques", type: "paid", duration: "1h 45min", url: "https://www.youtube.com/embed/GI5J9LrP_9s" },
-                { id: 18, title: "Social Media Marketing", description: "Effective social media strategies", type: "free", duration: "1h", url: "https://www.youtube.com/embed/fO1ii0S_rTo" }
-            ]
-        };
-
-        // DOM elements
-        const pages = document.querySelectorAll('.page');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const hamburger = document.getElementById('hamburger');
-        const navLinksContainer = document.getElementById('navLinks');
-        const exploreBtn = document.getElementById('exploreBtn');
-        const categoryCards = document.querySelectorAll('.category-card');
-        const lessonsContainer = document.getElementById('lessonsContainer');
-        const lessonsGrid = document.getElementById('lessonsGrid');
-        const categoryTitle = document.getElementById('categoryTitle');
-        const contactForm = document.getElementById('contactForm');
-        const formMessage = document.getElementById('formMessage');
-        const loginForm = document.getElementById('loginForm');
-        const loginError = document.getElementById('loginError');
-        const logoutBtn = document.getElementById('logoutBtn');
-        const categoryForm = document.getElementById('categoryForm');
-        const videoForm = document.getElementById('videoForm');
-        const staffForm = document.getElementById('staffForm');
-        const categoryTableBody = document.getElementById('categoryTableBody');
-        const categoryCount = document.getElementById('categoryCount');
-        const videoCount = document.getElementById('videoCount');
-        const staffCount = document.getElementById('staffCount');
-
-        // Navigation
-        function showPage(pageId) {
-            pages.forEach(page => {
-                page.classList.remove('active');
-            });
-            
-            document.getElementById(pageId).classList.add('active');
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('data-page') === pageId) {
-                    link.classList.add('active');
-                }
-            });
-            
-            // Close mobile menu
-            navLinksContainer.classList.remove('active');
-        }
-
-        // Event listeners for navigation
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const pageId = link.getAttribute('data-page');
-                showPage(pageId);
-            });
-        });
-
-        // Mobile menu toggle
-        hamburger.addEventListener('click', () => {
-            navLinksContainer.classList.toggle('active');
-        });
-
-        // Explore button
-        exploreBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('categories');
-        });
-
-        // Category cards
-        categoryCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const category = card.getAttribute('data-category');
-                showLessons(category);
-            });
-        });
-
-        // Show lessons for a category
-        function showLessons(category) {
-            const categoryNames = {
-                ict: 'ICT',
-                english: 'English',
-                korean: 'Korean',
-                maths: 'Mathematics',
-                media: 'Media Studies',
-                network: 'Networking'
-            };
-            
-            categoryTitle.textContent = categoryNames[category] + ' Lessons';
-            lessonsGrid.innerHTML = '';
-            
-            const lessons = lessonsData[category];
-            lessons.forEach(lesson => {
-                const lessonCard = document.createElement('div');
-                lessonCard.className = 'lesson-card';
-                lessonCard.innerHTML = `
-                    <div class="lesson-thumbnail">
-                        <i class="fas fa-play-circle"></i>
-                    </div>
-                    <div class="lesson-body">
-                        <h3 class="lesson-title">${lesson.title}</h3>
-                        <p class="lesson-description">${lesson.description}</p>
-                        <div class="lesson-meta">
-                            <span class="lesson-type ${lesson.type}">${lesson.type === 'free' ? 'Free' : 'Paid'}</span>
-                            <span class="lesson-duration"><i class="fas fa-clock"></i> ${lesson.duration}</span>
-                        </div>
-                    </div>
-                `;
-                
-                lessonCard.addEventListener('click', () => {
-                    showLessonDetail(lesson);
-                });
-                
-                lessonsGrid.appendChild(lessonCard);
-            });
-            
-            lessonsContainer.classList.add('active');
-            lessonsContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        // Show lesson detail
-        function showLessonDetail(lesson) {
-            // Create lesson detail view
-            const lessonDetail = document.createElement('div');
-            lessonDetail.className = 'lesson-detail active';
-            lessonDetail.innerHTML = `
-                <div class="lesson-header">
-                    <h1 class="lesson-title-large">${lesson.title}</h1>
-                    <div class="lesson-meta-large">
-                        <span class="lesson-type ${lesson.type}">${lesson.type === 'free' ? 'Free' : 'Paid'}</span>
-                        <span class="lesson-duration"><i class="fas fa-clock"></i> ${lesson.duration}</span>
-                    </div>
-                </div>
-                
-                <div class="video-container">
-                    <iframe 
-                        src="${lesson.url}?rel=0&modestbranding=1&showinfo=0" 
-                        frameborder="0" 
-                        allowfullscreen
-                        id="videoFrame"
-                    ></iframe>
-                </div>
-                
-                <p class="lesson-description-large">${lesson.description}</p>
-                
-                <div class="lesson-actions">
-                    <button class="btn btn-request">Request Access</button>
-                </div>
-            `;
-            
-            // Replace lessons grid with lesson detail
-            lessonsGrid.innerHTML = '';
-            lessonsGrid.appendChild(lessonDetail);
-            
-            // Scroll to top of lessons container
-            lessonsContainer.scrollIntoView({ behavior: 'smooth' });
-            
-            // Add basic protection to video
-            const videoFrame = document.getElementById('videoFrame');
-            videoFrame.addEventListener('contextmenu', (e) => {
-                e.preventDefault();
-            });
-        }
-
-        // Contact form
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(contactForm);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const message = formData.get('message');
-            
-            // Here you would normally send the data to a server
-            // For demo purposes, we'll just show a success message
-            
-            formMessage.textContent = 'Thank you for your message! We will get back to you soon.';
-            formMessage.className = 'form-message success';
-            formMessage.style.display = 'block';
-            
-            // Reset form
-            contactForm.reset();
-            
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                formMessage.style.display = 'none';
-            }, 5000);
-        });
-
-        // Login form
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            
-            // Simple authentication (in a real app, this would be server-side)
-            if (username === 'admin' && password === 'admin123') {
-                showPage('admin');
-                loginError.style.display = 'none';
-            } else {
-                loginError.style.display = 'block';
-            }
-        });
-
-        // Logout button
-        logoutBtn.addEventListener('click', () => {
-            showPage('home');
-        });
-
-        // Category form
-        categoryForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(categoryForm);
-            const name = formData.get('name');
-            const description = formData.get('description');
-            const icon = formData.get('icon');
-            
-            // Add to table (in a real app, this would be saved to a database)
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td>${name}</td>
-                <td>${description}</td>
-                <td>${icon}</td>
-                <td>
-                    <button class="btn btn-danger btn-small">Delete</button>
-                </td>
-            `;
-            categoryTableBody.appendChild(newRow);
-            
-            // Update count
-            const currentCount = parseInt(categoryCount.textContent);
-            categoryCount.textContent = currentCount + 1;
-            
-            // Reset form
-            categoryForm.reset();
-            
-            // Show success message
-            alert('Category added successfully!');
-        });
-
-        // Video form
-        videoForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(videoForm);
-            const title = formData.get('title');
-            const description = formData.get('description');
-            const category = formData.get('category');
-            const duration = formData.get('duration');
-            const url = formData.get('url');
-            const type = formData.get('type');
-            const buttonType = formData.get('buttonType');
-            
-            // Add to lessons data (in a real app, this would be saved to a database)
-            const newId = Object.keys(lessonsData).reduce((max, cat) => {
-                const catMax = Math.max(...lessonsData[cat].map(l => l.id));
-                return Math.max(max, catMax);
-            }, 0) + 1;
-            
-            lessonsData[category].push({
-                id: newId,
-                title,
-                description,
-                type,
-                duration,
-                url,
-                buttonType
-            });
-            
-            // Update count
-            const currentCount = parseInt(videoCount.textContent);
-            videoCount.textContent = currentCount + 1;
-            
-            // Reset form
-            videoForm.reset();
-            
-            // Show success message
-            alert('Video added successfully!');
-        });
-
-        // Staff form
-        staffForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(staffForm);
-            const name = formData.get('name');
-            const email = formData.get('email');
-            const position = formData.get('position');
-            const department = formData.get('department');
-            
-            // Update count (in a real app, this would be saved to a database)
-            const currentCount = parseInt(staffCount.textContent);
-            staffCount.textContent = currentCount + 1;
-            
-            // Reset form
-            staffForm.reset();
-            
-            // Show success message
-            alert('Staff member added successfully!');
-        });
-
-        // Initialize the page
-        showPage('home');
-    </script>
-</body>
-</html>
+      )}
+    </div>
+  );
+}

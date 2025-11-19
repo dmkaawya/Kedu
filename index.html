@@ -3,698 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KEdu - Korean Education Platform</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <title>EduWorld Pro - Complete Learning Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary-color: #4e73df;
-            --secondary-color: #858796;
-            --success-color: #1cc88a;
-            --info-color: #36b9cc;
-            --warning-color: #f6c23e;
-            --danger-color: #e74a3b;
-            --light-color: #f8f9fc;
-            --dark-color: #5a5c69;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
         }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fc;
-            color: #5a5c69;
-        }
-
-        .navbar {
-            background-color: var(--primary-color) !important;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-        }
-
-        .navbar-brand {
-            font-weight: 700;
-            font-size: 1.5rem;
-        }
-
-        .nav-link {
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.8) !important;
-            transition: all 0.3s;
-        }
-
-        .nav-link:hover {
-            color: white !important;
-        }
-
-        .hero-section {
+        
+        .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
         }
-
-        .hero-section::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHBhdHRlcm5UcmFuc2Zvcm09InJvdGF0ZSg0NSkiPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNwYXR0ZXJuKSIvPjwvc3ZnPg==');
-            opacity: 0.4;
+        
+        .card-hover {
+            transition: all 0.3s ease;
         }
-
-        .hero-content {
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-title {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .section {
-            padding: 80px 0;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: "";
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--primary-color);
-            border-radius: 2px;
-        }
-
-        .year-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
-            transition: all 0.3s;
-            cursor: pointer;
-            height: 100%;
-        }
-
-        .year-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.15);
-        }
-
-        .year-icon {
-            font-size: 3rem;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-
-        .tier-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            text-align: center;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
-            transition: all 0.3s;
-            cursor: pointer;
-            height: 100%;
-            margin-bottom: 20px;
-        }
-
-        .tier-card:hover {
+        
+        .card-hover:hover {
             transform: translateY(-5px);
-            box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-
-        .tier-icon {
-            font-size: 2.5rem;
-            color: var(--info-color);
-            margin-bottom: 15px;
+        
+        .text-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-
-        .month-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
-            transition: all 0.3s;
-            cursor: pointer;
-            height: 100%;
-            margin-bottom: 20px;
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
         }
-
-        .month-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.15);
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
-
-        .month-icon {
-            font-size: 2rem;
-            color: var(--success-color);
-            margin-bottom: 10px;
+        
+        .slide-up {
+            animation: slideUp 0.5s ease-out;
         }
-
-        .video-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
-            transition: all 0.3s;
-            margin-bottom: 25px;
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-
-        .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.15);
+        
+        .pulse {
+            animation: pulse 2s infinite;
         }
-
-        .video-thumbnail {
-            position: relative;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-            background-color: #000;
-            overflow: hidden;
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
         }
-
-        .video-thumbnail img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            transition: all 0.3s;
-        }
-
-        .video-card:hover .play-button {
-            background: var(--primary-color);
-            transform: translate(-50%, -50%) scale(1.1);
-        }
-
-        .video-details {
-            padding: 20px;
-        }
-
-        .video-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--dark-color);
-        }
-
-        .video-description {
-            color: var(--secondary-color);
-            margin-bottom: 15px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .video-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.9rem;
-        }
-
-        .video-date {
-            color: var(--secondary-color);
-        }
-
-        .video-price {
-            font-weight: 600;
-        }
-
-        .free-badge {
-            background: var(--success-color);
-            color: white;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .paid-badge {
-            background: var(--warning-color);
-            color: white;
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .login-form {
-            max-width: 450px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
-        }
-
-        .form-control {
-            border-radius: 10px;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            margin-bottom: 20px;
-        }
-
-        .btn-primary {
-            background: var(--primary-color);
-            border: none;
-            border-radius: 10px;
-            padding: 12px 25px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .btn-primary:hover {
-            background: #2e59d9;
-            transform: translateY(-2px);
-        }
-
-        .notice-card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
-            border-left: 5px solid var(--info-color);
-        }
-
-        .notice-date {
-            color: var(--secondary-color);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        .notice-title {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--dark-color);
-        }
-
-        .student-table {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
-        }
-
-        .table thead th {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            font-weight: 600;
-            padding: 15px;
-        }
-
-        .table tbody td {
-            padding: 15px;
-            vertical-align: middle;
-        }
-
-        .footer {
-            background: var(--dark-color);
-            color: white;
-            padding: 50px 0 30px;
-            text-align: center;
-        }
-
-        .footer p {
-            margin-bottom: 0;
-            opacity: 0.8;
-        }
-
-        .access-indicator {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
-
-        .access-granted {
-            background: var(--success-color);
-        }
-
-        .access-denied {
-            background: var(--danger-color);
-        }
-
-        .video-modal .modal-content {
-            border-radius: 15px;
-            overflow: hidden;
-        }
-
-        .video-modal .modal-header {
-            background: var(--primary-color);
-            color: white;
-            border: none;
-        }
-
-        .video-modal .modal-body {
-            padding: 0;
-        }
-
-        .video-modal .video-container {
+        
+        .video-container {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
         }
-
-        .video-modal .video-container iframe {
+        
+        .video-container iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
         }
-
-        .video-modal .modal-footer {
-            background: #f8f9fc;
-            border: none;
-        }
-
-        .lesson-group {
-            margin-bottom: 30px;
-        }
-
-        .lesson-group-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-        }
-
-        .lesson-group-title i {
-            margin-right: 10px;
-        }
-
-        .lesson-month {
-            margin-bottom: 20px;
-        }
-
-        .lesson-month-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--info-color);
-            padding-bottom: 5px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .user-menu {
-            position: relative;
-        }
-
-        .user-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-            min-width: 200px;
-            z-index: 1000;
-            display: none;
-        }
-
-        .user-dropdown.show {
-            display: block;
-        }
-
-        .user-dropdown a {
-            display: block;
-            padding: 10px 15px;
-            color: var(--dark-color);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .user-dropdown a:hover {
-            background: var(--light-color);
-            color: var(--primary-color);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
-
-        .user-info:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .user-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .year-card, .tier-card, .month-card {
-                margin-bottom: 20px;
-            }
-        }
     </style>
 </head>
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#"><i class="bi bi-mortarboard-fill me-2"></i>KEdu</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#" data-page="home">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-page="about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-page="contact">Contact Us</a>
-                    </li>
-                    <li class="nav-item d-none" id="login-nav-item">
-                        <a class="nav-link" href="#" data-page="login">Login</a>
-                    </li>
-                    <li class="nav-item d-none" id="user-nav-item">
-                        <div class="user-menu">
-                            <div class="user-info" id="user-info">
-                                <div class="user-avatar">
-                                    <i class="bi bi-person-fill"></i>
-                                </div>
-                                <span id="user-name">User</span>
-                                <i class="bi bi-chevron-down ms-2"></i>
-                            </div>
-                            <div class="user-dropdown" id="user-dropdown">
-                                <a href="#" data-page="student">My Dashboard</a>
-                                <a href="#" data-page="admin" id="admin-link" style="display: none;">Admin Panel</a>
-                                <a href="#" id="logout-btn">Logout</a>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" data-page="notice">Notice</a>
-                    </li>
-                </ul>
+<body class="bg-gray-50">
+    <!-- Public Navigation -->
+    <nav id="publicNav" class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <i class="fas fa-graduation-cap text-3xl text-purple-600 mr-3"></i>
+                    <span class="text-2xl font-bold text-gradient">EduWorld Pro</span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" onclick="showSection('home')" class="text-gray-700 hover:text-purple-600 transition">Home</a>
+                    <a href="#" onclick="showSection('about')" class="text-gray-700 hover:text-purple-600 transition">About</a>
+                    <a href="#" onclick="showSection('contact')" class="text-gray-700 hover:text-purple-600 transition">Contact</a>
+                    <a href="#" onclick="showSection('login')" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">Login</a>
+                </div>
+                <button class="md:hidden" onclick="toggleMobileMenu()">
+                    <i class="fas fa-bars text-2xl text-gray-700"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+            <div class="px-6 py-4 space-y-3">
+                <a href="#" onclick="showSection('home')" class="block text-gray-700 hover:text-purple-600">Home</a>
+                <a href="#" onclick="showSection('about')" class="block text-gray-700 hover:text-purple-600">About</a>
+                <a href="#" onclick="showSection('contact')" class="block text-gray-700 hover:text-purple-600">Contact</a>
+                <a href="#" onclick="showSection('login')" class="block bg-purple-600 text-white px-4 py-2 rounded-lg text-center">Login</a>
             </div>
         </div>
     </nav>
 
     <!-- Home Section -->
-    <section id="home-section" class="section">
-        <div class="container">
-            <div class="hero-section">
-                <div class="hero-content">
-                    <h1 class="hero-title">Korean Education Platform</h1>
-                    <p class="hero-subtitle">Learn Korean with our comprehensive courses for 2026 & 2027</p>
-                    <div class="d-flex justify-content-center gap-3">
-                        <button class="btn btn-light btn-lg" id="year-2026-btn">2026 Courses</button>
-                        <button class="btn btn-outline-light btn-lg" id="year-2027-btn">2027 Courses</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Year Selection -->
-            <div id="year-selection" class="mt-5">
-                <h2 class="section-title">Select Academic Year</h2>
-                <div class="row">
-                    <div class="col-md-6 mb-4">
-                        <div class="year-card" data-year="2026">
-                            <div class="year-icon">
-                                <i class="bi bi-calendar-event"></i>
-                            </div>
-                            <h3>2026</h3>
-                            <p class="text-muted">Comprehensive Korean courses for the 2026 academic year</p>
+    <section id="homeSection" class="min-h-screen">
+        <!-- Hero Section -->
+        <div class="gradient-bg text-white pt-24 pb-20">
+            <div class="container mx-auto px-6">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-10 md:mb-0 slide-in">
+                        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                            Transform Your Learning Experience
+                        </h1>
+                        <p class="text-xl mb-8 text-gray-200">
+                            Access world-class education with interactive videos, expert teachers, and comprehensive resources
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <button onclick="showSection('login')" class="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition pulse">
+                                Get Started
+                            </button>
+                            <button onclick="showSection('about')" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-purple-600 transition">
+                                Learn More
+                            </button>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="year-card" data-year="2027">
-                            <div class="year-icon">
-                                <i class="bi bi-calendar-check"></i>
-                            </div>
-                            <h3>2027</h3>
-                            <p class="text-muted">Advanced Korean courses for the 2027 academic year</p>
+                    <div class="md:w-1/2 flex justify-center">
+                        <div class="floating">
+                            <i class="fas fa-laptop-code text-9xl opacity-20"></i>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Tier Selection -->
-            <div id="tier-selection" class="mt-5 d-none">
-                <h2 class="section-title">Select Course Tier</h2>
-                <div class="row">
-                    <div class="col-md-6 mb-4">
-                        <div class="tier-card" data-tier="theory">
-                            <div class="tier-icon">
-                                <i class="bi bi-book"></i>
-                            </div>
-                            <h3>Theoretical Paper</h3>
-                            <p class="text-muted">In-depth theoretical knowledge of Korean language</p>
-                        </div>
+        <!-- Features Section -->
+        <div class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4">Why Choose EduWorld Pro?</h2>
+                    <p class="text-xl text-gray-600">Experience education like never before</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center p-6 rounded-lg bg-purple-50 card-hover">
+                        <i class="fas fa-video text-5xl text-purple-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Interactive Videos</h3>
+                        <p class="text-gray-600">Watch high-quality educational videos embedded directly on our platform</p>
                     </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="tier-card" data-tier="extra">
-                            <div class="tier-icon">
-                                <i class="bi bi-pencil-square"></i>
-                            </div>
-                            <h3>Extra Class</h3>
-                            <p class="text-muted">Practical sessions and additional learning materials</p>
-                        </div>
+                    <div class="text-center p-6 rounded-lg bg-blue-50 card-hover">
+                        <i class="fas fa-chalkboard-teacher text-5xl text-blue-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Expert Teachers</h3>
+                        <p class="text-gray-600">Learn from industry professionals and experienced educators</p>
+                    </div>
+                    <div class="text-center p-6 rounded-lg bg-green-50 card-hover">
+                        <i class="fas fa-certificate text-5xl text-green-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-2">Certified Courses</h3>
+                        <p class="text-gray-600">Earn recognized certificates upon course completion</p>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Month Selection -->
-            <div id="month-selection" class="mt-5 d-none">
-                <h2 class="section-title">Select Month</h2>
-                <div class="row" id="months-container">
-                    <!-- Months will be dynamically generated -->
-                </div>
-            </div>
-
-            <!-- Video Section -->
-            <div id="video-section" class="mt-5 d-none">
-                <h2 class="section-title">Course Videos</h2>
-                <div class="row" id="videos-container">
-                    <!-- Videos will be dynamically generated -->
+        <!-- Stats Section -->
+        <div class="py-16 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                    <div class="card-hover p-6 rounded-lg bg-white">
+                        <i class="fas fa-users text-4xl text-purple-600 mb-4"></i>
+                        <h3 class="text-3xl font-bold text-gray-800">50,000+</h3>
+                        <p class="text-gray-600">Students</p>
+                    </div>
+                    <div class="card-hover p-6 rounded-lg bg-white">
+                        <i class="fas fa-video text-4xl text-blue-600 mb-4"></i>
+                        <h3 class="text-3xl font-bold text-gray-800">10,000+</h3>
+                        <p class="text-gray-600">Videos</p>
+                    </div>
+                    <div class="card-hover p-6 rounded-lg bg-white">
+                        <i class="fas fa-book text-4xl text-green-600 mb-4"></i>
+                        <h3 class="text-3xl font-bold text-gray-800">500+</h3>
+                        <p class="text-gray-600">Courses</p>
+                    </div>
+                    <div class="card-hover p-6 rounded-lg bg-white">
+                        <i class="fas fa-award text-4xl text-yellow-600 mb-4"></i>
+                        <h3 class="text-3xl font-bold text-gray-800">98%</h3>
+                        <p class="text-gray-600">Success Rate</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about-section" class="section d-none">
-        <div class="container">
-            <h2 class="section-title">About KEdu</h2>
-            <div class="row">
-                <div class="col-lg-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <h3 class="card-title">Our Mission</h3>
-                            <p class="card-text">At KEdu, we're dedicated to providing high-quality Korean language education to students worldwide. Our mission is to make learning Korean accessible, engaging, and effective for everyone.</p>
-                            <p class="card-text">We believe that language learning opens doors to new cultures, opportunities, and connections. Our comprehensive curriculum is designed to take students from beginner to advanced levels with structured learning paths.</p>
-                        </div>
-                    </div>
+    <section id="aboutSection" class="hidden min-h-screen py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4">About EduWorld Pro</h2>
+                    <p class="text-xl text-gray-600">Revolutionizing education through technology</p>
                 </div>
-                <div class="col-lg-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <h3 class="card-title">Our Approach</h3>
-                            <p class="card-text">Our teaching methodology combines traditional language learning techniques with modern technology. We offer a blend of theoretical knowledge and practical application to ensure well-rounded language skills.</p>
-                            <p class="card-text">With courses designed for both 2026 and 2027 academic years, we provide up-to-date content that reflects current usage and cultural nuances of the Korean language.</p>
-                        </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Our Mission</h3>
+                        <p class="text-gray-600 mb-4">
+                            To provide accessible, high-quality education to students worldwide through innovative technology and expert instruction.
+                        </p>
+                        <p class="text-gray-600">
+                            We believe that education should be engaging, interactive, and available to everyone, regardless of their location or background.
+                        </p>
                     </div>
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="col-md-4 mb-4">
                     <div class="text-center">
-                        <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                            <i class="bi bi-people-fill fs-2"></i>
-                        </div>
-                        <h4>Expert Instructors</h4>
-                        <p>Learn from native Korean speakers and certified language educators with years of teaching experience.</p>
+                        <i class="fas fa-globe-americas text-9xl text-purple-200"></i>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="text-center">
-                        <div class="bg-info text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                            <i class="bi bi-laptop-fill fs-2"></i>
-                        </div>
-                        <h4>Modern Platform</h4>
-                        <p>Access our courses anytime, anywhere on our user-friendly platform optimized for all devices.</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
+                    <div class="text-center order-2 md:order-1">
+                        <i class="fas fa-lightbulb text-9xl text-yellow-200"></i>
+                    </div>
+                    <div class="order-1 md:order-2">
+                        <h3 class="text-2xl font-bold mb-4">Our Vision</h3>
+                        <p class="text-gray-600 mb-4">
+                            To become the world's leading online education platform, empowering millions of students to achieve their academic and career goals.
+                        </p>
+                        <p class="text-gray-600">
+                            We envision a future where quality education is just a click away, breaking down barriers and creating opportunities for all.
+                        </p>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="text-center">
-                        <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
-                            <i class="bi bi-trophy-fill fs-2"></i>
+                
+                <div class="bg-gray-50 rounded-xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-center">Our Values</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <i class="fas fa-heart text-4xl text-red-500 mb-4"></i>
+                            <h4 class="font-semibold mb-2">Passion</h4>
+                            <p class="text-gray-600 text-sm">We're passionate about education and committed to excellence</p>
                         </div>
-                        <h4>Proven Results</h4>
-                        <p>Join thousands of successful students who have achieved fluency in Korean through our programs.</p>
+                        <div class="text-center">
+                            <i class="fas fa-users text-4xl text-blue-500 mb-4"></i>
+                            <h4 class="font-semibold mb-2">Community</h4>
+                            <p class="text-gray-600 text-sm">Building a global community of learners and educators</p>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-rocket text-4xl text-purple-500 mb-4"></i>
+                            <h4 class="font-semibold mb-2">Innovation</h4>
+                            <p class="text-gray-600 text-sm">Constantly innovating to improve the learning experience</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -702,828 +272,783 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact-section" class="section d-none">
-        <div class="container">
-            <h2 class="section-title">Contact Us</h2>
-            <div class="row">
-                <div class="col-lg-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <h3 class="card-title">Get in Touch</h3>
-                            <p class="card-text">Have questions about our courses or need assistance? Our team is here to help you.</p>
-                            <ul class="list-unstyled">
-                                <li class="mb-3"><i class="bi bi-geo-alt-fill text-primary me-2"></i> 123 Education Street, Seoul, South Korea</li>
-                                <li class="mb-3"><i class="bi bi-telephone-fill text-primary me-2"></i> +82 2 1234 5678</li>
-                                <li class="mb-3"><i class="bi bi-envelope-fill text-primary me-2"></i> info@kedu.com</li>
-                                <li><i class="bi bi-clock-fill text-primary me-2"></i> Mon-Fri: 9:00 AM - 6:00 PM (KST)</li>
-                            </ul>
-                        </div>
-                    </div>
+    <section id="contactSection" class="hidden min-h-screen py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-4">Contact Us</h2>
+                    <p class="text-xl text-gray-600">We're here to help with any questions</p>
                 </div>
-                <div class="col-lg-6 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <h3 class="card-title">Send a Message</h3>
-                            <form id="contact-form">
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Your Name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <input type="email" class="form-control" placeholder="Your Email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Subject" required>
-                                </div>
-                                <div class="mb-3">
-                                    <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Send Message</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Login Section -->
-    <section id="login-section" class="section d-none">
-        <div class="container">
-            <h2 class="section-title">Login to Your Account</h2>
-            <div class="login-form">
-                <form id="login-form">
-                    <div class="text-center mb-4">
-                        <i class="bi bi-person-circle fs-1 text-primary"></i>
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="username" placeholder="Username" required>
-                    </div>
-                    <div class="mb-3">
-                        <input type="password" class="form-control" id="password" placeholder="Password" required>
-                    </div>
-                    <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">Login</button>
-                    </div>
-                    <div class="text-center mt-3">
-                        <small class="text-muted">Demo credentials: admin/admin123 or student1/student123</small>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- Notice Section -->
-    <section id="notice-section" class="section d-none">
-        <div class="container">
-            <h2 class="section-title">Notices & Announcements</h2>
-            <div class="notice-card">
-                <div class="notice-date">May 15, 2023</div>
-                <h3 class="notice-title">New 2027 Course Enrollment Open</h3>
-                <p>We're excited to announce that enrollment for our 2027 Korean language courses is now open. Early bird discounts available for the first 100 students!</p>
-            </div>
-            <div class="notice-card">
-                <div class="notice-date">April 28, 2023</div>
-                <h3 class="notice-title">System Maintenance on May 5</h3>
-                <p>Please note that our platform will undergo scheduled maintenance on May 5 from 2:00 AM to 6:00 AM KST. During this time, the service may be temporarily unavailable.</p>
-            </div>
-            <div class="notice-card">
-                <div class="notice-date">April 10, 2023</div>
-                <h3 class="notice-title">Korean Cultural Festival</h3>
-                <p>Join us for our annual Korean Cultural Festival on May 20! Experience traditional music, dance, food, and language workshops. Free for all enrolled students.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Admin Dashboard (Hidden by default) -->
-    <section id="admin-section" class="section d-none">
-        <div class="container">
-            <h2 class="section-title">Admin Dashboard</h2>
-            <div class="mb-4">
-                <button class="btn btn-primary" id="view-students-btn">View Students</button>
-                <button class="btn btn-info" id="manage-videos-btn">Manage Videos</button>
-            </div>
-
-            <!-- Student Management -->
-            <div id="student-management">
-                <h3 class="mb-4">Student Management</h3>
-                <div class="student-table">
-                    <table class="table table-hover mb-0">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>ID Number</th>
-                                <th>District</th>
-                                <th>Date of Birth</th>
-                                <th>Phone</th>
-                                <th>Email</th>
-                                <th>Username</th>
-                                <th>Password</th>
-                                <th>Access</th>
-                            </tr>
-                        </thead>
-                        <tbody id="student-table-body">
-                            <!-- Student data will be populated here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Video Management -->
-            <div id="video-management" class="d-none">
-                <h3 class="mb-4">Video Management</h3>
-                <div class="card border-0 shadow-sm mb-4">
-                    <div class="card-body">
-                        <h4 class="card-title">Add New Video</h4>
-                        <form id="add-video-form">
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <input type="text" class="form-control" id="video-title" placeholder="Video Title" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <select class="form-control" id="video-year" required>
-                                        <option value="">Select Year</option>
-                                        <option value="2026">2026</option>
-                                        <option value="2027">2027</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <select class="form-control" id="video-tier" required>
-                                        <option value="">Select Tier</option>
-                                        <option value="theory">Theoretical Paper</option>
-                                        <option value="extra">Extra Class</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <select class="form-control" id="video-month" required>
-                                        <option value="">Select Month</option>
-                                        <option value="January">January</option>
-                                        <option value="February">February</option>
-                                        <option value="March">March</option>
-                                        <option value="April">April</option>
-                                        <option value="May">May</option>
-                                        <option value="June">June</option>
-                                        <option value="July">July</option>
-                                        <option value="August">August</option>
-                                        <option value="September">September</option>
-                                        <option value="October">October</option>
-                                        <option value="November">November</option>
-                                        <option value="December">December</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <input type="text" class="form-control" id="video-url" placeholder="YouTube Video ID" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <select class="form-control" id="video-type" required>
-                                        <option value="">Select Type</option>
-                                        <option value="free">Free</option>
-                                        <option value="paid">Paid</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <textarea class="form-control" id="video-description" rows="3" placeholder="Video Description" required></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary">Add Video</button>
-                                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-xl shadow-lg p-8">
+                        <h3 class="text-2xl font-bold mb-6">Get in Touch</h3>
+                        <form onsubmit="handleContact(event)">
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-semibold mb-2">Name</label>
+                                <input type="text" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Your Name">
                             </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-semibold mb-2">Email</label>
+                                <input type="email" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="your@email.com">
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-gray-700 font-semibold mb-2">Subject</label>
+                                <input type="text" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Subject">
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-700 font-semibold mb-2">Message</label>
+                                <textarea rows="4" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Your message..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">
+                                Send Message
+                            </button>
                         </form>
                     </div>
-                </div>
-
-                <h4 class="mb-3">Existing Videos</h4>
-                <div class="student-table">
-                    <table class="table table-hover mb-0">
-                        <thead>
-                            <tr>
-                                <th>Title</th>
-                                <th>Year</th>
-                                <th>Tier</th>
-                                <th>Month</th>
-                                <th>Type</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="video-table-body">
-                            <!-- Video data will be populated here -->
-                        </tbody>
-                    </table>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <h4 class="text-xl font-semibold mb-4">Contact Information</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center">
+                                    <i class="fas fa-map-marker-alt text-purple-600 mr-3"></i>
+                                    <span class="text-gray-600">123 Education Street, Learning City, LC 12345</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-phone text-purple-600 mr-3"></i>
+                                    <span class="text-gray-600">+1 (555) 123-4567</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-envelope text-purple-600 mr-3"></i>
+                                    <span class="text-gray-600">info@eduworldpro.com</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <h4 class="text-xl font-semibold mb-4">Business Hours</h4>
+                            <div class="space-y-2 text-gray-600">
+                                <div class="flex justify-between">
+                                    <span>Monday - Friday</span>
+                                    <span>9:00 AM - 6:00 PM</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Saturday</span>
+                                    <span>10:00 AM - 4:00 PM</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Sunday</span>
+                                    <span>Closed</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white rounded-xl shadow-lg p-6">
+                            <h4 class="text-xl font-semibold mb-4">Follow Us</h4>
+                            <div class="flex space-x-4">
+                                <a href="#" class="text-gray-600 hover:text-purple-600 transition">
+                                    <i class="fab fa-facebook text-2xl"></i>
+                                </a>
+                                <a href="#" class="text-gray-600 hover:text-purple-600 transition">
+                                    <i class="fab fa-twitter text-2xl"></i>
+                                </a>
+                                <a href="#" class="text-gray-600 hover:text-purple-600 transition">
+                                    <i class="fab fa-instagram text-2xl"></i>
+                                </a>
+                                <a href="#" class="text-gray-600 hover:text-purple-600 transition">
+                                    <i class="fab fa-linkedin text-2xl"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Student Dashboard (Hidden by default) -->
-    <section id="student-section" class="section d-none">
-        <div class="container">
-            <h2 class="section-title">Student Dashboard</h2>
-            <div class="row">
-                <div class="col-lg-4 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <h3 class="card-title">My Profile</h3>
-                            <div id="student-profile">
-                                <!-- Student profile will be populated here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-8 mb-4">
-                    <div class="card border-0 shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <h3 class="card-title">My Lessons</h3>
-                            <div id="student-lessons">
-                                <!-- Student lessons will be populated here -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Login Screen -->
+    <div id="loginSection" class="hidden min-h-screen flex items-center justify-center gradient-bg">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md slide-up">
+            <div class="text-center mb-8">
+                <i class="fas fa-graduation-cap text-6xl text-purple-600 mb-4"></i>
+                <h1 class="text-3xl font-bold text-gradient">EduWorld Pro</h1>
+                <p class="text-gray-600 mt-2">Advanced Learning Management System</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Video Modal -->
-    <div class="modal fade video-modal" id="videoModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="videoModalTitle">Video Title</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            
+            <form onsubmit="handleLogin(event)" class="space-y-4">
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Username</label>
+                    <input type="text" id="username" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Enter username">
                 </div>
-                <div class="modal-body">
-                    <div class="video-container">
-                        <iframe id="videoFrame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    </div>
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Password</label>
+                    <input type="password" id="password" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Enter password">
                 </div>
-                <div class="modal-footer">
-                    <div id="videoModalDescription" class="me-auto"></div>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <div>
+                    <label class="block text-gray-700 font-semibold mb-2">Login As</label>
+                    <select id="userType" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition pulse">
+                    Login
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center">
+                <p class="text-sm text-gray-600">Demo Credentials:</p>
+                <div class="mt-2 text-xs text-gray-500">
+                    <p>Students: student1 to student10 (password: 123)</p>
+                    <p>Teachers: teacher1, teacher2 (password: 123)</p>
+                    <p>Admin: admin (password: admin123)</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2023 KEdu - Korean Education Platform. All rights reserved.</p>
+    <!-- Main Dashboard -->
+    <div id="mainDashboard" class="hidden min-h-screen">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-lg sticky top-0 z-50">
+            <div class="container mx-auto px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <i class="fas fa-graduation-cap text-3xl text-purple-600 mr-3"></i>
+                        <span class="text-2xl font-bold text-gradient">EduWorld Pro</span>
+                    </div>
+                    <div class="flex items-center space-x-6">
+                        <span id="welcomeMessage" class="text-gray-700"></span>
+                        <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Student Dashboard -->
+        <div id="studentDashboard" class="hidden container mx-auto px-6 py-8">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Student Dashboard</h2>
+                <p class="text-gray-600">Welcome to your learning portal</p>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow card-hover">
+                    <i class="fas fa-book text-3xl text-blue-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800" id="enrolledCourses">0</h3>
+                    <p class="text-gray-600">Enrolled Courses</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow card-hover">
+                    <i class="fas fa-video text-3xl text-green-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800" id="watchedVideos">0</h3>
+                    <p class="text-gray-600">Videos Watched</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow card-hover">
+                    <i class="fas fa-trophy text-3xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800" id="completedCourses">0</h3>
+                    <p class="text-gray-600">Completed Courses</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow card-hover">
+                    <i class="fas fa-certificate text-3xl text-purple-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800" id="certificates">0</h3>
+                    <p class="text-gray-600">Certificates</p>
+                </div>
+            </div>
+
+            <!-- Video Library Section -->
+            <div class="bg-white rounded-xl shadow p-6 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Video Library</h3>
+                    <div class="flex space-x-4">
+                        <select id="classType" onchange="filterVideos()" class="px-4 py-2 border rounded-lg focus:outline-none focus:border-purple-600">
+                            <option value="all">All Classes</option>
+                            <option value="theory">Theory Class</option>
+                            <option value="extra">Extra Class</option>
+                            <option value="paper">Paper Class</option>
+                        </select>
+                        <select id="monthSelect" onchange="filterVideos()" class="px-4 py-2 border rounded-lg focus:outline-none focus:border-purple-600">
+                            <option value="all">All Months</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div id="videoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Videos will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- My Classes -->
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">My Classes</h3>
+                <div id="studentClasses" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Classes will be populated by JavaScript -->
+                </div>
+            </div>
         </div>
-    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Teacher Dashboard -->
+        <div id="teacherDashboard" class="hidden container mx-auto px-6 py-8">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Teacher Dashboard</h2>
+                <p class="text-gray-600">Manage your classes and students</p>
+            </div>
+
+            <!-- Teacher Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow card-hover">
+                    <i class="fas fa-chalkboard text-3xl text-blue-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800" id="teachingClasses">0</h3>
+                    <p class="text-gray-600">Teaching Classes</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow card-hover">
+                    <i class="fas fa-users text-3xl text-green-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800" id="totalStudents">0</h3>
+                    <p class="text-gray-600">Total Students</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow card-hover">
+                    <i class="fas fa-video text-3xl text-purple-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800" id="uploadedVideos">0</h3>
+                    <p class="text-gray-600">Uploaded Videos</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow card-hover">
+                    <i class="fas fa-chart-line text-3xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800" id="completionRate">0%</h3>
+                    <p class="text-gray-600">Completion Rate</p>
+                </div>
+            </div>
+
+            <!-- My Classes -->
+            <div class="bg-white rounded-xl shadow p-6 mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">My Classes</h3>
+                <div id="teacherClasses" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Classes will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Upload Video Section -->
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Upload New Video</h3>
+                <form onsubmit="uploadVideo(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Video Title</label>
+                            <input type="text" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Enter video title">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">YouTube URL</label>
+                            <input type="url" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="https://youtube.com/watch?v=...">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Class Type</label>
+                            <select required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
+                                <option value="theory">Theory Class</option>
+                                <option value="extra">Extra Class</option>
+                                <option value="paper">Paper Class</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Month</label>
+                            <select required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value="4">April</option>
+                                <option value="5">May</option>
+                                <option value="6">June</option>
+                                <option value="7">July</option>
+                                <option value="8">August</option>
+                                <option value="9">September</option>
+                                <option value="10">October</option>
+                                <option value="11">November</option>
+                                <option value="12">December</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Class</label>
+                            <select required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
+                                <option value="web2026">Web Development 2026</option>
+                                <option value="digital2026">Digital Marketing 2026</option>
+                                <option value="graphic2026">Graphic Design 2026</option>
+                                <option value="data2027">Data Science 2027</option>
+                                <option value="mobile2027">Mobile Development 2027</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Description</label>
+                        <textarea rows="3" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Enter video description"></textarea>
+                    </div>
+                    <button type="submit" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition">
+                        <i class="fas fa-upload mr-2"></i>Upload Video
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="adminDashboard" class="hidden container mx-auto px-6 py-8">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">Admin Dashboard</h2>
+                <p class="text-gray-600">Manage the entire system</p>
+            </div>
+
+            <!-- Admin Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-xl shadow card-hover">
+                    <i class="fas fa-users text-3xl text-blue-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800" id="totalUsers">0</h3>
+                    <p class="text-gray-600">Total Users</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow card-hover">
+                    <i class="fas fa-video text-3xl text-green-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800" id="totalVideos">0</h3>
+                    <p class="text-gray-600">Total Videos</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow card-hover">
+                    <i class="fas fa-book-open text-3xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800" id="totalClasses">0</h3>
+                    <p class="text-gray-600">Total Classes</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow card-hover">
+                    <i class="fas fa-eye text-3xl text-purple-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold text-gray-800" id="totalViews">0</h3>
+                    <p class="text-gray-600">Total Views</p>
+                </div>
+            </div>
+
+            <!-- Video Management -->
+            <div class="bg-white rounded-xl shadow p-6 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Video Management</h3>
+                    <button onclick="showAddVideoForm()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                        <i class="fas fa-plus mr-2"></i>Add Video
+                    </button>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="text-left py-3 px-4">Title</th>
+                                <th class="text-left py-3 px-4">Class Type</th>
+                                <th class="text-left py-3 px-4">Month</th>
+                                <th class="text-left py-3 px-4">Views</th>
+                                <th class="text-left py-3 px-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="videoTable">
+                            <!-- Videos will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- User Management -->
+            <div class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">User Management</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="text-left py-3 px-4">Username</th>
+                                <th class="text-left py-3 px-4">Type</th>
+                                <th class="text-left py-3 px-4">Status</th>
+                                <th class="text-left py-3 px-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTable">
+                            <!-- Users will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md mx-4">
+            <div class="text-center">
+                <i class="fas fa-check-circle text-5xl text-green-500 mb-4"></i>
+                <h3 class="text-2xl font-bold mb-2">Success!</h3>
+                <p class="text-gray-600 mb-6" id="modalMessage">Operation completed successfully.</p>
+                <button onclick="closeModal()" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition">
+                    OK
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Global variables
-        let currentUser = null;
-        let selectedYear = null;
-        let selectedTier = null;
-        let selectedMonth = null;
-
-        // Student data
-        const students = [
-            { name: "Admin User", id: "ADM001", district: "Seoul", dob: "1990-01-01", phone: "010-1234-5678", email: "admin@kedu.com", username: "admin", password: "admin123", role: "admin" },
-            { name: "Student One", id: "STU001", district: "Busan", dob: "2005-03-15", phone: "010-1111-2222", email: "student1@kedu.com", username: "student1", password: "student123", role: "student", access: { year: 2026, tier: "all", months: "all" } },
-            { name: "Student Two", id: "STU002", district: "Incheon", dob: "2005-05-20", phone: "010-2222-3333", email: "student2@kedu.com", username: "student2", password: "student123", role: "student", access: { year: 2026, tier: "all", months: "all" } },
-            { name: "Student Three", id: "STU003", district: "Daegu", dob: "2005-07-10", phone: "010-3333-4444", email: "student3@kedu.com", username: "student3", password: "student123", role: "student", access: { year: 2026, tier: "all", months: "all" } },
-            { name: "Student Four", id: "STU004", district: "Daejeon", dob: "2005-09-05", phone: "010-4444-5555", email: "student4@kedu.com", username: "student4", password: "student123", role: "student", access: { year: 2026, tier: "all", months: "all" } },
-            { name: "Student Five", id: "STU005", district: "Gwangju", dob: "2005-11-12", phone: "010-5555-6666", email: "student5@kedu.com", username: "student5", password: "student123", role: "student", access: { year: 2026, tier: "all", months: "all" } },
-            { name: "Student Six", id: "STU006", district: "Suwon", dob: "2006-01-18", phone: "010-6666-7777", email: "student6@kedu.com", username: "student6", password: "student123", role: "student", access: { year: 2027, tier: "all", months: "all" } },
-            { name: "Student Seven", id: "STU007", district: "Ulsan", dob: "2006-03-22", phone: "010-7777-8888", email: "student7@kedu.com", username: "student7", password: "student123", role: "student", access: { year: 2027, tier: "all", months: "all" } },
-            { name: "Student Eight", id: "STU008", district: "Changwon", dob: "2006-05-30", phone: "010-8888-9999", email: "student8@kedu.com", username: "student8", password: "student123", role: "student", access: { year: 2027, tier: "all", months: "all" } },
-            { name: "Student Nine", id: "STU009", district: "Jeonju", dob: "2006-07-14", phone: "010-9999-0000", email: "student9@kedu.com", username: "student9", password: "student123", role: "student", access: { year: 2027, tier: "all", months: "all" } },
-            { name: "Student Ten", id: "STU010", district: "Cheongju", dob: "2006-09-25", phone: "010-0000-1111", email: "student10@kedu.com", username: "student10", password: "student123", role: "student", access: { year: 2027, tier: "all", months: "all" } },
-            { name: "Student Eleven", id: "STU011", district: "Pohang", dob: "2006-02-08", phone: "010-1111-0000", email: "student11@kedu.com", username: "student11", password: "student123", role: "student", access: { year: 2026, tier: "all", months: ["January", "February", "March", "April", "May"] } },
-            { name: "Student Twelve", id: "STU012", district: "Gumi", dob: "2006-04-12", phone: "010-2222-1111", email: "student12@kedu.com", username: "student12", password: "student123", role: "student", access: { year: 2026, tier: "all", months: ["January", "February", "March", "April", "May"] } },
-            { name: "Student Thirteen", id: "STU013", district: "Gyeongju", dob: "2006-06-19", phone: "010-3333-2222", email: "student13@kedu.com", username: "student13", password: "student123", role: "student", access: { year: 2026, tier: "all", months: ["January", "February", "March", "April", "May"] } },
-            { name: "Student Fourteen", id: "STU014", district: "Wonju", dob: "2006-08-07", phone: "010-4444-3333", email: "student14@kedu.com", username: "student14", password: "student123", role: "student", access: { year: 2026, tier: "all", months: ["January", "February", "March", "April", "May"] } },
-            { name: "Student Fifteen", id: "STU015", district: "Chuncheon", dob: "2006-10-15", phone: "010-5555-4444", email: "student15@kedu.com", username: "student15", password: "student123", role: "student", access: { year: 2026, tier: "all", months: ["January", "February", "March", "April", "May"] } },
-            { name: "Student Sixteen", id: "STU016", district: "Gangneung", dob: "2006-12-03", phone: "010-6666-5555", email: "student16@kedu.com", username: "student16", password: "student123", role: "student", access: { year: 2026, tier: "all", months: ["September"] } }
+        // Database simulation
+        let users = [
+            { username: 'student1', password: '123', type: 'student', name: 'John Doe' },
+            { username: 'student2', password: '123', type: 'student', name: 'Jane Smith' },
+            { username: 'student3', password: '123', type: 'student', name: 'Mike Johnson' },
+            { username: 'student4', password: '123', type: 'student', name: 'Sarah Williams' },
+            { username: 'student5', password: '123', type: 'student', name: 'David Brown' },
+            { username: 'student6', password: '123', type: 'student', name: 'Emily Davis' },
+            { username: 'student7', password: '123', type: 'student', name: 'James Wilson' },
+            { username: 'student8', password: '123', type: 'student', name: 'Linda Martinez' },
+            { username: 'student9', password: '123', type: 'student', name: 'Robert Anderson' },
+            { username: 'student10', password: '123', type: 'student', name: 'Maria Taylor' },
+            { username: 'teacher1', password: '123', type: 'teacher', name: 'Dr. Smith' },
+            { username: 'teacher2', password: '123', type: 'teacher', name: 'Prof. Johnson' },
+            { username: 'admin', password: 'admin123', type: 'admin', name: 'Administrator' }
         ];
 
-        // Video data
+        let classes = [
+            { id: 1, name: 'Web Development 2026', year: '2026', teacher: 'teacher1', students: ['student1', 'student2', 'student3'] },
+            { id: 2, name: 'Digital Marketing 2026', year: '2026', teacher: 'teacher2', students: ['student4', 'student5'] },
+            { id: 3, name: 'Graphic Design 2026', year: '2026', teacher: 'teacher1', students: ['student6', 'student7'] },
+            { id: 4, name: 'Data Science 2027', year: '2027', teacher: 'teacher2', students: ['student8', 'student9'] },
+            { id: 5, name: 'Mobile Development 2027', year: '2027', teacher: 'teacher1', students: ['student10'] }
+        ];
+
         let videos = [
-            { id: 1, title: "Korean Alphabet Introduction", description: "Learn the basics of the Korean alphabet (Hangul) and pronunciation rules.", url: "dQw4w9WgXcQ", month: "January", year: 2026, tier: "theory", paid: false, date: "2026-01-05" },
-            { id: 2, title: "Basic Greetings in Korean", description: "Master essential greetings and polite expressions in Korean.", url: "dQw4w9WgXcQ", month: "January", year: 2026, tier: "theory", paid: false, date: "2026-01-12" },
-            { id: 3, title: "Korean Numbers 1-100", description: "Learn to count in Korean from 1 to 100 with proper pronunciation.", url: "dQw4w9WgXcQ", month: "February", year: 2026, tier: "theory", paid: true, date: "2026-02-03" },
-            { id: 4, title: "Days of the Week in Korean", description: "Master the days of the week and related vocabulary in Korean.", url: "dQw4w9WgXcQ", month: "February", year: 2026, tier: "theory", paid: true, date: "2026-02-15" },
-            { id: 5, title: "Korean Sentence Structure", description: "Understand the basic SOV (Subject-Object-Verb) sentence structure in Korean.", url: "dQw4w9WgXcQ", month: "March", year: 2026, tier: "theory", paid: true, date: "2026-03-08" },
-            { id: 6, title: "Korean Verbs Conjugation", description: "Learn how to conjugate Korean verbs in present tense.", url: "dQw4w9WgXcQ", month: "March", year: 2026, tier: "theory", paid: true, date: "2026-03-22" },
-            { id: 7, title: "Korean Food Vocabulary", description: "Essential vocabulary for ordering food and talking about Korean cuisine.", url: "dQw4w9WgXcQ", month: "April", year: 2026, tier: "extra", paid: true, date: "2026-04-05" },
-            { id: 8, title: "Korean Honorifics System", description: "Understand the complex honorifics system in Korean language.", url: "dQw4w9WgXcQ", month: "April", year: 2026, tier: "theory", paid: true, date: "2026-04-18" },
-            { id: 9, title: "Korean Family Terms", description: "Learn family relationship terms and how to address family members.", url: "dQw4w9WgXcQ", month: "May", year: 2026, tier: "theory", paid: true, date: "2026-05-10" },
-            { id: 10, title: "Korean Weather Expressions", description: "Master vocabulary and expressions for talking about weather in Korean.", url: "dQw4w9WgXcQ", month: "May", year: 2026, tier: "extra", paid: true, date: "2026-05-25" },
-            { id: 11, title: "Korean Time Expressions", description: "Learn how to tell time and talk about schedules in Korean.", url: "dQw4w9WgXcQ", month: "June", year: 2026, tier: "theory", paid: true, date: "2026-06-07" },
-            { id: 12, title: "Korean Adjectives", description: "Master common Korean adjectives and their usage in sentences.", url: "dQw4w9WgXcQ", month: "June", year: 2026, tier: "theory", paid: true, date: "2026-06-20" },
-            { id: 13, title: "Korean Travel Phrases", description: "Essential phrases for traveling in Korea and navigating transportation.", url: "dQw4w9WgXcQ", month: "July", year: 2026, tier: "extra", paid: true, date: "2026-07-12" },
-            { id: 14, title: "Korean Past Tense", description: "Learn how to form past tense in Korean with regular and irregular verbs.", url: "dQw4w9WgXcQ", month: "July", year: 2026, tier: "theory", paid: true, date: "2026-07-28" },
-            { id: 15, title: "Korean Shopping Vocabulary", description: "Vocabulary and phrases for shopping and bargaining in Korean markets.", url: "dQw4w9WgXcQ", month: "August", year: 2026, tier: "extra", paid: true, date: "2026-08-15" },
-            { id: 16, title: "Korean Future Tense", description: "Understand how to express future actions and plans in Korean.", url: "dQw4w9WgXcQ", month: "August", year: 2026, tier: "theory", paid: true, date: "2026-08-30" },
-            { id: 17, title: "Korean School Life Vocabulary", description: "Essential vocabulary related to education and school life in Korea.", url: "dQw4w9WgXcQ", month: "September", year: 2026, tier: "theory", paid: true, date: "2026-09-10" },
-            { id: 18, title: "Korean Job Interview Phrases", description: "Key phrases and vocabulary for job interviews in Korean companies.", url: "dQw4w9WgXcQ", month: "September", year: 2026, tier: "extra", paid: true, date: "2026-09-25" },
-            { id: 19, title: "Korean Conditional Sentences", description: "Learn to form conditional sentences using 'if' in Korean.", url: "dQw4w9WgXcQ", month: "October", year: 2026, tier: "theory", paid: true, date: "2026-10-08" },
-            { id: 20, title: "Korean Business Etiquette", description: "Understanding business culture and etiquette in Korean workplaces.", url: "dQw4w9WgXcQ", month: "October", year: 2026, tier: "extra", paid: true, date: "2026-10-22" },
-            { id: 21, title: "Korean Idioms and Proverbs", description: "Common Korean idioms and proverbs with cultural explanations.", url: "dQw4w9WgXcQ", month: "November", year: 2026, tier: "theory", paid: true, date: "2026-11-05" },
-            { id: 22, title: "Korean Slang and Informal Speech", description: "Modern Korean slang and informal speech used by younger generations.", url: "dQw4w9WgXcQ", month: "November", year: 2026, tier: "extra", paid: true, date: "2026-11-20" },
-            { id: 23, title: "Korean History Overview", description: "Brief overview of Korean history and its influence on the language.", url: "dQw4w9WgXcQ", month: "December", year: 2026, tier: "theory", paid: true, date: "2026-12-10" },
-            { id: 24, title: "Korean Holiday Traditions", description: "Learn about major Korean holidays and associated traditions.", url: "dQw4w9WgXcQ", month: "December", year: 2026, tier: "extra", paid: true, date: "2026-12-25" },
-            { id: 25, title: "Advanced Korean Grammar", description: "Complex grammar structures for advanced Korean learners.", url: "dQw4w9WgXcQ", month: "January", year: 2027, tier: "theory", paid: true, date: "2027-01-15" },
-            { id: 26, title: "Korean Literature Introduction", description: "Introduction to classical and modern Korean literature.", url: "dQw4w9WgXcQ", month: "January", year: 2027, tier: "theory", paid: true, date: "2027-01-30" },
-            { id: 27, title: "Korean Business Writing", description: "Formal writing skills for business communication in Korean.", url: "dQw4w9WgXcQ", month: "February", year: 2027, tier: "extra", paid: true, date: "2027-02-12" },
-            { id: 28, title: "Korean Dialects", description: "Overview of regional dialects in the Korean language.", url: "dQw4w9WgXcQ", month: "February", year: 2027, tier: "theory", paid: true, date: "2027-02-28" }
+            { id: 1, title: 'Introduction to HTML', type: 'theory', month: 1, classId: 1, url: 'https://www.youtube.com/embed/UB1O30fR-EE', views: 150, description: 'Learn the basics of HTML' },
+            { id: 2, title: 'CSS Fundamentals', type: 'theory', month: 1, classId: 1, url: 'https://www.youtube.com/embed/yfoY53QXEnI', views: 120, description: 'Master CSS styling' },
+            { id: 3, title: 'JavaScript Basics', type: 'extra', month: 2, classId: 1, url: 'https://www.youtube.com/embed/W6NZfCO5SIk', views: 200, description: 'Introduction to JavaScript' },
+            { id: 4, title: 'SEO Strategies', type: 'theory', month: 1, classId: 2, url: 'https://www.youtube.com/embed/OI2AoIwLc_4', views: 180, description: 'Learn SEO techniques' },
+            { id: 5, title: 'Social Media Marketing', type: 'extra', month: 2, classId: 2, url: 'https://www.youtube.com/embed/gcNkoJF0s2A', views: 160, description: 'Social media strategies' },
+            { id: 6, title: 'Design Principles', type: 'theory', month: 1, classId: 3, url: 'https://www.youtube.com/embed/i4N6T8O5s1w', views: 140, description: 'Basic design principles' },
+            { id: 7, title: 'Photoshop Tutorial', type: 'extra', month: 2, classId: 3, url: 'https://www.youtube.com/embed/7B3u0ZK9p5o', views: 190, description: 'Photoshop basics' },
+            { id: 8, title: 'Data Analysis', type: 'theory', month: 1, classId: 4, url: 'https://www.youtube.com/embed/0v5eRtK5Dx8', views: 170, description: 'Introduction to data analysis' },
+            { id: 9, title: 'Machine Learning', type: 'extra', month: 2, classId: 4, url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', views: 220, description: 'ML fundamentals' },
+            { id: 10, title: 'React Native', type: 'theory', month: 1, classId: 5, url: 'https://www.youtube.com/embed/0-S5a0eXPoc', views: 130, description: 'React Native basics' },
+            { id: 11, title: 'Mobile UI Design', type: 'extra', month: 2, classId: 5, url: 'https://www.youtube.com/embed/F4sk1Q2d4j4', views: 110, description: 'Mobile UI principles' },
+            { id: 12, title: 'Past Paper Solutions', type: 'paper', month: 3, classId: 1, url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', views: 250, description: 'Web development past papers' }
         ];
 
-        // Month names
-        const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        let currentUser = null;
+        let currentSection = 'home';
 
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', function() {
-            // Navigation handling
-            const navLinks = document.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const page = this.getAttribute('data-page');
-                    showPage(page);
-                    
-                    // Update active nav link
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
 
-            // User dropdown
-            document.getElementById('user-info').addEventListener('click', function() {
-                document.getElementById('user-dropdown').classList.toggle('show');
-            });
-
-            // Logout button
-            document.getElementById('logout-btn').addEventListener('click', function(e) {
-                e.preventDefault();
-                logout();
-            });
-
-            // Year selection
-            document.getElementById('year-2026-btn').addEventListener('click', function() {
-                selectedYear = 2026;
-                showTierSelection();
-            });
-
-            document.getElementById('year-2027-btn').addEventListener('click', function() {
-                selectedYear = 2027;
-                showTierSelection();
-            });
-
-            // Year card selection
-            document.querySelectorAll('.year-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    selectedYear = parseInt(this.getAttribute('data-year'));
-                    showTierSelection();
-                });
-            });
-
-            // Tier selection
-            document.querySelectorAll('.tier-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    selectedTier = this.getAttribute('data-tier');
-                    showMonthSelection();
-                });
-            });
-
-            // Login form
-            document.getElementById('login-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                
-                const user = students.find(s => s.username === username && s.password === password);
-                
-                if (user) {
-                    currentUser = user;
-                    updateUserInterface();
-                    if (user.role === 'admin') {
-                        showAdminDashboard();
-                    } else {
-                        showStudentDashboard();
-                    }
-                } else {
-                    alert('Invalid username or password');
-                }
-            });
-
-            // Contact form
-            document.getElementById('contact-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('Thank you for your message! We will contact you soon.');
-                this.reset();
-            });
-
-            // Admin dashboard buttons
-            document.getElementById('view-students-btn').addEventListener('click', function() {
-                document.getElementById('student-management').classList.remove('d-none');
-                document.getElementById('video-management').classList.add('d-none');
-                populateStudentTable();
-            });
-
-            document.getElementById('manage-videos-btn').addEventListener('click', function() {
-                document.getElementById('student-management').classList.add('d-none');
-                document.getElementById('video-management').classList.remove('d-none');
-                populateVideoTable();
-            });
-
-            // Add video form
-            document.getElementById('add-video-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const newVideo = {
-                    id: videos.length + 1,
-                    title: document.getElementById('video-title').value,
-                    description: document.getElementById('video-description').value,
-                    url: document.getElementById('video-url').value,
-                    month: document.getElementById('video-month').value,
-                    year: parseInt(document.getElementById('video-year').value),
-                    tier: document.getElementById('video-tier').value,
-                    paid: document.getElementById('video-type').value === 'paid',
-                    date: new Date().toISOString().split('T')[0]
-                };
-                
-                videos.push(newVideo);
-                populateVideoTable();
-                this.reset();
-                alert('Video added successfully!');
-            });
-
-            // Initialize with home page
-            showPage('home');
-        });
-
-        // Show page function
-        function showPage(page) {
+        // Show section
+        function showSection(section) {
             // Hide all sections
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.add('d-none');
-            });
+            document.getElementById('homeSection').classList.add('hidden');
+            document.getElementById('aboutSection').classList.add('hidden');
+            document.getElementById('contactSection').classList.add('hidden');
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('mainDashboard').classList.add('hidden');
+            
+            // Hide public nav when showing login or dashboard
+            if (section === 'login' || section === 'dashboard') {
+                document.getElementById('publicNav').classList.add('hidden');
+            } else {
+                document.getElementById('publicNav').classList.remove('hidden');
+            }
             
             // Show selected section
-            document.getElementById(`${page}-section`).classList.remove('d-none');
+            switch(section) {
+                case 'home':
+                    document.getElementById('homeSection').classList.remove('hidden');
+                    break;
+                case 'about':
+                    document.getElementById('aboutSection').classList.remove('hidden');
+                    break;
+                case 'contact':
+                    document.getElementById('contactSection').classList.remove('hidden');
+                    break;
+                case 'login':
+                    document.getElementById('loginSection').classList.remove('hidden');
+                    break;
+                case 'dashboard':
+                    document.getElementById('mainDashboard').classList.remove('hidden');
+                    break;
+            }
             
-            // Reset navigation state
-            if (page !== 'home') {
-                document.getElementById('year-selection').classList.remove('d-none');
-                document.getElementById('tier-selection').classList.add('d-none');
-                document.getElementById('month-selection').classList.add('d-none');
-                document.getElementById('video-section').classList.add('d-none');
+            currentSection = section;
+        }
+
+        // Contact form handler
+        function handleContact(event) {
+            event.preventDefault();
+            showModal('Your message has been sent successfully. We\'ll get back to you soon.');
+            event.target.reset();
+        }
+
+        // Login handler
+        function handleLogin(event) {
+            event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const userType = document.getElementById('userType').value;
+
+            const user = users.find(u => u.username === username && u.password === password && u.type === userType);
+            
+            if (user) {
+                currentUser = user;
+                showSection('dashboard');
+                document.getElementById('welcomeMessage').textContent = `Welcome, ${user.name}!`;
+                
+                // Show appropriate dashboard
+                document.getElementById('studentDashboard').classList.add('hidden');
+                document.getElementById('teacherDashboard').classList.add('hidden');
+                document.getElementById('adminDashboard').classList.add('hidden');
+                
+                if (user.type === 'student') {
+                    document.getElementById('studentDashboard').classList.remove('hidden');
+                    loadStudentDashboard();
+                } else if (user.type === 'teacher') {
+                    document.getElementById('teacherDashboard').classList.remove('hidden');
+                    loadTeacherDashboard();
+                } else if (user.type === 'admin') {
+                    document.getElementById('adminDashboard').classList.remove('hidden');
+                    loadAdminDashboard();
+                }
+            } else {
+                showModal('Invalid credentials. Please try again.');
             }
         }
 
-        // Show tier selection
-        function showTierSelection() {
-            document.getElementById('year-selection').classList.add('d-none');
-            document.getElementById('tier-selection').classList.remove('d-none');
-            document.getElementById('month-selection').classList.add('d-none');
-            document.getElementById('video-section').classList.add('d-none');
+        // Logout
+        function logout() {
+            currentUser = null;
+            showSection('home');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
         }
 
-        // Show month selection
-        function showMonthSelection() {
-            document.getElementById('tier-selection').classList.add('d-none');
-            document.getElementById('month-selection').classList.remove('d-none');
-            document.getElementById('video-section').classList.add('d-none');
+        // Load Student Dashboard
+        function loadStudentDashboard() {
+            const studentClasses = classes.filter(c => c.students.includes(currentUser.username));
             
-            // Generate month cards
-            const monthsContainer = document.getElementById('months-container');
-            monthsContainer.innerHTML = '';
+            // Update stats
+            document.getElementById('enrolledCourses').textContent = studentClasses.length;
+            document.getElementById('watchedVideos').textContent = '45';
+            document.getElementById('completedCourses').textContent = Math.floor(studentClasses.length * 0.7);
+            document.getElementById('certificates').textContent = Math.floor(studentClasses.length * 0.5);
             
-            months.forEach(month => {
-                const monthCard = document.createElement('div');
-                monthCard.className = 'col-md-3 col-sm-6 mb-4';
-                monthCard.innerHTML = `
-                    <div class="month-card" data-month="${month}">
-                        <div class="month-icon">
-                            <i class="bi bi-calendar-month"></i>
-                        </div>
-                        <h4>${month}</h4>
-                        <p class="text-muted">${month} Lessons</p>
-                        <p class="fw-bold">$${selectedTier === 'theory' ? '29' : '39'}</p>
+            // Load videos
+            filterVideos();
+            
+            // Load enrolled classes
+            const studentClassesDiv = document.getElementById('studentClasses');
+            studentClassesDiv.innerHTML = studentClasses.map(c => `
+                <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-6 rounded-xl card-hover">
+                    <h4 class="text-xl font-bold mb-2">${c.name}</h4>
+                    <p class="mb-4">Year: ${c.year}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-sm">Teacher: ${users.find(u => u.username === c.teacher).name}</span>
+                        <button onclick="viewClass(${c.id})" class="bg-white text-purple-600 px-3 py-1 rounded-lg text-sm hover:bg-gray-100 transition">
+                            View
+                        </button>
                     </div>
-                `;
-                
-                monthCard.querySelector('.month-card').addEventListener('click', function() {
-                    selectedMonth = month;
-                    showVideoSection();
-                });
-                
-                monthsContainer.appendChild(monthCard);
-            });
+                </div>
+            `).join('');
         }
 
-        // Show video section
-        function showVideoSection() {
-            document.getElementById('month-selection').classList.add('d-none');
-            document.getElementById('video-section').classList.remove('d-none');
+        // Filter videos
+        function filterVideos() {
+            const classType = document.getElementById('classType').value;
+            const month = document.getElementById('monthSelect').value;
             
-            // Filter videos for selected year, tier, and month
-            const filteredVideos = videos.filter(video => 
-                video.year === selectedYear && 
-                video.tier === selectedTier && 
-                video.month === selectedMonth
-            );
+            let filteredVideos = videos;
             
-            // Generate video cards
-            const videosContainer = document.getElementById('videos-container');
-            videosContainer.innerHTML = '';
-            
-            if (filteredVideos.length === 0) {
-                videosContainer.innerHTML = '<div class="col-12 text-center"><p class="text-muted">No videos available for this selection.</p></div>';
-                return;
+            if (classType !== 'all') {
+                filteredVideos = filteredVideos.filter(v => v.type === classType);
             }
             
-            filteredVideos.forEach(video => {
-                const videoCard = createVideoCard(video);
-                videosContainer.appendChild(videoCard);
-            });
-        }
-
-        // Create video card element
-        function createVideoCard(video) {
-            const videoCard = document.createElement('div');
-            videoCard.className = 'col-lg-4 col-md-6 mb-4';
+            if (month !== 'all') {
+                filteredVideos = filteredVideos.filter(v => v.month == month);
+            }
             
-            const isAccessible = currentUser ? 
-                (video.paid === false || hasAccess(currentUser, video)) : 
-                (video.paid === false);
-            
-            videoCard.innerHTML = `
-                <div class="video-card">
-                    <div class="video-thumbnail">
-                        <img src="https://img.youtube.com/vi/${video.url}/maxresdefault.jpg" alt="${video.title}">
-                        <div class="play-button">
-                            <i class="bi bi-play-fill"></i>
-                        </div>
+            const videoGrid = document.getElementById('videoGrid');
+            videoGrid.innerHTML = filteredVideos.map(video => `
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
+                    <div class="video-container">
+                        <iframe src="${video.url}" frameborder="0" allowfullscreen></iframe>
                     </div>
-                    <div class="video-details">
-                        <h3 class="video-title">${video.title}</h3>
-                        <p class="video-description">${video.description}</p>
-                        <div class="video-meta">
-                            <span class="video-date">${video.date}</span>
-                            <span class="video-price">${video.paid ? '<span class="paid-badge">Paid</span>' : '<span class="free-badge">Free</span>'}</span>
+                    <div class="p-4">
+                        <h4 class="font-semibold text-lg mb-2">${video.title}</h4>
+                        <p class="text-gray-600 text-sm mb-2">${video.description}</p>
+                        <div class="flex justify-between items-center text-sm text-gray-500">
+                            <span><i class="fas fa-eye mr-1"></i>${video.views} views</span>
+                            <span class="bg-${video.type === 'theory' ? 'blue' : video.type === 'extra' ? 'green' : 'yellow'}-100 text-${video.type === 'theory' ? 'blue' : video.type === 'extra' ? 'green' : 'yellow'}-800 px-2 py-1 rounded-full">
+                                ${video.type.charAt(0).toUpperCase() + video.type.slice(1)}
+                            </span>
                         </div>
                     </div>
                 </div>
-            `;
-            
-            videoCard.querySelector('.video-card').addEventListener('click', function() {
-                if (isAccessible) {
-                    showVideoModal(video);
-                } else {
-                    alert('Please login to access this video');
-                    showPage('login');
-                }
+            `).join('');
+        }
+
+        // Load Teacher Dashboard
+        function loadTeacherDashboard() {
+            const teacherClasses = classes.filter(c => c.teacher === currentUser.username);
+            const teacherVideos = videos.filter(v => {
+                const classObj = classes.find(c => c.id === v.classId);
+                return classObj && classObj.teacher === currentUser.username;
             });
             
-            return videoCard;
+            // Update stats
+            document.getElementById('teachingClasses').textContent = teacherClasses.length;
+            document.getElementById('totalStudents').textContent = teacherClasses.reduce((acc, c) => acc + c.students.length, 0);
+            document.getElementById('uploadedVideos').textContent = teacherVideos.length;
+            document.getElementById('completionRate').textContent = '92%';
+            
+            // Load classes
+            const teacherClassesDiv = document.getElementById('teacherClasses');
+            teacherClassesDiv.innerHTML = teacherClasses.map(c => `
+                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white p-6 rounded-xl card-hover">
+                    <h4 class="text-xl font-bold mb-2">${c.name}</h4>
+                    <p class="mb-2">Year: ${c.year}</p>
+                    <p class="mb-4">Students: ${c.students.length}</p>
+                    <div class="flex space-x-2">
+                        <button onclick="manageClass(${c.id})" class="bg-white text-blue-600 px-3 py-1 rounded-lg text-sm hover:bg-gray-100 transition">
+                            Manage
+                        </button>
+                        <button onclick="viewClassStudents(${c.id})" class="bg-white text-blue-600 px-3 py-1 rounded-lg text-sm hover:bg-gray-100 transition">
+                            Students
+                        </button>
+                    </div>
+                </div>
+            `).join('');
         }
 
-        // Show video modal
-        function showVideoModal(video) {
-            document.getElementById('videoModalTitle').textContent = video.title;
-            document.getElementById('videoFrame').src = `https://www.youtube.com/embed/${video.url}`;
-            document.getElementById('videoModalDescription').textContent = video.description;
-            
-            const modal = new bootstrap.Modal(document.getElementById('videoModal'));
-            modal.show();
-            
-            // Reset iframe when modal is closed
-            document.getElementById('videoModal').addEventListener('hidden.bs.modal', function() {
-                document.getElementById('videoFrame').src = '';
-            });
+        // Upload video
+        function uploadVideo(event) {
+            event.preventDefault();
+            showModal('Video uploaded successfully!');
+            event.target.reset();
         }
 
-        // Check if user has access to video
-        function hasAccess(user, video) {
-            if (user.role === 'admin') return true;
+        // Load Admin Dashboard
+        function loadAdminDashboard() {
+            // Update stats
+            document.getElementById('totalUsers').textContent = users.length;
+            document.getElementById('totalVideos').textContent = videos.length;
+            document.getElementById('totalClasses').textContent = classes.length;
+            document.getElementById('totalViews').textContent = videos.reduce((acc, v) => acc + v.views, 0);
             
-            const access = user.access;
-            if (!access) return false;
-            
-            // Check year access
-            if (access.year !== video.year) return false;
-            
-            // Check tier access
-            if (access.tier !== 'all' && access.tier !== video.tier) return false;
-            
-            // Check month access
-            if (access.months !== 'all' && !access.months.includes(video.month)) return false;
-            
-            return true;
-        }
-
-        // Update user interface after login
-        function updateUserInterface() {
-            // Update navigation
-            document.getElementById('login-nav-item').classList.add('d-none');
-            document.getElementById('user-nav-item').classList.remove('d-none');
-            document.getElementById('user-name').textContent = currentUser.name;
-            
-            // Show admin link if user is admin
-            if (currentUser.role === 'admin') {
-                document.getElementById('admin-link').style.display = 'block';
-            } else {
-                document.getElementById('admin-link').style.display = 'none';
-            }
-        }
-
-        // Logout function
-        function logout() {
-            currentUser = null;
-            document.getElementById('login-nav-item').classList.remove('d-none');
-            document.getElementById('user-nav-item').classList.add('d-none');
-            document.getElementById('user-dropdown').classList.remove('show');
-            showPage('home');
-            
-            // Reset form
-            document.getElementById('login-form').reset();
-        }
-
-        // Show admin dashboard
-        function showAdminDashboard() {
-            showPage('admin');
-            populateStudentTable();
-        }
-
-        // Show student dashboard
-        function showStudentDashboard() {
-            showPage('student');
-            populateStudentProfile();
-            populateStudentLessons();
-        }
-
-        // Populate student table
-        function populateStudentTable() {
-            const tableBody = document.getElementById('student-table-body');
-            tableBody.innerHTML = '';
-            
-            students.filter(s => s.role === 'student').forEach(student => {
-                const row = document.createElement('tr');
-                
-                let accessInfo = '';
-                if (student.access.year === 2026) {
-                    if (student.access.months === 'all') {
-                        accessInfo = '2026 Full Access';
-                    } else {
-                        accessInfo = `2026: ${student.access.months.join(', ')}`;
-                    }
-                } else {
-                    accessInfo = '2027 Full Access';
-                }
-                
-                row.innerHTML = `
-                    <td>${student.name}</td>
-                    <td>${student.id}</td>
-                    <td>${student.district}</td>
-                    <td>${student.dob}</td>
-                    <td>${student.phone}</td>
-                    <td>${student.email}</td>
-                    <td>${student.username}</td>
-                    <td>${student.password}</td>
-                    <td>${accessInfo}</td>
-                `;
-                
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Populate video table
-        function populateVideoTable() {
-            const tableBody = document.getElementById('video-table-body');
-            tableBody.innerHTML = '';
-            
-            videos.forEach(video => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${video.title}</td>
-                    <td>${video.year}</td>
-                    <td>${video.tier === 'theory' ? 'Theoretical Paper' : 'Extra Class'}</td>
-                    <td>${video.month}</td>
-                    <td>${video.paid ? 'Paid' : 'Free'}</td>
-                    <td>
-                        <button class="btn btn-sm btn-danger" onclick="removeVideo(${video.id})">Remove</button>
+            // Load video table
+            const videoTable = document.getElementById('videoTable');
+            videoTable.innerHTML = videos.map(v => `
+                <tr class="border-b">
+                    <td class="py-3 px-4">${v.title}</td>
+                    <td class="py-3 px-4">
+                        <span class="bg-${v.type === 'theory' ? 'blue' : v.type === 'extra' ? 'green' : 'yellow'}-100 text-${v.type === 'theory' ? 'blue' : v.type === 'extra' ? 'green' : 'yellow'}-800 px-2 py-1 rounded-full text-sm">
+                            ${v.type}
+                        </span>
                     </td>
-                `;
-                
-                tableBody.appendChild(row);
-            });
+                    <td class="py-3 px-4">Month ${v.month}</td>
+                    <td class="py-3 px-4">${v.views}</td>
+                    <td class="py-3 px-4">
+                        <button onclick="editVideo(${v.id})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition mr-2">
+                            Edit
+                        </button>
+                        <button onclick="deleteVideo(${v.id})" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+            
+            // Load user table
+            const userTable = document.getElementById('userTable');
+            userTable.innerHTML = users.map(u => `
+                <tr class="border-b">
+                    <td class="py-3 px-4">${u.name} (${u.username})</td>
+                    <td class="py-3 px-4">
+                        <span class="bg-${u.type === 'admin' ? 'purple' : u.type === 'teacher' ? 'blue' : 'green'}-100 text-${u.type === 'admin' ? 'purple' : u.type === 'teacher' ? 'blue' : 'green'}-800 px-2 py-1 rounded-full text-sm">
+                            ${u.type}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4">
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Active</span>
+                    </td>
+                    <td class="py-3 px-4">
+                        <button onclick="editUser('${u.username}')" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition mr-2">
+                            Edit
+                        </button>
+                        <button onclick="deleteUser('${u.username}')" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
         }
 
-        // Remove video
-        function removeVideo(id) {
-            if (confirm('Are you sure you want to remove this video?')) {
-                videos = videos.filter(v => v.id !== id);
-                populateVideoTable();
+        // Helper functions
+        function viewClass(classId) {
+            showModal(`Viewing class: ${classes.find(c => c.id === classId).name}`);
+        }
+
+        function manageClass(classId) {
+            showModal(`Managing class: ${classes.find(c => c.id === classId).name}`);
+        }
+
+        function viewClassStudents(classId) {
+            showModal(`Viewing students for: ${classes.find(c => c.id === classId).name}`);
+        }
+
+        function editVideo(videoId) {
+            showModal(`Editing video: ${videos.find(v => v.id === videoId).title}`);
+        }
+
+        function deleteVideo(videoId) {
+            if (confirm('Are you sure you want to delete this video?')) {
+                videos = videos.filter(v => v.id !== videoId);
+                loadAdminDashboard();
+                showModal('Video deleted successfully!');
             }
         }
 
-        // Populate student profile
-        function populateStudentProfile() {
-            const profileContainer = document.getElementById('student-profile');
-            profileContainer.innerHTML = `
-                <p><strong>Name:</strong> ${currentUser.name}</p>
-                <p><strong>ID:</strong> ${currentUser.id}</p>
-                <p><strong>District:</strong> ${currentUser.district}</p>
-                <p><strong>Date of Birth:</strong> ${currentUser.dob}</p>
-                <p><strong>Phone:</strong> ${currentUser.phone}</p>
-                <p><strong>Email:</strong> ${currentUser.email}</p>
-                <p><strong>Username:</strong> ${currentUser.username}</p>
-            `;
+        function editUser(username) {
+            showModal(`Editing user: ${users.find(u => u.username === username).name}`);
         }
 
-        // Populate student lessons
-        function populateStudentLessons() {
-            const lessonsContainer = document.getElementById('student-lessons');
-            lessonsContainer.innerHTML = '';
-            
-            // Get accessible videos for the student
-            const accessibleVideos = videos.filter(video => hasAccess(currentUser, video));
-            
-            if (accessibleVideos.length === 0) {
-                lessonsContainer.innerHTML = '<p class="text-muted">No lessons available for your access level.</p>';
-                return;
+        function deleteUser(username) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                users = users.filter(u => u.username !== username);
+                loadAdminDashboard();
+                showModal('User deleted successfully!');
             }
-            
-            // Group videos by year
-            const videosByYear = {};
-            accessibleVideos.forEach(video => {
-                if (!videosByYear[video.year]) {
-                    videosByYear[video.year] = {};
-                }
-                
-                if (!videosByYear[video.year][video.tier]) {
-                    videosByYear[video.year][video.tier] = {};
-                }
-                
-                if (!videosByYear[video.year][video.tier][video.month]) {
-                    videosByYear[video.year][video.tier][video.month] = [];
-                }
-                
-                videosByYear[video.year][video.tier][video.month].push(video);
-            });
-            
-            // Create lesson groups
-            Object.keys(videosByYear).sort().forEach(year => {
-                const yearGroup = document.createElement('div');
-                yearGroup.className = 'lesson-group';
-                
-                const yearTitle = document.createElement('h3');
-                yearTitle.className = 'lesson-group-title';
-                yearTitle.innerHTML = `<i class="bi bi-calendar-event"></i> ${year} Lessons`;
-                yearGroup.appendChild(yearTitle);
-                
-                Object.keys(videosByYear[year]).forEach(tier => {
-                    const tierGroup = document.createElement('div');
-                    tierGroup.className = 'mb-4';
-                    
-                    const tierTitle = document.createElement('h4');
-                    tierTitle.className = 'lesson-group-title';
-                    tierTitle.innerHTML = `<i class="bi bi-${tier === 'theory' ? 'book' : 'pencil-square'}"></i> ${tier === 'theory' ? 'Theoretical Paper' : 'Extra Class'}`;
-                    tierGroup.appendChild(tierTitle);
-                    
-                    Object.keys(videosByYear[year][tier]).sort((a, b) => {
-                        return months.indexOf(a) - months.indexOf(b);
-                    }).forEach(month => {
-                        const monthGroup = document.createElement('div');
-                        monthGroup.className = 'lesson-month';
-                        
-                        const monthTitle = document.createElement('h5');
-                        monthTitle.className = 'lesson-month-title';
-                        monthTitle.textContent = month;
-                        monthGroup.appendChild(monthTitle);
-                        
-                        const videosRow = document.createElement('div');
-                        videosRow.className = 'row';
-                        
-                        videosByYear[year][tier][month].forEach(video => {
-                            const videoCard = createVideoCard(video);
-                            videosRow.appendChild(videoCard);
-                        });
-                        
-                        monthGroup.appendChild(videosRow);
-                        tierGroup.appendChild(monthGroup);
-                    });
-                    
-                    yearGroup.appendChild(tierGroup);
-                });
-                
-                lessonsContainer.appendChild(yearGroup);
-            });
         }
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            const userMenu = document.querySelector('.user-menu');
-            const userDropdown = document.getElementById('user-dropdown');
-            
-            if (!userMenu.contains(event.target)) {
-                userDropdown.classList.remove('show');
-            }
-        });
+        function showAddVideoForm() {
+            showModal('Add video form would appear here');
+        }
+
+        // Modal functions
+        function showModal(message) {
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('successModal').classList.remove('hidden');
+            document.getElementById('successModal').classList.add('flex');
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').classList.add('hidden');
+            document.getElementById('successModal').classList.remove('flex');
+        }
+
+        // Initialize
+        showSection('home');
     </script>
 </body>
 </html>

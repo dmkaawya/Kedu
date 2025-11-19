@@ -459,6 +459,46 @@
                 </div>
             </div>
 
+            <!-- Student Profile Section -->
+            <div class="bg-white rounded-xl shadow p-6 mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">My Profile</h3>
+                <form onsubmit="updateProfile(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Full Name</label>
+                        <input type="text" id="profileName" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">District</label>
+                        <input type="text" id="profileDistrict" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">WhatsApp Number</label>
+                        <input type="tel" id="profileWhatsapp" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Email</label>
+                        <input type="email" id="profileEmail" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Student ID</label>
+                        <input type="text" id="profileId" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Username</label>
+                        <input type="text" id="profileUsername" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Password</label>
+                        <input type="password" id="profilePassword" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
+                    </div>
+                    <div class="flex items-end">
+                        <button type="submit" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition">
+                            Update Profile
+                        </button>
+                    </div>
+                </form>
+            </div>
+
             <!-- Video Library Section -->
             <div class="bg-white rounded-xl shadow p-6 mb-8">
                 <div class="flex justify-between items-center mb-6">
@@ -469,6 +509,7 @@
                             <option value="theory">Theory Class</option>
                             <option value="extra">Extra Class</option>
                             <option value="paper">Paper Class</option>
+                            <option value="korean">Korean Class</option>
                         </select>
                         <select id="monthSelect" onchange="filterVideos()" class="px-4 py-2 border rounded-lg focus:outline-none focus:border-purple-600">
                             <option value="all">All Months</option>
@@ -562,6 +603,7 @@
                                 <option value="theory">Theory Class</option>
                                 <option value="extra">Extra Class</option>
                                 <option value="paper">Paper Class</option>
+                                <option value="korean">Korean Class</option>
                             </select>
                         </div>
                         <div>
@@ -582,15 +624,23 @@
                             </select>
                         </div>
                         <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Class</label>
+                            <label class="block text-gray-700 font-semibold mb-2">Payment Type</label>
                             <select required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                                <option value="web2026">Web Development 2026</option>
-                                <option value="digital2026">Digital Marketing 2026</option>
-                                <option value="graphic2026">Graphic Design 2026</option>
-                                <option value="data2027">Data Science 2027</option>
-                                <option value="mobile2027">Mobile Development 2027</option>
+                                <option value="free">Free</option>
+                                <option value="paid">Paid</option>
                             </select>
                         </div>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Class</label>
+                        <select required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
+                            <option value="web2026">Web Development 2026</option>
+                            <option value="digital2026">Digital Marketing 2026</option>
+                            <option value="graphic2026">Graphic Design 2026</option>
+                            <option value="korean2026">Korean Language 2026</option>
+                            <option value="data2027">Data Science 2027</option>
+                            <option value="mobile2027">Mobile Development 2027</option>
+                        </select>
                     </div>
                     <div>
                         <label class="block text-gray-700 font-semibold mb-2">Description</label>
@@ -634,6 +684,29 @@
                 </div>
             </div>
 
+            <!-- Student Management -->
+            <div class="bg-white rounded-xl shadow p-6 mb-8">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Student Management</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b">
+                                <th class="text-left py-3 px-4">Name</th>
+                                <th class="text-left py-3 px-4">District</th>
+                                <th class="text-left py-3 px-4">WhatsApp</th>
+                                <th class="text-left py-3 px-4">Email</th>
+                                <th class="text-left py-3 px-4">Student ID</th>
+                                <th class="text-left py-3 px-4">Username</th>
+                                <th class="text-left py-3 px-4">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentTable">
+                            <!-- Students will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- Video Management -->
             <div class="bg-white rounded-xl shadow p-6 mb-8">
                 <div class="flex justify-between items-center mb-6">
@@ -650,7 +723,7 @@
                                 <th class="text-left py-3 px-4">Title</th>
                                 <th class="text-left py-3 px-4">Class Type</th>
                                 <th class="text-left py-3 px-4">Month</th>
-                                <th class="text-left py-3 px-4">Views</th>
+                                <th class="text-left py-3 px-4">Payment</th>
                                 <th class="text-left py-3 px-4">Actions</th>
                             </tr>
                         </thead>
@@ -700,42 +773,163 @@
     <script>
         // Database simulation
         let users = [
-            { username: 'student1', password: '123', type: 'student', name: 'John Doe' },
-            { username: 'student2', password: '123', type: 'student', name: 'Jane Smith' },
-            { username: 'student3', password: '123', type: 'student', name: 'Mike Johnson' },
-            { username: 'student4', password: '123', type: 'student', name: 'Sarah Williams' },
-            { username: 'student5', password: '123', type: 'student', name: 'David Brown' },
-            { username: 'student6', password: '123', type: 'student', name: 'Emily Davis' },
-            { username: 'student7', password: '123', type: 'student', name: 'James Wilson' },
-            { username: 'student8', password: '123', type: 'student', name: 'Linda Martinez' },
-            { username: 'student9', password: '123', type: 'student', name: 'Robert Anderson' },
-            { username: 'student10', password: '123', type: 'student', name: 'Maria Taylor' },
-            { username: 'teacher1', password: '123', type: 'teacher', name: 'Dr. Smith' },
-            { username: 'teacher2', password: '123', type: 'teacher', name: 'Prof. Johnson' },
-            { username: 'admin', password: 'admin123', type: 'admin', name: 'Administrator' }
+            { 
+                username: 'student1', 
+                password: '123', 
+                type: 'student', 
+                name: 'John Doe',
+                district: 'Colombo',
+                whatsapp: '+94771234567',
+                email: 'john@example.com',
+                id: 'S001'
+            },
+            { 
+                username: 'student2', 
+                password: '123', 
+                type: 'student', 
+                name: 'Jane Smith',
+                district: 'Gampaha',
+                whatsapp: '+94772345678',
+                email: 'jane@example.com',
+                id: 'S002'
+            },
+            { 
+                username: 'student3', 
+                password: '123', 
+                type: 'student', 
+                name: 'Mike Johnson',
+                district: 'Kandy',
+                whatsapp: '+94773456789',
+                email: 'mike@example.com',
+                id: 'S003'
+            },
+            { 
+                username: 'student4', 
+                password: '123', 
+                type: 'student', 
+                name: 'Sarah Williams',
+                district: 'Galle',
+                whatsapp: '+94774567890',
+                email: 'sarah@example.com',
+                id: 'S004'
+            },
+            { 
+                username: 'student5', 
+                password: '123', 
+                type: 'student', 
+                name: 'David Brown',
+                district: 'Matara',
+                whatsapp: '+94775678901',
+                email: 'david@example.com',
+                id: 'S005'
+            },
+            { 
+                username: 'student6', 
+                password: '123', 
+                type: 'student', 
+                name: 'Emily Davis',
+                district: 'Jaffna',
+                whatsapp: '+94776789012',
+                email: 'emily@example.com',
+                id: 'S006'
+            },
+            { 
+                username: 'student7', 
+                password: '123', 
+                type: 'student', 
+                name: 'James Wilson',
+                district: 'Trincomalee',
+                whatsapp: '+94777890123',
+                email: 'james@example.com',
+                id: 'S007'
+            },
+            { 
+                username: 'student8', 
+                password: '123', 
+                type: 'student', 
+                name: 'Linda Martinez',
+                district: 'Batticaloa',
+                whatsapp: '+94778901234',
+                email: 'linda@example.com',
+                id: 'S008'
+            },
+            { 
+                username: 'student9', 
+                password: '123', 
+                type: 'student', 
+                name: 'Robert Anderson',
+                district: 'Kurunegala',
+                whatsapp: '+94779012345',
+                email: 'robert@example.com',
+                id: 'S009'
+            },
+            { 
+                username: 'student10', 
+                password: '123', 
+                type: 'student', 
+                name: 'Maria Taylor',
+                district: 'Anuradhapura',
+                whatsapp: '+94770123456',
+                email: 'maria@example.com',
+                id: 'S010'
+            },
+            { 
+                username: 'teacher1', 
+                password: '123', 
+                type: 'teacher', 
+                name: 'Dr. Smith',
+                district: 'Colombo',
+                whatsapp: '+94711234567',
+                email: 'smith@eduworldpro.com',
+                id: 'T001'
+            },
+            { 
+                username: 'teacher2', 
+                password: '123', 
+                type: 'teacher', 
+                name: 'Prof. Johnson',
+                district: 'Kandy',
+                whatsapp: '+94712345678',
+                email: 'johnson@eduworldpro.com',
+                id: 'T002'
+            },
+            { 
+                username: 'admin', 
+                password: 'admin123', 
+                type: 'admin', 
+                name: 'Administrator',
+                district: 'Colombo',
+                whatsapp: '+94711111111',
+                email: 'admin@eduworldpro.com',
+                id: 'A001'
+            }
         ];
 
         let classes = [
             { id: 1, name: 'Web Development 2026', year: '2026', teacher: 'teacher1', students: ['student1', 'student2', 'student3'] },
             { id: 2, name: 'Digital Marketing 2026', year: '2026', teacher: 'teacher2', students: ['student4', 'student5'] },
             { id: 3, name: 'Graphic Design 2026', year: '2026', teacher: 'teacher1', students: ['student6', 'student7'] },
-            { id: 4, name: 'Data Science 2027', year: '2027', teacher: 'teacher2', students: ['student8', 'student9'] },
-            { id: 5, name: 'Mobile Development 2027', year: '2027', teacher: 'teacher1', students: ['student10'] }
+            { id: 4, name: 'Korean Language 2026', year: '2026', teacher: 'teacher2', students: ['student8', 'student9', 'student10'] },
+            { id: 5, name: 'Data Science 2027', year: '2027', teacher: 'teacher2', students: ['student1', 'student2'] },
+            { id: 6, name: 'Mobile Development 2027', year: '2027', teacher: 'teacher1', students: ['student3'] }
         ];
 
         let videos = [
-            { id: 1, title: 'Introduction to HTML', type: 'theory', month: 1, classId: 1, url: 'https://www.youtube.com/embed/UB1O30fR-EE', views: 150, description: 'Learn the basics of HTML' },
-            { id: 2, title: 'CSS Fundamentals', type: 'theory', month: 1, classId: 1, url: 'https://www.youtube.com/embed/yfoY53QXEnI', views: 120, description: 'Master CSS styling' },
-            { id: 3, title: 'JavaScript Basics', type: 'extra', month: 2, classId: 1, url: 'https://www.youtube.com/embed/W6NZfCO5SIk', views: 200, description: 'Introduction to JavaScript' },
-            { id: 4, title: 'SEO Strategies', type: 'theory', month: 1, classId: 2, url: 'https://www.youtube.com/embed/OI2AoIwLc_4', views: 180, description: 'Learn SEO techniques' },
-            { id: 5, title: 'Social Media Marketing', type: 'extra', month: 2, classId: 2, url: 'https://www.youtube.com/embed/gcNkoJF0s2A', views: 160, description: 'Social media strategies' },
-            { id: 6, title: 'Design Principles', type: 'theory', month: 1, classId: 3, url: 'https://www.youtube.com/embed/i4N6T8O5s1w', views: 140, description: 'Basic design principles' },
-            { id: 7, title: 'Photoshop Tutorial', type: 'extra', month: 2, classId: 3, url: 'https://www.youtube.com/embed/7B3u0ZK9p5o', views: 190, description: 'Photoshop basics' },
-            { id: 8, title: 'Data Analysis', type: 'theory', month: 1, classId: 4, url: 'https://www.youtube.com/embed/0v5eRtK5Dx8', views: 170, description: 'Introduction to data analysis' },
-            { id: 9, title: 'Machine Learning', type: 'extra', month: 2, classId: 4, url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', views: 220, description: 'ML fundamentals' },
-            { id: 10, title: 'React Native', type: 'theory', month: 1, classId: 5, url: 'https://www.youtube.com/embed/0-S5a0eXPoc', views: 130, description: 'React Native basics' },
-            { id: 11, title: 'Mobile UI Design', type: 'extra', month: 2, classId: 5, url: 'https://www.youtube.com/embed/F4sk1Q2d4j4', views: 110, description: 'Mobile UI principles' },
-            { id: 12, title: 'Past Paper Solutions', type: 'paper', month: 3, classId: 1, url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', views: 250, description: 'Web development past papers' }
+            { id: 1, title: 'Introduction to HTML', type: 'theory', month: 1, classId: 1, url: 'https://www.youtube.com/embed/UB1O30fR-EE', isPaid: false, description: 'Learn the basics of HTML' },
+            { id: 2, title: 'CSS Fundamentals', type: 'theory', month: 1, classId: 1, url: 'https://www.youtube.com/embed/yfoY53QXEnI', isPaid: false, description: 'Master CSS styling' },
+            { id: 3, title: 'JavaScript Basics', type: 'extra', month: 2, classId: 1, url: 'https://www.youtube.com/embed/W6NZfCO5SIk', isPaid: true, description: 'Introduction to JavaScript' },
+            { id: 4, title: 'SEO Strategies', type: 'theory', month: 1, classId: 2, url: 'https://www.youtube.com/embed/OI2AoIwLc_4', isPaid: false, description: 'Learn SEO techniques' },
+            { id: 5, title: 'Social Media Marketing', type: 'extra', month: 2, classId: 2, url: 'https://www.youtube.com/embed/gcNkoJF0s2A', isPaid: true, description: 'Social media strategies' },
+            { id: 6, title: 'Design Principles', type: 'theory', month: 1, classId: 3, url: 'https://www.youtube.com/embed/i4N6T8O5s1w', isPaid: false, description: 'Basic design principles' },
+            { id: 7, title: 'Photoshop Tutorial', type: 'extra', month: 2, classId: 3, url: 'https://www.youtube.com/embed/7B3u0ZK9p5o', isPaid: true, description: 'Photoshop basics' },
+            { id: 8, title: 'Korean Alphabet - Hangul', type: 'korean', month: 1, classId: 4, url: 'https://www.youtube.com/embed/5s2Qg5qR5yI', isPaid: false, description: 'Learn Korean alphabet' },
+            { id: 9, title: 'Basic Korean Phrases', type: 'korean', month: 2, classId: 4, url: 'https://www.youtube.com/embed/1C2_X7p2a5U', isPaid: true, description: 'Essential Korean phrases' },
+            { id: 10, title: 'Korean Grammar Basics', type: 'korean', month: 3, classId: 4, url: 'https://www.youtube.com/embed/2s2Qg5qR5yJ', isPaid: true, description: 'Korean grammar fundamentals' },
+            { id: 11, title: 'Data Analysis', type: 'theory', month: 1, classId: 5, url: 'https://www.youtube.com/embed/0v5eRtK5Dx8', isPaid: false, description: 'Introduction to data analysis' },
+            { id: 12, title: 'Machine Learning', type: 'extra', month: 2, classId: 5, url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', isPaid: true, description: 'ML fundamentals' },
+            { id: 13, title: 'React Native', type: 'theory', month: 1, classId: 6, url: 'https://www.youtube.com/embed/0-S5a0eXPoc', isPaid: false, description: 'React Native basics' },
+            { id: 14, title: 'Mobile UI Design', type: 'extra', month: 2, classId: 6, url: 'https://www.youtube.com/embed/F4sk1Q2d4j4', isPaid: true, description: 'Mobile UI principles' },
+            { id: 15, title: 'Past Paper Solutions', type: 'paper', month: 3, classId: 1, url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', isPaid: true, description: 'Web development past papers' }
         ];
 
         let currentUser = null;
@@ -844,6 +1038,15 @@
             document.getElementById('completedCourses').textContent = Math.floor(studentClasses.length * 0.7);
             document.getElementById('certificates').textContent = Math.floor(studentClasses.length * 0.5);
             
+            // Load profile data
+            document.getElementById('profileName').value = currentUser.name;
+            document.getElementById('profileDistrict').value = currentUser.district;
+            document.getElementById('profileWhatsapp').value = currentUser.whatsapp;
+            document.getElementById('profileEmail').value = currentUser.email;
+            document.getElementById('profileId').value = currentUser.id;
+            document.getElementById('profileUsername').value = currentUser.username;
+            document.getElementById('profilePassword').value = currentUser.password;
+            
             // Load videos
             filterVideos();
             
@@ -861,6 +1064,28 @@
                     </div>
                 </div>
             `).join('');
+        }
+
+        // Update student profile
+        function updateProfile(event) {
+            event.preventDefault();
+            
+            // Update current user data
+            currentUser.name = document.getElementById('profileName').value;
+            currentUser.district = document.getElementById('profileDistrict').value;
+            currentUser.whatsapp = document.getElementById('profileWhatsapp').value;
+            currentUser.email = document.getElementById('profileEmail').value;
+            currentUser.id = document.getElementById('profileId').value;
+            currentUser.username = document.getElementById('profileUsername').value;
+            currentUser.password = document.getElementById('profilePassword').value;
+            
+            // Update in users array
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            if (userIndex !== -1) {
+                users[userIndex] = currentUser;
+            }
+            
+            showModal('Profile updated successfully!');
         }
 
         // Filter videos
@@ -887,9 +1112,11 @@
                     <div class="p-4">
                         <h4 class="font-semibold text-lg mb-2">${video.title}</h4>
                         <p class="text-gray-600 text-sm mb-2">${video.description}</p>
-                        <div class="flex justify-between items-center text-sm text-gray-500">
-                            <span><i class="fas fa-eye mr-1"></i>${video.views} views</span>
-                            <span class="bg-${video.type === 'theory' ? 'blue' : video.type === 'extra' ? 'green' : 'yellow'}-100 text-${video.type === 'theory' ? 'blue' : video.type === 'extra' ? 'green' : 'yellow'}-800 px-2 py-1 rounded-full">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="bg-${video.isPaid ? 'red' : 'green'}-100 text-${video.isPaid ? 'red' : 'green'}-800 px-2 py-1 rounded-full">
+                                ${video.isPaid ? 'Paid' : 'Free'}
+                            </span>
+                            <span class="bg-${video.type === 'theory' ? 'blue' : video.type === 'extra' ? 'purple' : video.type === 'korean' ? 'yellow' : 'orange'}-100 text-${video.type === 'theory' ? 'blue' : video.type === 'extra' ? 'purple' : video.type === 'korean' ? 'yellow' : 'orange'}-800 px-2 py-1 rounded-full">
                                 ${video.type.charAt(0).toUpperCase() + video.type.slice(1)}
                             </span>
                         </div>
@@ -944,7 +1171,29 @@
             document.getElementById('totalUsers').textContent = users.length;
             document.getElementById('totalVideos').textContent = videos.length;
             document.getElementById('totalClasses').textContent = classes.length;
-            document.getElementById('totalViews').textContent = videos.reduce((acc, v) => acc + v.views, 0);
+            document.getElementById('totalViews').textContent = videos.reduce((acc, v) => acc + (v.views || 0), 0);
+            
+            // Load student table
+            const studentTable = document.getElementById('studentTable');
+            const students = users.filter(u => u.type === 'student');
+            studentTable.innerHTML = students.map(s => `
+                <tr class="border-b">
+                    <td class="py-3 px-4">${s.name}</td>
+                    <td class="py-3 px-4">${s.district}</td>
+                    <td class="py-3 px-4">${s.whatsapp}</td>
+                    <td class="py-3 px-4">${s.email}</td>
+                    <td class="py-3 px-4">${s.id}</td>
+                    <td class="py-3 px-4">${s.username}</td>
+                    <td class="py-3 px-4">
+                        <button onclick="editStudent('${s.username}')" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition mr-2">
+                            Edit
+                        </button>
+                        <button onclick="deleteStudent('${s.username}')" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
             
             // Load video table
             const videoTable = document.getElementById('videoTable');
@@ -952,12 +1201,16 @@
                 <tr class="border-b">
                     <td class="py-3 px-4">${v.title}</td>
                     <td class="py-3 px-4">
-                        <span class="bg-${v.type === 'theory' ? 'blue' : v.type === 'extra' ? 'green' : 'yellow'}-100 text-${v.type === 'theory' ? 'blue' : v.type === 'extra' ? 'green' : 'yellow'}-800 px-2 py-1 rounded-full text-sm">
+                        <span class="bg-${v.type === 'theory' ? 'blue' : v.type === 'extra' ? 'purple' : v.type === 'korean' ? 'yellow' : 'orange'}-100 text-${v.type === 'theory' ? 'blue' : v.type === 'extra' ? 'purple' : v.type === 'korean' ? 'yellow' : 'orange'}-800 px-2 py-1 rounded-full text-sm">
                             ${v.type}
                         </span>
                     </td>
                     <td class="py-3 px-4">Month ${v.month}</td>
-                    <td class="py-3 px-4">${v.views}</td>
+                    <td class="py-3 px-4">
+                        <span class="bg-${v.isPaid ? 'red' : 'green'}-100 text-${v.isPaid ? 'red' : 'green'}-800 px-2 py-1 rounded-full text-sm">
+                            ${v.isPaid ? 'Paid' : 'Free'}
+                        </span>
+                    </td>
                     <td class="py-3 px-4">
                         <button onclick="editVideo(${v.id})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition mr-2">
                             Edit
@@ -1005,6 +1258,19 @@
 
         function viewClassStudents(classId) {
             showModal(`Viewing students for: ${classes.find(c => c.id === classId).name}`);
+        }
+
+        function editStudent(username) {
+            const student = users.find(u => u.username === username);
+            showModal(`Editing student: ${student.name}`);
+        }
+
+        function deleteStudent(username) {
+            if (confirm('Are you sure you want to delete this student?')) {
+                users = users.filter(u => u.username !== username);
+                loadAdminDashboard();
+                showModal('Student deleted successfully!');
+            }
         }
 
         function editVideo(videoId) {

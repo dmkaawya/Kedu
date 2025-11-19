@@ -411,6 +411,93 @@
             border: none;
         }
 
+        .lesson-group {
+            margin-bottom: 30px;
+        }
+
+        .lesson-group-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+        }
+
+        .lesson-group-title i {
+            margin-right: 10px;
+        }
+
+        .lesson-month {
+            margin-bottom: 20px;
+        }
+
+        .lesson-month-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--info-color);
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .user-menu {
+            position: relative;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            min-width: 200px;
+            z-index: 1000;
+            display: none;
+        }
+
+        .user-dropdown.show {
+            display: block;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 10px 15px;
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .user-dropdown a:hover {
+            background: var(--light-color);
+            color: var(--primary-color);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .user-info:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+        }
+
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2rem;
@@ -449,8 +536,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-page="contact">Contact Us</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-none" id="login-nav-item">
                         <a class="nav-link" href="#" data-page="login">Login</a>
+                    </li>
+                    <li class="nav-item d-none" id="user-nav-item">
+                        <div class="user-menu">
+                            <div class="user-info" id="user-info">
+                                <div class="user-avatar">
+                                    <i class="bi bi-person-fill"></i>
+                                </div>
+                                <span id="user-name">User</span>
+                                <i class="bi bi-chevron-down ms-2"></i>
+                            </div>
+                            <div class="user-dropdown" id="user-dropdown">
+                                <a href="#" data-page="student">My Dashboard</a>
+                                <a href="#" data-page="admin" id="admin-link" style="display: none;">Admin Panel</a>
+                                <a href="#" id="logout-btn">Logout</a>
+                            </div>
+                        </div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" data-page="notice">Notice</a>
@@ -828,9 +931,9 @@
                 <div class="col-lg-8 mb-4">
                     <div class="card border-0 shadow-sm h-100">
                         <div class="card-body p-4">
-                            <h3 class="card-title">My Courses</h3>
-                            <div id="student-courses">
-                                <!-- Student courses will be populated here -->
+                            <h3 class="card-title">My Lessons</h3>
+                            <div id="student-lessons">
+                                <!-- Student lessons will be populated here -->
                             </div>
                         </div>
                     </div>
@@ -947,6 +1050,17 @@
                 });
             });
 
+            // User dropdown
+            document.getElementById('user-info').addEventListener('click', function() {
+                document.getElementById('user-dropdown').classList.toggle('show');
+            });
+
+            // Logout button
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                logout();
+            });
+
             // Year selection
             document.getElementById('year-2026-btn').addEventListener('click', function() {
                 selectedYear = 2026;
@@ -984,6 +1098,7 @@
                 
                 if (user) {
                     currentUser = user;
+                    updateUserInterface();
                     if (user.role === 'admin') {
                         showAdminDashboard();
                     } else {
@@ -1122,43 +1237,49 @@
             }
             
             filteredVideos.forEach(video => {
-                const videoCard = document.createElement('div');
-                videoCard.className = 'col-lg-4 col-md-6 mb-4';
-                
-                const isAccessible = currentUser ? 
-                    (video.paid === false || hasAccess(currentUser, video)) : 
-                    (video.paid === false);
-                
-                videoCard.innerHTML = `
-                    <div class="video-card">
-                        <div class="video-thumbnail">
-                            <img src="https://img.youtube.com/vi/${video.url}/maxresdefault.jpg" alt="${video.title}">
-                            <div class="play-button">
-                                <i class="bi bi-play-fill"></i>
-                            </div>
-                        </div>
-                        <div class="video-details">
-                            <h3 class="video-title">${video.title}</h3>
-                            <p class="video-description">${video.description}</p>
-                            <div class="video-meta">
-                                <span class="video-date">${video.date}</span>
-                                <span class="video-price">${video.paid ? '<span class="paid-badge">Paid</span>' : '<span class="free-badge">Free</span>'}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                videoCard.querySelector('.video-card').addEventListener('click', function() {
-                    if (isAccessible) {
-                        showVideoModal(video);
-                    } else {
-                        alert('Please login to access this video');
-                        showPage('login');
-                    }
-                });
-                
+                const videoCard = createVideoCard(video);
                 videosContainer.appendChild(videoCard);
             });
+        }
+
+        // Create video card element
+        function createVideoCard(video) {
+            const videoCard = document.createElement('div');
+            videoCard.className = 'col-lg-4 col-md-6 mb-4';
+            
+            const isAccessible = currentUser ? 
+                (video.paid === false || hasAccess(currentUser, video)) : 
+                (video.paid === false);
+            
+            videoCard.innerHTML = `
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://img.youtube.com/vi/${video.url}/maxresdefault.jpg" alt="${video.title}">
+                        <div class="play-button">
+                            <i class="bi bi-play-fill"></i>
+                        </div>
+                    </div>
+                    <div class="video-details">
+                        <h3 class="video-title">${video.title}</h3>
+                        <p class="video-description">${video.description}</p>
+                        <div class="video-meta">
+                            <span class="video-date">${video.date}</span>
+                            <span class="video-price">${video.paid ? '<span class="paid-badge">Paid</span>' : '<span class="free-badge">Free</span>'}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            videoCard.querySelector('.video-card').addEventListener('click', function() {
+                if (isAccessible) {
+                    showVideoModal(video);
+                } else {
+                    alert('Please login to access this video');
+                    showPage('login');
+                }
+            });
+            
+            return videoCard;
         }
 
         // Show video modal
@@ -1195,6 +1316,33 @@
             return true;
         }
 
+        // Update user interface after login
+        function updateUserInterface() {
+            // Update navigation
+            document.getElementById('login-nav-item').classList.add('d-none');
+            document.getElementById('user-nav-item').classList.remove('d-none');
+            document.getElementById('user-name').textContent = currentUser.name;
+            
+            // Show admin link if user is admin
+            if (currentUser.role === 'admin') {
+                document.getElementById('admin-link').style.display = 'block';
+            } else {
+                document.getElementById('admin-link').style.display = 'none';
+            }
+        }
+
+        // Logout function
+        function logout() {
+            currentUser = null;
+            document.getElementById('login-nav-item').classList.remove('d-none');
+            document.getElementById('user-nav-item').classList.add('d-none');
+            document.getElementById('user-dropdown').classList.remove('show');
+            showPage('home');
+            
+            // Reset form
+            document.getElementById('login-form').reset();
+        }
+
         // Show admin dashboard
         function showAdminDashboard() {
             showPage('admin');
@@ -1205,7 +1353,7 @@
         function showStudentDashboard() {
             showPage('student');
             populateStudentProfile();
-            populateStudentCourses();
+            populateStudentLessons();
         }
 
         // Populate student table
@@ -1287,48 +1435,95 @@
             `;
         }
 
-        // Populate student courses
-        function populateStudentCourses() {
-            const coursesContainer = document.getElementById('student-courses');
-            coursesContainer.innerHTML = '';
+        // Populate student lessons
+        function populateStudentLessons() {
+            const lessonsContainer = document.getElementById('student-lessons');
+            lessonsContainer.innerHTML = '';
             
-            const access = currentUser.access;
-            let accessInfo = '';
-            
-            if (access.year === 2026) {
-                if (access.months === 'all') {
-                    accessInfo = '<p><strong>Access:</strong> Full access to 2026 courses</p>';
-                } else {
-                    accessInfo = `<p><strong>Access:</strong> 2026 courses for months: ${access.months.join(', ')}</p>`;
-                }
-            } else {
-                accessInfo = '<p><strong>Access:</strong> Full access to 2027 courses</p>';
-            }
-            
-            coursesContainer.innerHTML = accessInfo;
-            
-            // Show accessible videos
+            // Get accessible videos for the student
             const accessibleVideos = videos.filter(video => hasAccess(currentUser, video));
             
-            if (accessibleVideos.length > 0) {
-                const videoList = document.createElement('div');
-                videoList.innerHTML = '<h5 class="mt-4">Your Videos:</h5>';
+            if (accessibleVideos.length === 0) {
+                lessonsContainer.innerHTML = '<p class="text-muted">No lessons available for your access level.</p>';
+                return;
+            }
+            
+            // Group videos by year
+            const videosByYear = {};
+            accessibleVideos.forEach(video => {
+                if (!videosByYear[video.year]) {
+                    videosByYear[video.year] = {};
+                }
                 
-                accessibleVideos.forEach(video => {
-                    const videoItem = document.createElement('div');
-                    videoItem.className = 'mb-2';
-                    videoItem.innerHTML = `
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span>${video.title} (${video.month} ${video.year})</span>
-                            <span>${video.paid ? '<span class="paid-badge">Paid</span>' : '<span class="free-badge">Free</span>'}</span>
-                        </div>
-                    `;
-                    videoList.appendChild(videoItem);
+                if (!videosByYear[video.year][video.tier]) {
+                    videosByYear[video.year][video.tier] = {};
+                }
+                
+                if (!videosByYear[video.year][video.tier][video.month]) {
+                    videosByYear[video.year][video.tier][video.month] = [];
+                }
+                
+                videosByYear[video.year][video.tier][video.month].push(video);
+            });
+            
+            // Create lesson groups
+            Object.keys(videosByYear).sort().forEach(year => {
+                const yearGroup = document.createElement('div');
+                yearGroup.className = 'lesson-group';
+                
+                const yearTitle = document.createElement('h3');
+                yearTitle.className = 'lesson-group-title';
+                yearTitle.innerHTML = `<i class="bi bi-calendar-event"></i> ${year} Lessons`;
+                yearGroup.appendChild(yearTitle);
+                
+                Object.keys(videosByYear[year]).forEach(tier => {
+                    const tierGroup = document.createElement('div');
+                    tierGroup.className = 'mb-4';
+                    
+                    const tierTitle = document.createElement('h4');
+                    tierTitle.className = 'lesson-group-title';
+                    tierTitle.innerHTML = `<i class="bi bi-${tier === 'theory' ? 'book' : 'pencil-square'}"></i> ${tier === 'theory' ? 'Theoretical Paper' : 'Extra Class'}`;
+                    tierGroup.appendChild(tierTitle);
+                    
+                    Object.keys(videosByYear[year][tier]).sort((a, b) => {
+                        return months.indexOf(a) - months.indexOf(b);
+                    }).forEach(month => {
+                        const monthGroup = document.createElement('div');
+                        monthGroup.className = 'lesson-month';
+                        
+                        const monthTitle = document.createElement('h5');
+                        monthTitle.className = 'lesson-month-title';
+                        monthTitle.textContent = month;
+                        monthGroup.appendChild(monthTitle);
+                        
+                        const videosRow = document.createElement('div');
+                        videosRow.className = 'row';
+                        
+                        videosByYear[year][tier][month].forEach(video => {
+                            const videoCard = createVideoCard(video);
+                            videosRow.appendChild(videoCard);
+                        });
+                        
+                        monthGroup.appendChild(videosRow);
+                        tierGroup.appendChild(monthGroup);
+                    });
+                    
+                    yearGroup.appendChild(tierGroup);
                 });
                 
-                coursesContainer.appendChild(videoList);
-            }
+                lessonsContainer.appendChild(yearGroup);
+            });
         }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.querySelector('.user-menu');
+            const userDropdown = document.getElementById('user-dropdown');
+            
+            if (!userMenu.contains(event.target)) {
+                userDropdown.classList.remove('show');
+            }
+        });
     </script>
 </body>
 </html>

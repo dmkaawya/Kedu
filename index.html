@@ -3,1316 +3,2201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EduWorld Pro - Complete Learning Platform</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Korean Pro - EPS TOPIK Learning Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
+        :root {
+            --primary: #1a4b8c;
+            --secondary: #d4af37;
+            --dark: #121212;
+            --light: #f5f5f5;
+            --white: #ffffff;
+            --text: #333333;
+            --success: #28a745;
+            --danger: #dc3545;
+        }
+
         * {
-            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--white);
         }
-        
-        .card-hover {
-            transition: all 0.3s ease;
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-        
-        .card-hover:hover {
+
+        /* Header */
+        header {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .logo i {
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background-color: var(--white);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Main Content */
+        main {
+            min-height: calc(100vh - 70px);
+        }
+
+        .page {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            text-align: center;
+            padding: 5rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background-color: #0d2d5a;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #b8941f;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Cards */
+        .card {
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-        
-        .text-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
         }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
+
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 1.5rem;
         }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         }
-        
-        .slide-up {
-            animation: slideUp 0.5s ease-out;
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         }
-        
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         }
-        
-        .pulse {
-            animation: pulse 2s infinite;
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1rem;
         }
-        
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
-            }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
         }
-        
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Tables */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1rem;
+        }
+
+        .table th, .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        /* Notices */
+        .notice {
+            background-color: var(--white);
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .notice:hover {
+            transform: translateX(5px);
+        }
+
+        .notice-title {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .notice-date {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .notice-category {
+            display: inline-block;
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin: 0.5rem 0;
+        }
+
+        /* Videos */
         .video-container {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 1rem;
         }
-        
+
         .video-container iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            border: none;
+        }
+
+        /* Quizzes */
+        .quiz-container {
+            background-color: var(--white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .language-toggle {
+            display: flex;
+            background-color: var(--light);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .language-toggle button {
+            padding: 5px 15px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+        }
+
+        .language-toggle button.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .question {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .options {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: var(--light);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background-color: #e9ecef;
+        }
+
+        .option input {
+            margin-right: 10px;
+        }
+
+        /* Dashboard */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 1rem;
+        }
+
+        .admin-sidebar {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 1rem;
+            border-radius: 8px;
+            height: fit-content;
+        }
+
+        .admin-menu {
+            list-style: none;
+        }
+
+        .admin-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-menu a {
+            display: block;
+            padding: 10px;
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .admin-menu a:hover, .admin-menu a.active {
+            background-color: var(--primary);
+        }
+
+        .admin-content {
+            background-color: var(--white);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 10% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: var(--white);
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-1 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 2rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .badge-success {
+            background-color: var(--success);
+            color: var(--white);
+        }
+
+        .badge-warning {
+            background-color: #ffc107;
+            color: var(--dark);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                background-color: var(--dark);
+                flex-direction: column;
+                align-items: center;
+                padding: 1rem 0;
+                transform: translateY(-150%);
+                transition: transform 0.3s;
+            }
+
+            .nav-links.active {
+                transform: translateY(0);
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .admin-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-sidebar {
+                order: 2;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Public Navigation -->
-    <nav id="publicNav" class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-6 py-4">
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <i class="fas fa-graduation-cap text-3xl text-purple-600 mr-3"></i>
-                    <span class="text-2xl font-bold text-gradient">EduWorld Pro</span>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-language"></i>
+                    <span>Korean Pro</span>
                 </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#" onclick="showSection('home')" class="text-gray-700 hover:text-purple-600 transition">Home</a>
-                    <a href="#" onclick="showSection('about')" class="text-gray-700 hover:text-purple-600 transition">About</a>
-                    <a href="#" onclick="showSection('contact')" class="text-gray-700 hover:text-purple-600 transition">Contact</a>
-                    <a href="#" onclick="showSection('login')" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">Login</a>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('about')">About</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                    <li><a href="#" onclick="showPage('notices')">Notices</a></li>
+                    <li><a href="login.html" onclick="showPage('login')">Login</a></li>
+                    <li id="userMenu" class="hidden"><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
+                    <li id="adminMenu" class="hidden"><a href="#" onclick="showPage('admin')">Admin</a></li>
+                </ul>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
-                <button class="md:hidden" onclick="toggleMobileMenu()">
-                    <i class="fas fa-bars text-2xl text-gray-700"></i>
-                </button>
-            </div>
+            </nav>
         </div>
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
-            <div class="px-6 py-4 space-y-3">
-                <a href="#" onclick="showSection('home')" class="block text-gray-700 hover:text-purple-600">Home</a>
-                <a href="#" onclick="showSection('about')" class="block text-gray-700 hover:text-purple-600">About</a>
-                <a href="#" onclick="showSection('contact')" class="block text-gray-700 hover:text-purple-600">Contact</a>
-                <a href="#" onclick="showSection('login')" class="block bg-purple-600 text-white px-4 py-2 rounded-lg text-center">Login</a>
-            </div>
-        </div>
-    </nav>
+    </header>
 
-    <!-- Home Section -->
-    <section id="homeSection" class="min-h-screen">
-        <!-- Hero Section -->
-        <div class="gradient-bg text-white pt-24 pb-20">
-            <div class="container mx-auto px-6">
-                <div class="flex flex-col md:flex-row items-center">
-                    <div class="md:w-1/2 mb-10 md:mb-0 slide-in">
-                        <h1 class="text-4xl md:text-6xl font-bold mb-6">
-                            Transform Your Learning Experience
-                        </h1>
-                        <p class="text-xl mb-8 text-gray-200">
-                            Access world-class education with interactive videos, expert teachers, and comprehensive resources
-                        </p>
-                        <div class="flex flex-col sm:flex-row gap-4">
-                            <button onclick="showSection('login')" class="bg-white text-purple-600 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition pulse">
-                                Get Started
-                            </button>
-                            <button onclick="showSection('about')" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-purple-600 transition">
-                                Learn More
-                            </button>
-                        </div>
-                    </div>
-                    <div class="md:w-1/2 flex justify-center">
-                        <div class="floating">
-                            <i class="fas fa-laptop-code text-9xl opacity-20"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Features Section -->
-        <div class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold text-gray-800 mb-4">Why Choose EduWorld Pro?</h2>
-                    <p class="text-xl text-gray-600">Experience education like never before</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="text-center p-6 rounded-lg bg-purple-50 card-hover">
-                        <i class="fas fa-video text-5xl text-purple-600 mb-4"></i>
-                        <h3 class="text-xl font-semibold mb-2">Interactive Videos</h3>
-                        <p class="text-gray-600">Watch high-quality educational videos embedded directly on our platform</p>
-                    </div>
-                    <div class="text-center p-6 rounded-lg bg-blue-50 card-hover">
-                        <i class="fas fa-chalkboard-teacher text-5xl text-blue-600 mb-4"></i>
-                        <h3 class="text-xl font-semibold mb-2">Expert Teachers</h3>
-                        <p class="text-gray-600">Learn from industry professionals and experienced educators</p>
-                    </div>
-                    <div class="text-center p-6 rounded-lg bg-green-50 card-hover">
-                        <i class="fas fa-certificate text-5xl text-green-600 mb-4"></i>
-                        <h3 class="text-xl font-semibold mb-2">Certified Courses</h3>
-                        <p class="text-gray-600">Earn recognized certificates upon course completion</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Stats Section -->
-        <div class="py-16 bg-gray-50">
-            <div class="container mx-auto px-6">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-                    <div class="card-hover p-6 rounded-lg bg-white">
-                        <i class="fas fa-users text-4xl text-purple-600 mb-4"></i>
-                        <h3 class="text-3xl font-bold text-gray-800">50,000+</h3>
-                        <p class="text-gray-600">Students</p>
-                    </div>
-                    <div class="card-hover p-6 rounded-lg bg-white">
-                        <i class="fas fa-video text-4xl text-blue-600 mb-4"></i>
-                        <h3 class="text-3xl font-bold text-gray-800">10,000+</h3>
-                        <p class="text-gray-600">Videos</p>
-                    </div>
-                    <div class="card-hover p-6 rounded-lg bg-white">
-                        <i class="fas fa-book text-4xl text-green-600 mb-4"></i>
-                        <h3 class="text-3xl font-bold text-gray-800">500+</h3>
-                        <p class="text-gray-600">Courses</p>
-                    </div>
-                    <div class="card-hover p-6 rounded-lg bg-white">
-                        <i class="fas fa-award text-4xl text-yellow-600 mb-4"></i>
-                        <h3 class="text-3xl font-bold text-gray-800">98%</h3>
-                        <p class="text-gray-600">Success Rate</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="aboutSection" class="hidden min-h-screen py-20 bg-white">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold text-gray-800 mb-4">About EduWorld Pro</h2>
-                    <p class="text-xl text-gray-600">Revolutionizing education through technology</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <div id="home-page" class="page active">
+            <div class="hero">
+                <div class="container">
+                    <h1>Master Korean with Korean Pro</h1>
+                    <p>Your complete online platform for EPS TOPIK preparation and Korean language learning</p>
                     <div>
-                        <h3 class="text-2xl font-bold mb-4">Our Mission</h3>
-                        <p class="text-gray-600 mb-4">
-                            To provide accessible, high-quality education to students worldwide through innovative technology and expert instruction.
-                        </p>
-                        <p class="text-gray-600">
-                            We believe that education should be engaging, interactive, and available to everyone, regardless of their location or background.
-                        </p>
-                    </div>
-                    <div class="text-center">
-                        <i class="fas fa-globe-americas text-9xl text-purple-200"></i>
+                        <a href="login.html" onclick="showPage('login')" class="btn btn-secondary">Join Now</a>
+                        <a href="#" onclick="showPage('about')" class="btn btn-outline">Learn More</a>
                     </div>
                 </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-12">
-                    <div class="text-center order-2 md:order-1">
-                        <i class="fas fa-lightbulb text-9xl text-yellow-200"></i>
+            </div>
+
+            <div class="container mb-2">
+                <h2 class="text-center mb-1">Why Choose Korean Pro?</h2>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h3><i class="fas fa-graduation-cap"></i> EPS TOPIK Preparation</h3>
+                        <p>Specialized training for EPS TOPIK exam with mock tests and personalized feedback</p>
                     </div>
-                    <div class="order-1 md:order-2">
-                        <h3 class="text-2xl font-bold mb-4">Our Vision</h3>
-                        <p class="text-gray-600 mb-4">
-                            To become the world's leading online education platform, empowering millions of students to achieve their academic and career goals.
-                        </p>
-                        <p class="text-gray-600">
-                            We envision a future where quality education is just a click away, breaking down barriers and creating opportunities for all.
-                        </p>
+                    <div class="card">
+                        <h3><i class="fas fa-book-open"></i> Theory Classes</h3>
+                        <p>Comprehensive Korean grammar and vocabulary lessons for all levels</p>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-file-alt"></i> Paper Classes</h3>
+                        <p>Practice with past papers and exam strategies to boost your confidence</p>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-star"></i> Extra Classes</h3>
+                        <p>Special sessions on Korean culture, conversation practice, and more</p>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-video"></i> Monthly Recordings</h3>
+                        <p>Access all class recordings anytime to review and reinforce learning</p>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-tasks"></i> Daily Quizzes</h3>
+                        <p>Test your knowledge with bilingual quizzes in Korean and Sinhala</p>
                     </div>
                 </div>
+            </div>
+
+            <div class="container">
+                <h2 class="text-center mb-1">Latest Notices</h2>
+                <div id="homeNotices"></div>
+                <div class="text-center">
+                    <a href="#" onclick="showPage('notices')" class="btn btn-outline">View All Notices</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about-page" class="page">
+            <div class="container">
+                <h1 class="text-center mb-2">About Korean Pro</h1>
                 
-                <div class="bg-gray-50 rounded-xl p-8">
-                    <h3 class="text-2xl font-bold mb-6 text-center">Our Values</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="text-center">
-                            <i class="fas fa-heart text-4xl text-red-500 mb-4"></i>
-                            <h4 class="font-semibold mb-2">Passion</h4>
-                            <p class="text-gray-600 text-sm">We're passionate about education and committed to excellence</p>
+                <div class="grid grid-2 mb-2">
+                    <div>
+                        <h3>Our Mission</h3>
+                        <p>At Korean Pro, our mission is to provide high-quality Korean language education that empowers students to achieve their goals, whether it's passing the EPS TOPIK exam, advancing their careers, or simply exploring a new culture.</p>
+                        
+                        <h3 class="mt-1">Our Vision</h3>
+                        <p>We envision becoming the leading Korean language learning platform in Sri Lanka, known for our excellence in teaching, innovative methods, and student success stories.</p>
+                    </div>
+                    <div>
+                        <h3>Why Choose Us?</h3>
+                        <ul>
+                            <li>Experienced instructors with specialized knowledge in EPS TOPIK</li>
+                            <li>Comprehensive curriculum covering all aspects of the Korean language</li>
+                            <li>Flexible learning options with online classes and recordings</li>
+                            <li>Bilingual support in Korean and Sinhala</li>
+                            <li>Proven track record of student success</li>
+                            <li>Affordable pricing with flexible payment options</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card mb-2">
+                    <h2>Meet Our Instructor</h2>
+                    <div class="grid grid-2">
+                        <div>
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Sudeera" style="width: 100%; border-radius: 8px;">
                         </div>
-                        <div class="text-center">
-                            <i class="fas fa-users text-4xl text-blue-500 mb-4"></i>
-                            <h4 class="font-semibold mb-2">Community</h4>
-                            <p class="text-gray-600 text-sm">Building a global community of learners and educators</p>
+                        <div>
+                            <h3>Sudeera - Korean Lecturer / EPS TOPIK Specialist</h3>
+                            <p>With over 10 years of experience in teaching Korean language and preparing students for the EPS TOPIK exam, Sudeera is a dedicated educator passionate about helping students achieve their language learning goals.</p>
+                            <p>Having lived and studied in Korea, Sudeera brings authentic language experience and cultural insights to the classroom.</p>
                         </div>
-                        <div class="text-center">
-                            <i class="fas fa-rocket text-4xl text-purple-500 mb-4"></i>
-                            <h4 class="font-semibold mb-2">Innovation</h4>
-                            <p class="text-gray-600 text-sm">Constantly innovating to improve the learning experience</p>
-                        </div>
+                    </div>
+                </div>
+
+                <h2 class="text-center mb-1">EPS TOPIK Course Structure</h2>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h3>Beginner Level</h3>
+                        <p>Introduction to Korean alphabet, basic grammar, and essential vocabulary for daily communication.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Intermediate Level</h3>
+                        <p>Advanced grammar, expanded vocabulary, and conversation practice for real-life situations.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Advanced Level</h3>
+                        <p>Exam-focused preparation with mock tests, time management strategies, and specialized vocabulary for EPS TOPIK.</p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Contact Section -->
-    <section id="contactSection" class="hidden min-h-screen py-20 bg-gray-50">
-        <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold text-gray-800 mb-4">Contact Us</h2>
-                    <p class="text-xl text-gray-600">We're here to help with any questions</p>
-                </div>
+        <!-- Contact Page -->
+        <div id="contact-page" class="page">
+            <div class="container">
+                <h1 class="text-center mb-2">Contact Us</h1>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="bg-white rounded-xl shadow-lg p-8">
-                        <h3 class="text-2xl font-bold mb-6">Get in Touch</h3>
-                        <form onsubmit="handleContact(event)">
-                            <div class="mb-4">
-                                <label class="block text-gray-700 font-semibold mb-2">Name</label>
-                                <input type="text" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Your Name">
+                <div class="grid grid-2">
+                    <div>
+                        <h3>Get in Touch</h3>
+                        <form id="contactForm" onsubmit="handleContactForm(event)">
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" name="name" class="form-control" required>
                             </div>
-                            <div class="mb-4">
-                                <label class="block text-gray-700 font-semibold mb-2">Email</label>
-                                <input type="email" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="your@email.com">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" required>
                             </div>
-                            <div class="mb-4">
-                                <label class="block text-gray-700 font-semibold mb-2">Subject</label>
-                                <input type="text" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Subject">
+                            <div class="form-group">
+                                <label>Subject</label>
+                                <input type="text" name="subject" class="form-control" required>
                             </div>
-                            <div class="mb-6">
-                                <label class="block text-gray-700 font-semibold mb-2">Message</label>
-                                <textarea rows="4" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Your message..."></textarea>
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea name="message" class="form-control" rows="4" required></textarea>
                             </div>
-                            <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition">
-                                Send Message
-                            </button>
+                            <button type="submit" class="btn">Send Message</button>
                         </form>
                     </div>
-                    
-                    <div class="space-y-6">
-                        <div class="bg-white rounded-xl shadow-lg p-6">
-                            <h4 class="text-xl font-semibold mb-4">Contact Information</h4>
-                            <div class="space-y-3">
-                                <div class="flex items-center">
-                                    <i class="fas fa-map-marker-alt text-purple-600 mr-3"></i>
-                                    <span class="text-gray-600">kalutara,sri lanka</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-phone text-purple-600 mr-3"></i>
-                                    <span class="text-gray-600">+94 077 50 48 455</span>
-                                </div>
-                                <div class="flex items-center">
-                                    <i class="fas fa-envelope text-purple-600 mr-3"></i>
-                                    <span class="text-gray-600">dmkaawya@gmail.com</span>
-                                </div>
-                            </div>
+                    <div>
+                        <h3>Contact Information</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> kalutara, Sri Lanka</p>
+                        <p><i class="fas fa-phone"></i> +94 77 50 48 455</p>
+                        <p><i class="fas fa-envelope"></i> dmkaawya@gmail.com</p>
+                        
+                        <h3 class="mt-1">Connect With Us</h3>
+                        <div style="display: flex; gap: 10px;">
+                            <a href="#" class="btn btn-outline"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="btn btn-outline"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="btn btn-outline"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="btn btn-outline"><i class="fab fa-youtube"></i></a>
                         </div>
                         
-                        <div class="bg-white rounded-xl shadow-lg p-6">
-                            <h4 class="text-xl font-semibold mb-4">Business Hours</h4>
-                            <div class="space-y-2 text-gray-600">
-                                <div class="flex justify-between">
-                                    <span>Monday - Friday</span>
-                                    <span>9:00 AM - 6:00 PM</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span>Saturday</span>
-                                    <span>10:00 AM - 4:00 PM</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span>Sunday</span>
-                                    <span>Closed</span>
-                                </div>
-                            </div>
-                        </div>
+                        <h3 class="mt-1">WhatsApp</h3>
+                        <a href="https://wa.me/94775048455" class="btn btn-secondary" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
                         
-                        <div class="bg-white rounded-xl shadow-lg p-6">
-                            <h4 class="text-xl font-semibold mb-4">Follow Us</h4>
-                            <div class="flex space-x-4">
-                                <a href="#" class="text-gray-600 hover:text-purple-600 transition">
-                                    <i class="fab fa-facebook text-2xl"></i>
-                                </a>
-                                <a href="#" class="text-gray-600 hover:text-purple-600 transition">
-                                    <i class="fab fa-twitter text-2xl"></i>
-                                </a>
-                                <a href="#" class="text-gray-600 hover:text-purple-600 transition">
-                                    <i class="fab fa-instagram text-2xl"></i>
-                                </a>
-                                <a href="#" class="text-gray-600 hover:text-purple-600 transition">
-                                    <i class="fab fa-linkedin text-2xl"></i>
-                                </a>
-                            </div>
+                        <h3 class="mt-1">Payment Information</h3>
+                        <div class="card">
+                            <h4>Bank Details</h4>
+                            <p><strong>Bank:</strong> Bank of Ceylon</p>
+                            <p><strong>Account Name:</strong> Korean Pro (Pvt) Ltd</p>
+                            <p><strong>Account Number:</strong> 1234567890</p>
+                            <p><strong>Branch:</strong>kalutara south</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Login Screen -->
-    <div id="loginSection" class="hidden min-h-screen flex items-center justify-center gradient-bg">
-        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md slide-up">
-            <div class="text-center mb-8">
-                <i class="fas fa-graduation-cap text-6xl text-purple-600 mb-4"></i>
-                <h1 class="text-3xl font-bold text-gradient">EduWorld Pro</h1>
-                <p class="text-gray-600 mt-2">Advanced Learning Management System</p>
+        <!-- Notices Page -->
+        <div id="notices-page" class="page">
+            <div class="container">
+                <h1 class="text-center mb-2">Noticeboard</h1>
+                
+                <div id="adminNoticeBtn" class="hidden text-right mb-1">
+                    <button class="btn btn-secondary" onclick="showAddNoticeModal()">Add New Notice</button>
+                </div>
+                
+                <div id="noticesContainer"></div>
             </div>
-            
-            <form onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-2">Username</label>
-                    <input type="text" id="username" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Enter username">
+        </div>
+
+        <!-- Login Page -->
+        <div id="login-page" class="page">
+            <div class="container">
+                <h1 class="text-center mb-2">Login / Signup</h1>
+                
+                <div class="grid grid-2">
+                    <div>
+                        <h3>Login</h3>
+                        <form id="loginForm" onsubmit="handleLogin(event)">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" name="username" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="password" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn">Login</button>
+                        </form>
+                        
+                        <div class="mt-1">
+                            <h4>Demo Accounts</h4>
+                            <p><strong>Admin:</strong> admin / admin123</p>
+                            <p><strong>Students:</strong> student1/student123, student2/student123, etc.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Signup</h3>
+                        <form id="signupForm" onsubmit="handleSignup(event)">
+                            <div class="form-group">
+                                <label>Username</label>
+                                <input type="text" name="username" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" name="password" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone</label>
+                                <input type="tel" name="phone" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn">Signup</button>
+                        </form>
+                        <p class="mt-1">Note: Your account will need to be approved by an admin before you can access all features.</p>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-2">Password</label>
-                    <input type="password" id="password" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Enter password">
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page" class="page">
+            <div class="container">
+                <h1 class="mb-1">Welcome, <span id="userName">Student</span>!</h1>
+                
+                <div id="paymentStatus" class="card mb-1">
+                    <i class="fas fa-exclamation-circle"></i> Your payment is pending approval. Please contact admin for access to all features.
                 </div>
-                <div>
-                    <label class="block text-gray-700 font-semibold mb-2">Login As</label>
-                    <select id="userType" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                        <option value="student">Student</option>
-                        <option value="teacher">Teacher</option>
-                        <option value="admin">Admin</option>
+                
+                <div class="dashboard-stats mb-2">
+                    <div class="stat-card">
+                        <h3 id="quizzesCompleted">0</h3>
+                        <p>Quizzes Completed</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="averageScore">0%</h3>
+                        <p>Average Score</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="daysActive">0</h3>
+                        <p>Days Active</p>
+                    </div>
+                </div>
+                
+                <h2 class="mb-1">Quick Access</h2>
+                <div class="grid grid-3">
+                    <div class="card">
+                        <h3><i class="fas fa-book-open"></i> Theory Classes</h3>
+                        <p>Access theory class materials and recordings</p>
+                        <button class="btn btn-outline mt-1" onclick="showPage('theory')">View Classes</button>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-file-alt"></i> Paper Classes</h3>
+                        <p>Practice with past papers and exam strategies</p>
+                        <button class="btn btn-outline mt-1" onclick="showPage('paper')">View Papers</button>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-star"></i> Extra Classes</h3>
+                        <p>Special sessions on culture and conversation</p>
+                        <button class="btn btn-outline mt-1" onclick="showPage('extra')">View Extras</button>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-video"></i> Monthly Recordings</h3>
+                        <p>Access all class recordings by month</p>
+                        <button class="btn btn-outline mt-1" onclick="showPage('recordings')">View Recordings</button>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-tasks"></i> Daily Quizzes</h3>
+                        <p>Test your knowledge with bilingual quizzes</p>
+                        <button class="btn btn-outline mt-1" onclick="showPage('quizzes')">Take Quizzes</button>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-bullhorn"></i> Notices</h3>
+                        <p>Stay updated with latest announcements</p>
+                        <button class="btn btn-outline mt-1" onclick="showPage('notices')">View Notices</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recordings Page -->
+        <div id="recordings-page" class="page">
+            <div class="container">
+                <h1 class="text-center mb-2">Monthly Recordings</h1>
+                
+                <div id="adminRecordingBtn" class="hidden text-right mb-1">
+                    <button class="btn btn-secondary" onclick="showAddRecordingModal('monthly')">Add New Recording</button>
+                </div>
+                
+                <div id="recordingsContainer"></div>
+            </div>
+        </div>
+
+        <!-- Theory Page -->
+        <div id="theory-page" class="page">
+            <div class="container">
+                <h1 class="text-center mb-2">Theory Classes</h1>
+                
+                <div id="adminTheoryBtn" class="hidden text-right mb-1">
+                    <button class="btn btn-secondary" onclick="showAddRecordingModal('theory')">Add New Theory Class</button>
+                </div>
+                
+                <div id="theoryContainer"></div>
+            </div>
+        </div>
+
+        <!-- Paper Page -->
+        <div id="paper-page" class="page">
+            <div class="container">
+                <h1 class="text-center mb-2">Paper Classes</h1>
+                
+                <div id="adminPaperBtn" class="hidden text-right mb-1">
+                    <button class="btn btn-secondary" onclick="showAddRecordingModal('paper')">Add New Paper Class</button>
+                </div>
+                
+                <div id="paperContainer"></div>
+            </div>
+        </div>
+
+        <!-- Extra Page -->
+        <div id="extra-page" class="page">
+            <div class="container">
+                <h1 class="text-center mb-2">Extra Classes</h1>
+                
+                <div id="adminExtraBtn" class="hidden text-right mb-1">
+                    <button class="btn btn-secondary" onclick="showAddRecordingModal('extra')">Add New Extra Class</button>
+                </div>
+                
+                <div id="extraContainer"></div>
+            </div>
+        </div>
+
+        <!-- Quizzes Page -->
+        <div id="quizzes-page" class="page">
+            <div class="container">
+                <h1 class="text-center mb-2">Daily Quizzes</h1>
+                
+                <div id="adminQuizBtn" class="hidden text-right mb-1">
+                    <button class="btn btn-secondary" onclick="showAddQuizModal()">Add New Quiz</button>
+                </div>
+                
+                <div id="quizzesContainer"></div>
+            </div>
+        </div>
+
+        <!-- Admin Page -->
+        <div id="admin-page" class="page">
+            <div class="container">
+                <h1 class="text-center mb-2">Admin Panel</h1>
+                
+                <div class="admin-panel">
+                    <div class="admin-sidebar">
+                        <ul class="admin-menu">
+                            <li><a href="#" onclick="showAdminSection('dashboard')" class="active">Dashboard</a></li>
+                            <li><a href="#" onclick="showAdminSection('students')">Students</a></li>
+                            <li><a href="#" onclick="showAdminSection('payments')">Approve Payments</a></li>
+                            <li><a href="#" onclick="showAdminSection('recordings')">Manage Recordings</a></li>
+                            <li><a href="#" onclick="showAdminSection('quizzes')">Manage Quizzes</a></li>
+                            <li><a href="#" onclick="showAdminSection('notices')">Manage Notices</a></li>
+                            <li><a href="#" onclick="showAdminSection('messages')">Messages</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="admin-content">
+                        <!-- Dashboard Section -->
+                        <div id="admin-dashboard" class="admin-section">
+                            <h2>System Overview</h2>
+                            <div class="dashboard-stats">
+                                <div class="stat-card">
+                                    <h3 id="totalStudents">0</h3>
+                                    <p>Total Students</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3 id="approvedStudents">0</h3>
+                                    <p>Approved Students</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3 id="totalRecordings">0</h3>
+                                    <p>Total Recordings</p>
+                                </div>
+                                <div class="stat-card">
+                                    <h3 id="totalQuizzes">0</h3>
+                                    <p>Total Quizzes</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Students Section -->
+                        <div id="admin-students" class="admin-section hidden">
+                            <h2>Manage Students</h2>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsTableBody"></tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Payments Section -->
+                        <div id="admin-payments" class="admin-section hidden">
+                            <h2>Approve Payments</h2>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="paymentsTableBody"></tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Recordings Section -->
+                        <div id="admin-recordings" class="admin-section hidden">
+                            <h2>Manage Recordings</h2>
+                            <div class="mb-1">
+                                <button class="btn btn-secondary" onclick="showAddRecordingModal('monthly')">Add New Recording</button>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Month</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recordingsTableBody"></tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Quizzes Section -->
+                        <div id="admin-quizzes" class="admin-section hidden">
+                            <h2>Manage Quizzes</h2>
+                            <div class="mb-1">
+                                <button class="btn btn-secondary" onclick="showAddQuizModal()">Add New Quiz</button>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Question (Korean)</th>
+                                        <th>Question (Sinhala)</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="quizzesTableBody"></tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Notices Section -->
+                        <div id="admin-notices" class="admin-section hidden">
+                            <h2>Manage Notices</h2>
+                            <div class="mb-1">
+                                <button class="btn btn-secondary" onclick="showAddNoticeModal()">Add New Notice</button>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="noticesTableBody"></tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Messages Section -->
+                        <div id="admin-messages" class="admin-section hidden">
+                            <h2>Contact Messages</h2>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Subject</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="messagesTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Korean Pro</h3>
+                    <p>Your complete online platform for EPS TOPIK preparation and Korean language learning.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="showPage('home')">Home</a></li>
+                        <li><a href="#" onclick="showPage('about')">About</a></li>
+                        <li><a href="#" onclick="showPage('contact')">Contact</a></li>
+                        <li><a href="login.html" onclick="showPage('login')">Login</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Courses</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="showPage('theory')">Theory Classes</a></li>
+                        <li><a href="#" onclick="showPage('paper')">Paper Classes</a></li>
+                        <li><a href="#" onclick="showPage('extra')">Extra Classes</a></li>
+                        <li><a href="#" onclick="showPage('quizzes')">Daily Quizzes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> kalutara,sri lanka</p>
+                    <p><i class="fas fa-phone"></i> +94 77 50 48 455</p>
+                    <p><i class="fas fa-envelope"></i>dmkaawya@gmail.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Korean Pro. All Rights Reserved. Designed by <span style="color: var(--secondary);">DMC group</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Add Notice Modal -->
+    <div id="addNoticeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addNoticeModal')">&times;</span>
+            <h2>Add New Notice</h2>
+            <form id="noticeForm" onsubmit="handleNoticeForm(event)">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" name="title" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select name="category" class="form-control" required>
+                        <option value="Announcement">Announcement</option>
+                        <option value="Schedule">Schedule</option>
+                        <option value="Results">Results</option>
+                        <option value="Holiday">Holiday</option>
                     </select>
                 </div>
-                <button type="submit" class="w-full bg-purple-600 text-white py-3 rounded-lg font-semibold hover:bg-purple-700 transition pulse">
-                    Login
-                </button>
+                <div class="form-group">
+                    <label>Content</label>
+                    <textarea name="content" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn">Add Notice</button>
             </form>
-            
-            <div class="mt-6 text-center">
-                <p class="text-sm text-gray-600">Demo Credentials:</p>
-                <div class="mt-2 text-xs text-gray-500">
-                    <p>Students: student1 to student10 (password: 123)</p>
-                    <p>Teachers: teacher1, teacher2 (password: 123)</p>
-                    <p>Admin: admin (password: admin123)</p>
-                </div>
-            </div>
         </div>
     </div>
 
-    <!-- Main Dashboard -->
-    <div id="mainDashboard" class="hidden min-h-screen">
-        <!-- Navigation -->
-        <nav class="bg-white shadow-lg sticky top-0 z-50">
-            <div class="container mx-auto px-6 py-4">
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center">
-                        <i class="fas fa-graduation-cap text-3xl text-purple-600 mr-3"></i>
-                        <span class="text-2xl font-bold text-gradient">EduWorld Pro</span>
-                    </div>
-                    <div class="flex items-center space-x-6">
-                        <span id="welcomeMessage" class="text-gray-700"></span>
-                        <button onclick="logout()" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition">
-                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
-                        </button>
-                    </div>
+    <!-- Add Recording Modal -->
+    <div id="addRecordingModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addRecordingModal')">&times;</span>
+            <h2>Add New Recording</h2>
+            <form id="recordingForm" onsubmit="handleRecordingForm(event)">
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" name="title" class="form-control" required>
                 </div>
-            </div>
-        </nav>
-
-        <!-- Student Dashboard -->
-        <div id="studentDashboard" class="hidden container mx-auto px-6 py-8">
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-2">Student Dashboard</h2>
-                <p class="text-gray-600">Welcome to your learning portal</p>
-            </div>
-
-            <!-- Quick Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white p-6 rounded-xl shadow card-hover">
-                    <i class="fas fa-book text-3xl text-blue-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800" id="enrolledCourses">0</h3>
-                    <p class="text-gray-600">Enrolled Courses</p>
+                <div class="form-group">
+                    <label>Month</label>
+                    <select name="month" class="form-control" required>
+                        <option value="January">January</option>
+                        <option value="February">February</option>
+                        <option value="March">March</option>
+                        <option value="April">April</option>
+                        <option value="May">May</option>
+                        <option value="June">June</option>
+                        <option value="July">July</option>
+                        <option value="August">August</option>
+                        <option value="September">September</option>
+                        <option value="October">October</option>
+                        <option value="November">November</option>
+                        <option value="December">December</option>
+                    </select>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow card-hover">
-                    <i class="fas fa-video text-3xl text-green-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800" id="watchedVideos">0</h3>
-                    <p class="text-gray-600">Videos Watched</p>
+                <div class="form-group">
+                    <label>Video URL</label>
+                    <input type="text" name="url" class="form-control" placeholder="YouTube, Vimeo, or MP4 link" required>
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow card-hover">
-                    <i class="fas fa-trophy text-3xl text-yellow-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800" id="completedCourses">0</h3>
-                    <p class="text-gray-600">Completed Courses</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow card-hover">
-                    <i class="fas fa-certificate text-3xl text-purple-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800" id="certificates">0</h3>
-                    <p class="text-gray-600">Certificates</p>
-                </div>
-            </div>
-
-            <!-- Student Profile Section -->
-            <div class="bg-white rounded-xl shadow p-6 mb-8">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">My Profile</h3>
-                <form onsubmit="updateProfile(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Full Name</label>
-                        <input type="text" id="profileName" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">District</label>
-                        <input type="text" id="profileDistrict" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">WhatsApp Number</label>
-                        <input type="tel" id="profileWhatsapp" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Email</label>
-                        <input type="email" id="profileEmail" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Student ID</label>
-                        <input type="text" id="profileId" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Username</label>
-                        <input type="text" id="profileUsername" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Password</label>
-                        <input type="password" id="profilePassword" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                    </div>
-                    <div class="flex items-end">
-                        <button type="submit" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition">
-                            Update Profile
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Video Library Section -->
-            <div class="bg-white rounded-xl shadow p-6 mb-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-bold text-gray-800">Video Library</h3>
-                    <div class="flex space-x-4">
-                        <select id="classType" onchange="filterVideos()" class="px-4 py-2 border rounded-lg focus:outline-none focus:border-purple-600">
-                            <option value="all">All Classes</option>
-                            <option value="theory">Theory Class</option>
-                            <option value="extra">Extra Class</option>
-                            <option value="paper">Paper Class</option>
-                            <option value="korean">Korean Class</option>
-                        </select>
-                        <select id="monthSelect" onchange="filterVideos()" class="px-4 py-2 border rounded-lg focus:outline-none focus:border-purple-600">
-                            <option value="all">All Months</option>
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value="4">April</option>
-                            <option value="5">May</option>
-                            <option value="6">June</option>
-                            <option value="7">July</option>
-                            <option value="8">August</option>
-                            <option value="9">September</option>
-                            <option value="10">October</option>
-                            <option value="11">November</option>
-                            <option value="12">December</option>
-                        </select>
-                    </div>
-                </div>
-                
-                <div id="videoGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Videos will be populated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- My Classes -->
-            <div class="bg-white rounded-xl shadow p-6">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">My Classes</h3>
-                <div id="studentClasses" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Classes will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Teacher Dashboard -->
-        <div id="teacherDashboard" class="hidden container mx-auto px-6 py-8">
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-2">Teacher Dashboard</h2>
-                <p class="text-gray-600">Manage your classes and students</p>
-            </div>
-
-            <!-- Teacher Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white p-6 rounded-xl shadow card-hover">
-                    <i class="fas fa-chalkboard text-3xl text-blue-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800" id="teachingClasses">0</h3>
-                    <p class="text-gray-600">Teaching Classes</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow card-hover">
-                    <i class="fas fa-users text-3xl text-green-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800" id="totalStudents">0</h3>
-                    <p class="text-gray-600">Total Students</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow card-hover">
-                    <i class="fas fa-video text-3xl text-purple-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800" id="uploadedVideos">0</h3>
-                    <p class="text-gray-600">Uploaded Videos</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow card-hover">
-                    <i class="fas fa-chart-line text-3xl text-yellow-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800" id="completionRate">0%</h3>
-                    <p class="text-gray-600">Completion Rate</p>
-                </div>
-            </div>
-
-            <!-- My Classes -->
-            <div class="bg-white rounded-xl shadow p-6 mb-8">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">My Classes</h3>
-                <div id="teacherClasses" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <!-- Classes will be populated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Upload Video Section -->
-            <div class="bg-white rounded-xl shadow p-6">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">Upload New Video</h3>
-                <form onsubmit="uploadVideo(event)" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Video Title</label>
-                            <input type="text" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Enter video title">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">YouTube URL</label>
-                            <input type="url" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="https://youtube.com/watch?v=...">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Class Type</label>
-                            <select required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                                <option value="theory">Theory Class</option>
-                                <option value="extra">Extra Class</option>
-                                <option value="paper">Paper Class</option>
-                                <option value="korean">Korean Class</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Month</label>
-                            <select required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                                <option value="1">January</option>
-                                <option value="2">February</option>
-                                <option value="3">March</option>
-                                <option value="4">April</option>
-                                <option value="5">May</option>
-                                <option value="6">June</option>
-                                <option value="7">July</option>
-                                <option value="8">August</option>
-                                <option value="9">September</option>
-                                <option value="10">October</option>
-                                <option value="11">November</option>
-                                <option value="12">December</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 font-semibold mb-2">Payment Type</label>
-                            <select required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                                <option value="free">Free</option>
-                                <option value="paid">Paid</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Class</label>
-                        <select required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600">
-                            <option value="web2026">ICT RB</option>
-                            <option value="digital2026">Media MB</option>
-                            <option value="graphic2026">Korean DP</option>
-                            <option value="korean2026">Korean Language RJ</option>
-                            <option value="data2027">ICT LP</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-gray-700 font-semibold mb-2">Description</label>
-                        <textarea rows="3" required class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-purple-600" placeholder="Enter video description"></textarea>
-                    </div>
-                    <button type="submit" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition">
-                        <i class="fas fa-upload mr-2"></i>Upload Video
-                    </button>
-                </form>
-            </div>
-        </div>
-
-        <!-- Admin Dashboard -->
-        <div id="adminDashboard" class="hidden container mx-auto px-6 py-8">
-            <div class="mb-8">
-                <h2 class="text-3xl font-bold text-gray-800 mb-2">Admin Dashboard</h2>
-                <p class="text-gray-600">Manage the entire system</p>
-            </div>
-
-            <!-- Admin Stats -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div class="bg-white p-6 rounded-xl shadow card-hover">
-                    <i class="fas fa-users text-3xl text-blue-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800" id="totalUsers">0</h3>
-                    <p class="text-gray-600">Total Users</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow card-hover">
-                    <i class="fas fa-video text-3xl text-green-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800" id="totalVideos">0</h3>
-                    <p class="text-gray-600">Total Videos</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow card-hover">
-                    <i class="fas fa-book-open text-3xl text-yellow-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800" id="totalClasses">0</h3>
-                    <p class="text-gray-600">Total Classes</p>
-                </div>
-                <div class="bg-white p-6 rounded-xl shadow card-hover">
-                    <i class="fas fa-eye text-3xl text-purple-500 mb-4"></i>
-                    <h3 class="text-2xl font-bold text-gray-800" id="totalViews">0</h3>
-                    <p class="text-gray-600">Total Views</p>
-                </div>
-            </div>
-
-            <!-- Student Management -->
-            <div class="bg-white rounded-xl shadow p-6 mb-8">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">Student Management</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="border-b">
-                                <th class="text-left py-3 px-4">Name</th>
-                                <th class="text-left py-3 px-4">District</th>
-                                <th class="text-left py-3 px-4">WhatsApp</th>
-                                <th class="text-left py-3 px-4">Email</th>
-                                <th class="text-left py-3 px-4">Student ID</th>
-                                <th class="text-left py-3 px-4">Username</th>
-                                <th class="text-left py-3 px-4">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="studentTable">
-                            <!-- Students will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Video Management -->
-            <div class="bg-white rounded-xl shadow p-6 mb-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-2xl font-bold text-gray-800">Video Management</h3>
-                    <button onclick="showAddVideoForm()" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
-                        <i class="fas fa-plus mr-2"></i>Add Video
-                    </button>
-                </div>
-                
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="border-b">
-                                <th class="text-left py-3 px-4">Title</th>
-                                <th class="text-left py-3 px-4">Class Type</th>
-                                <th class="text-left py-3 px-4">Month</th>
-                                <th class="text-left py-3 px-4">Payment</th>
-                                <th class="text-left py-3 px-4">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="videoTable">
-                            <!-- Videos will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- User Management -->
-            <div class="bg-white rounded-xl shadow p-6">
-                <h3 class="text-2xl font-bold text-gray-800 mb-6">User Management</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead>
-                            <tr class="border-b">
-                                <th class="text-left py-3 px-4">Username</th>
-                                <th class="text-left py-3 px-4">Type</th>
-                                <th class="text-left py-3 px-4">Status</th>
-                                <th class="text-left py-3 px-4">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="userTable">
-                            <!-- Users will be populated by JavaScript -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                <input type="hidden" name="type" id="recordingType">
+                <button type="submit" class="btn">Add Recording</button>
+            </form>
         </div>
     </div>
 
-    <!-- Success Modal -->
-    <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white rounded-lg p-8 max-w-md mx-4">
-            <div class="text-center">
-                <i class="fas fa-check-circle text-5xl text-green-500 mb-4"></i>
-                <h3 class="text-2xl font-bold mb-2">Success!</h3>
-                <p class="text-gray-600 mb-6" id="modalMessage">Operation completed successfully.</p>
-                <button onclick="closeModal()" class="bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition">
-                    OK
-                </button>
-            </div>
+    <!-- Add Quiz Modal -->
+    <div id="addQuizModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('addQuizModal')">&times;</span>
+            <h2>Add New Quiz</h2>
+            <form id="quizForm" onsubmit="handleQuizForm(event)">
+                <div class="form-group">
+                    <label>Question (Korean)</label>
+                    <input type="text" name="question" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Question (Sinhala)</label>
+                    <input type="text" name="questionSin" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Option 1 (Korean)</label>
+                    <input type="text" name="option1" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Option 2 (Korean)</label>
+                    <input type="text" name="option2" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Option 3 (Korean)</label>
+                    <input type="text" name="option3" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Option 4 (Korean)</label>
+                    <input type="text" name="option4" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Option 1 (Sinhala)</label>
+                    <input type="text" name="option1Sin" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Option 2 (Sinhala)</label>
+                    <input type="text" name="option2Sin" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Option 3 (Sinhala)</label>
+                    <input type="text" name="option3Sin" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Option 4 (Sinhala)</label>
+                    <input type="text" name="option4Sin" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Correct Answer</label>
+                    <select name="correctAnswer" class="form-control" required>
+                        <option value="0">Option 1</option>
+                        <option value="1">Option 2</option>
+                        <option value="2">Option 3</option>
+                        <option value="3">Option 4</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Add Quiz</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- View Notice Modal -->
+    <div id="viewNoticeModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('viewNoticeModal')">&times;</span>
+            <h2 id="viewNoticeTitle"></h2>
+            <div id="viewNoticeCategory" class="badge"></div>
+            <p id="viewNoticeDate"></p>
+            <div id="viewNoticeContent"></div>
+        </div>
+    </div>
+
+    <!-- View Message Modal -->
+    <div id="viewMessageModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('viewMessageModal')">&times;</span>
+            <h2>Contact Message</h2>
+            <p><strong>Name:</strong> <span id="viewMessageName"></span></p>
+            <p><strong>Email:</strong> <span id="viewMessageEmail"></span></p>
+            <p><strong>Subject:</strong> <span id="viewMessageSubject"></span></p>
+            <p><strong>Date:</strong> <span id="viewMessageDate"></span></p>
+            <p><strong>Message:</strong></p>
+            <p id="viewMessageContent"></p>
         </div>
     </div>
 
     <script>
-        // Database simulation
-        let users = [
-            { 
-                username: 'student1', 
-                password: '123', 
-                type: 'student', 
-                name: 'John Doe',
-                district: 'Colombo',
-                whatsapp: '+94771234567',
-                email: 'john@example.com',
-                id: 'S001'
-            },
-            { 
-                username: 'student2', 
-                password: '123', 
-                type: 'student', 
-                name: 'Jane Smith',
-                district: 'Gampaha',
-                whatsapp: '+94772345678',
-                email: 'jane@example.com',
-                id: 'S002'
-            },
-            { 
-                username: 'student3', 
-                password: '123', 
-                type: 'student', 
-                name: 'Mike Johnson',
-                district: 'Kandy',
-                whatsapp: '+94773456789',
-                email: 'mike@example.com',
-                id: 'S003'
-            },
-            { 
-                username: 'student4', 
-                password: '123', 
-                type: 'student', 
-                name: 'Sarah Williams',
-                district: 'Galle',
-                whatsapp: '+94774567890',
-                email: 'sarah@example.com',
-                id: 'S004'
-            },
-            { 
-                username: 'student5', 
-                password: '123', 
-                type: 'student', 
-                name: 'David Brown',
-                district: 'Matara',
-                whatsapp: '+94775678901',
-                email: 'david@example.com',
-                id: 'S005'
-            },
-            { 
-                username: 'student6', 
-                password: '123', 
-                type: 'student', 
-                name: 'Emily Davis',
-                district: 'Jaffna',
-                whatsapp: '+94776789012',
-                email: 'emily@example.com',
-                id: 'S006'
-            },
-            { 
-                username: 'student7', 
-                password: '123', 
-                type: 'student', 
-                name: 'James Wilson',
-                district: 'Trincomalee',
-                whatsapp: '+94777890123',
-                email: 'james@example.com',
-                id: 'S007'
-            },
-            { 
-                username: 'student8', 
-                password: '123', 
-                type: 'student', 
-                name: 'Linda Martinez',
-                district: 'Batticaloa',
-                whatsapp: '+94778901234',
-                email: 'linda@example.com',
-                id: 'S008'
-            },
-            { 
-                username: 'student9', 
-                password: '123', 
-                type: 'student', 
-                name: 'Robert Anderson',
-                district: 'Kurunegala',
-                whatsapp: '+94779012345',
-                email: 'robert@example.com',
-                id: 'S009'
-            },
-            { 
-                username: 'student10', 
-                password: '123', 
-                type: 'student', 
-                name: 'Maria Taylor',
-                district: 'Anuradhapura',
-                whatsapp: '+94770123456',
-                email: 'maria@example.com',
-                id: 'S010'
-            },
-            { 
-                username: 'teacher1', 
-                password: '123', 
-                type: 'teacher', 
-                name: 'Dr. Smith',
-                district: 'Colombo',
-                whatsapp: '+94711234567',
-                email: 'smith@eduworldpro.com',
-                id: 'T001'
-            },
-            { 
-                username: 'teacher2', 
-                password: '123', 
-                type: 'teacher', 
-                name: 'Prof. Johnson',
-                district: 'Kandy',
-                whatsapp: '+94712345678',
-                email: 'johnson@eduworldpro.com',
-                id: 'T002'
-            },
-            { 
-                username: 'admin', 
-                password: 'admin123', 
-                type: 'admin', 
-                name: 'Administrator',
-                district: 'Colombo',
-                whatsapp: '+94711111111',
-                email: 'admin@eduworldpro.com',
-                id: 'A001'
-            }
-        ];
+        // Initialize data
+        if (!localStorage.getItem('koreanPro')) {
+            const initialData = {
+                users: [
+                    { username: 'admin', password: 'admin123', role: 'admin', email: 'admin@koreanpro.com', phone: '1234567890', approved: true },
+                    { username: 'student1', password: 'student123', role: 'student', email: 'student1@example.com', phone: '1234567891', approved: true },
+                    { username: 'student2', password: 'student123', role: 'student', email: 'student2@example.com', phone: '1234567892', approved: true },
+                    { username: 'student3', password: 'student123', role: 'student', email: 'student3@example.com', phone: '1234567893', approved: true },
+                    { username: 'student4', password: 'student123', role: 'student', email: 'student4@example.com', phone: '1234567894', approved: true },
+                    { username: 'student5', password: 'student123', role: 'student', email: 'student5@example.com', phone: '1234567895', approved: true },
+                    { username: 'student6', password: 'student123', role: 'student', email: 'student6@example.com', phone: '1234567896', approved: true }
+                ],
+                notices: [
+                    {
+                        id: 1,
+                        title: 'New Batch Starting Soon',
+                        content: 'We are excited to announce that a new batch for EPS TOPIK preparation will be starting next month. Register now to secure your spot!',
+                        date: '2023-05-15',
+                        category: 'Announcement'
+                    },
+                    {
+                        id: 2,
+                        title: 'Holiday Schedule',
+                        content: 'Please note that there will be no classes from May 25th to May 30th due to the holidays. Classes will resume on May 31st.',
+                        date: '2023-05-10',
+                        category: 'Schedule'
+                    },
+                    {
+                        id: 3,
+                        title: 'Exam Results',
+                        content: 'The results for the last EPS TOPIK mock exam have been published. Students can check their results in the dashboard.',
+                        date: '2023-05-05',
+                        category: 'Results'
+                    }
+                ],
+                messages: [],
+                recordings: {
+                    monthly: [
+                        {
+                            id: 1,
+                            title: 'January Introduction',
+                            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                            date: '2023-01-15',
+                            month: 'January'
+                        },
+                        {
+                            id: 2,
+                            title: 'February Grammar',
+                            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                            date: '2023-02-20',
+                            month: 'February'
+                        }
+                    ],
+                    theory: [
+                        {
+                            id: 1,
+                            title: 'Basic Korean Grammar',
+                            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                            date: '2023-01-10',
+                            month: 'January'
+                        }
+                    ],
+                    paper: [
+                        {
+                            id: 1,
+                            title: 'EPS TOPIK Paper Class 1',
+                            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                            date: '2023-01-12',
+                            month: 'January'
+                        }
+                    ],
+                    extra: [
+                        {
+                            id: 1,
+                            title: 'Korean Culture Session',
+                            url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+                            date: '2023-01-18',
+                            month: 'January'
+                        }
+                    ]
+                },
+                quizzes: [
+                    {
+                        id: 1,
+                        question: '안녕하세요 means:',
+                        questionSin: '안녕하세요 යනු කුමක්ද:',
+                        options: ['Goodbye', 'Hello', 'Thank you', 'Sorry'],
+                        optionsSin: ['සමුගැනීම', 'හෙලෝ', 'ස්තුතියි', 'සමාවෙන්න'],
+                        correctAnswer: 1
+                    },
+                    {
+                        id: 2,
+                        question: 'How do you say "Thank you" in Korean?',
+                        questionSin: 'කොරියානු භාෂාවෙන් "Thank you" කියන්නේ කෙසේද?',
+                        options: ['안녕히 가세요', '감사합니다', '죄송합니다', '미안합니다'],
+                        optionsSin: ['안녕히 가세요', '감사합니다', '죄송합니다', '미안합니다'],
+                        correctAnswer: 1
+                    },
+                    {
+                        id: 3,
+                        question: 'What is the meaning of "사랑해"?',
+                        questionSin: '"사랑해" හැඟීම කුමක්ද?',
+                        options: ['I hate you', 'I like you', 'I love you', 'I miss you'],
+                        optionsSin: ['මම ඔබට එපා', 'මම ඔබට කැමතියි', 'මම ඔබට ආදරෙයි', 'මම ඔබව මතක් කරනවා'],
+                        correctAnswer: 2
+                    },
+                    {
+                        id: 4,
+                        question: 'How do you say "Good morning" in Korean?',
+                        questionSin: 'කොරියානු භාෂාවෙන් "Good morning" කියන්නේ කෙසේද?',
+                        options: ['안녕히 주무셨어요', '안녕하세요', '안녕히 가세요', '잘 지내세요'],
+                        optionsSin: ['안녕히 주무셨어요', '안녕하세요', '안녕히 가세요', '잘 지내세요'],
+                        correctAnswer: 0
+                    },
+                    {
+                        id: 5,
+                        question: 'What is the meaning of "학교"?',
+                        questionSin: '"학교" හැඟීම කුමක්ද?',
+                        options: ['Hospital', 'School', 'Market', 'Restaurant'],
+                        optionsSin: ['රෝහල', 'පාසල', 'වෙළෙඳපොළ', 'ත් හෝටලය'],
+                        correctAnswer: 1
+                    }
+                ],
+                quizResults: {}
+            };
+            localStorage.setItem('koreanPro', JSON.stringify(initialData));
+        }
 
-        let classes = [
-            { id: 1, name: 'ICT RB', year: '2026', teacher: 'teacher1', students: ['student1', 'student2', 'student3'] },
-            { id: 2, name: 'Media MB', year: '2026', teacher: 'teacher2', students: ['student4', 'student5'] },
-            { id: 3, name: 'Korean DP', year: '2026', teacher: 'teacher1', students: ['student6', 'student7'] },
-            { id: 4, name: 'Korean Language RJ', year: '2026', teacher: 'teacher2', students: ['student8', 'student9', 'student10'] },
-            { id: 5, name: 'ICT LP', year: '2027', teacher: 'teacher2', students: ['student1', 'student2'] },
-        ];
-
-        let videos = [
-            { id: 1, title: 'Introduction to HTML', type: 'theory', month: 1, classId: 1, url: 'https://www.youtube.com/embed/UB1O30fR-EE', isPaid: false, description: 'Learn the basics of HTML' },
-            { id: 2, title: 'CSS Fundamentals', type: 'theory', month: 1, classId: 1, url: 'https://www.youtube.com/embed/yfoY53QXEnI', isPaid: false, description: 'Master CSS styling' },
-            { id: 3, title: 'JavaScript Basics', type: 'extra', month: 2, classId: 1, url: 'https://www.youtube.com/embed/W6NZfCO5SIk', isPaid: true, description: 'Introduction to JavaScript' },
-            { id: 4, title: 'SEO Strategies', type: 'theory', month: 1, classId: 2, url: 'https://www.youtube.com/embed/OI2AoIwLc_4', isPaid: false, description: 'Learn SEO techniques' },
-            { id: 5, title: 'Social Media Marketing', type: 'extra', month: 2, classId: 2, url: 'https://www.youtube.com/embed/gcNkoJF0s2A', isPaid: true, description: 'Social media strategies' },
-            { id: 6, title: 'Design Principles', type: 'theory', month: 1, classId: 3, url: 'https://www.youtube.com/embed/i4N6T8O5s1w', isPaid: false, description: 'Basic design principles' },
-            { id: 7, title: 'Photoshop Tutorial', type: 'extra', month: 2, classId: 3, url: 'https://www.youtube.com/embed/7B3u0ZK9p5o', isPaid: true, description: 'Photoshop basics' },
-            { id: 8, title: 'Korean Alphabet - Hangul', type: 'korean', month: 1, classId: 4, url: 'https://www.youtube.com/embed/5s2Qg5qR5yI', isPaid: false, description: 'Learn Korean alphabet' },
-            { id: 9, title: 'Basic Korean Phrases', type: 'korean', month: 2, classId: 4, url: 'https://www.youtube.com/embed/1C2_X7p2a5U', isPaid: true, description: 'Essential Korean phrases' },
-            { id: 10, title: 'Korean Grammar Basics', type: 'korean', month: 3, classId: 4, url: 'https://www.youtube.com/embed/2s2Qg5qR5yJ', isPaid: true, description: 'Korean grammar fundamentals' },
-            { id: 11, title: 'Data Analysis', type: 'theory', month: 1, classId: 5, url: 'https://www.youtube.com/embed/0v5eRtK5Dx8', isPaid: false, description: 'Introduction to data analysis' },
-            { id: 12, title: 'Machine Learning', type: 'extra', month: 2, classId: 5, url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', isPaid: true, description: 'ML fundamentals' },
-            { id: 13, title: 'React Native', type: 'theory', month: 1, classId: 6, url: 'https://www.youtube.com/embed/0-S5a0eXPoc', isPaid: false, description: 'React Native basics' },
-            { id: 14, title: 'Mobile UI Design', type: 'extra', month: 2, classId: 6, url: 'https://www.youtube.com/embed/F4sk1Q2d4j4', isPaid: true, description: 'Mobile UI principles' },
-            { id: 15, title: 'Past Paper Solutions', type: 'paper', month: 3, classId: 1, url: 'https://www.youtube.com/embed/dQw4w9WgXcQ', isPaid: true, description: 'Web development past papers' }
-        ];
-
+        // Current user
         let currentUser = null;
-        let currentSection = 'home';
 
-        // Mobile menu toggle
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobileMenu');
-            menu.classList.toggle('hidden');
+        // Initialize app
+        function initApp() {
+            checkAuth();
+            loadHomeNotices();
+            loadNotices();
+            loadRecordings('monthly');
+            loadRecordings('theory');
+            loadRecordings('paper');
+            loadRecordings('extra');
+            loadQuizzes();
+            loadAdminData();
         }
 
-        // Show section
-        function showSection(section) {
-            // Hide all sections
-            document.getElementById('homeSection').classList.add('hidden');
-            document.getElementById('aboutSection').classList.add('hidden');
-            document.getElementById('contactSection').classList.add('hidden');
-            document.getElementById('loginSection').classList.add('hidden');
-            document.getElementById('mainDashboard').classList.add('hidden');
-            
-            // Hide public nav when showing login or dashboard
-            if (section === 'login' || section === 'dashboard') {
-                document.getElementById('publicNav').classList.add('hidden');
-            } else {
-                document.getElementById('publicNav').classList.remove('hidden');
+        // Check authentication
+        function checkAuth() {
+            const userData = localStorage.getItem('currentUser');
+            if (userData) {
+                currentUser = JSON.parse(userData);
+                document.getElementById('userName').textContent = currentUser.username;
+                
+                // Show/hide menu items based on role
+                if (currentUser.role === 'admin') {
+                    document.getElementById('adminMenu').classList.remove('hidden');
+                }
+                document.getElementById('userMenu').classList.remove('hidden');
+                
+                // Update payment status
+                const paymentStatus = document.getElementById('paymentStatus');
+                if (currentUser.approved) {
+                    paymentStatus.innerHTML = '<i class="fas fa-check-circle"></i> Your payment has been approved. You have full access to all features.';
+                    paymentStatus.style.backgroundColor = '#d4edda';
+                    paymentStatus.style.color = '#155724';
+                }
             }
+        }
+
+        // Show page
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
             
-            // Show selected section
-            switch(section) {
-                case 'home':
-                    document.getElementById('homeSection').classList.remove('hidden');
-                    break;
-                case 'about':
-                    document.getElementById('aboutSection').classList.remove('hidden');
-                    break;
-                case 'contact':
-                    document.getElementById('contactSection').classList.remove('hidden');
-                    break;
-                case 'login':
-                    document.getElementById('loginSection').classList.remove('hidden');
-                    break;
-                case 'dashboard':
-                    document.getElementById('mainDashboard').classList.remove('hidden');
-                    break;
+            // Show selected page
+            const selectedPage = document.getElementById(`${pageId}-page`);
+            if (selectedPage) {
+                selectedPage.classList.add('active');
+                
+                // Load page-specific data
+                if (pageId === 'dashboard') {
+                    loadDashboard();
+                } else if (pageId === 'recordings') {
+                    loadRecordings('monthly');
+                } else if (pageId === 'theory') {
+                    loadRecordings('theory');
+                } else if (pageId === 'paper') {
+                    loadRecordings('paper');
+                } else if (pageId === 'extra') {
+                    loadRecordings('extra');
+                } else if (pageId === 'quizzes') {
+                    loadQuizzes();
+                } else if (pageId === 'notices') {
+                    loadNotices();
+                }
             }
-            
-            currentSection = section;
         }
 
-        // Contact form handler
-        function handleContact(event) {
-            event.preventDefault();
-            showModal('Your message has been sent successfully. We\'ll get back to you soon.');
-            event.target.reset();
+        // Toggle mobile menu
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
         }
 
-        // Login handler
+        // Handle login
         function handleLogin(event) {
             event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const userType = document.getElementById('userType').value;
-
-            const user = users.find(u => u.username === username && u.password === password && u.type === userType);
+            const formData = new FormData(event.target);
+            const username = formData.get('username');
+            const password = formData.get('password');
+            
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const user = data.users.find(u => u.username === username && u.password === password);
             
             if (user) {
                 currentUser = user;
-                showSection('dashboard');
-                document.getElementById('welcomeMessage').textContent = `Welcome, ${user.name}!`;
-                
-                // Show appropriate dashboard
-                document.getElementById('studentDashboard').classList.add('hidden');
-                document.getElementById('teacherDashboard').classList.add('hidden');
-                document.getElementById('adminDashboard').classList.add('hidden');
-                
-                if (user.type === 'student') {
-                    document.getElementById('studentDashboard').classList.remove('hidden');
-                    loadStudentDashboard();
-                } else if (user.type === 'teacher') {
-                    document.getElementById('teacherDashboard').classList.remove('hidden');
-                    loadTeacherDashboard();
-                } else if (user.type === 'admin') {
-                    document.getElementById('adminDashboard').classList.remove('hidden');
-                    loadAdminDashboard();
-                }
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                alert('Login successful!');
+                showPage(user.role === 'admin' ? 'admin' : 'dashboard');
+                location.reload();
             } else {
-                showModal('Invalid credentials. Please try again.');
+                alert('Invalid username or password');
             }
+        }
+
+        // Handle signup
+        function handleSignup(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const username = formData.get('username');
+            
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            
+            // Check if username exists
+            if (data.users.find(u => u.username === username)) {
+                alert('Username already exists');
+                return;
+            }
+            
+            // Create new user
+            const newUser = {
+                username: username,
+                password: formData.get('password'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                role: 'student',
+                approved: false
+            };
+            
+            data.users.push(newUser);
+            localStorage.setItem('koreanPro', JSON.stringify(data));
+            
+            alert('Signup successful! Please wait for admin approval.');
+            showPage('login');
+        }
+
+        // Handle contact form
+        function handleContactForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const newMessage = {
+                id: Date.now(),
+                name: formData.get('name'),
+                email: formData.get('email'),
+                subject: formData.get('subject'),
+                message: formData.get('message'),
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            data.messages.push(newMessage);
+            localStorage.setItem('koreanPro', JSON.stringify(data));
+            
+            alert('Message sent successfully!');
+            event.target.reset();
+        }
+
+        // Handle notice form
+        function handleNoticeForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const newNotice = {
+                id: Date.now(),
+                title: formData.get('title'),
+                content: formData.get('content'),
+                date: new Date().toISOString().split('T')[0],
+                category: formData.get('category')
+            };
+            
+            data.notices.push(newNotice);
+            localStorage.setItem('koreanPro', JSON.stringify(data));
+            
+            alert('Notice added successfully!');
+            closeModal('addNoticeModal');
+            loadNotices();
+            loadHomeNotices();
+        }
+
+        // Handle recording form
+        function handleRecordingForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const type = formData.get('type');
+            
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const newRecording = {
+                id: Date.now(),
+                title: formData.get('title'),
+                url: formData.get('url'),
+                date: new Date().toISOString().split('T')[0],
+                month: formData.get('month')
+            };
+            
+            data.recordings[type].push(newRecording);
+            localStorage.setItem('koreanPro', JSON.stringify(data));
+            
+            alert('Recording added successfully!');
+            closeModal('addRecordingModal');
+            loadRecordings(type);
+        }
+
+        // Handle quiz form
+        function handleQuizForm(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const newQuiz = {
+                id: Date.now(),
+                question: formData.get('question'),
+                questionSin: formData.get('questionSin'),
+                options: [
+                    formData.get('option1'),
+                    formData.get('option2'),
+                    formData.get('option3'),
+                    formData.get('option4')
+                ],
+                optionsSin: [
+                    formData.get('option1Sin'),
+                    formData.get('option2Sin'),
+                    formData.get('option3Sin'),
+                    formData.get('option4Sin')
+                ],
+                correctAnswer: parseInt(formData.get('correctAnswer'))
+            };
+            
+            data.quizzes.push(newQuiz);
+            localStorage.setItem('koreanPro', JSON.stringify(data));
+            
+            alert('Quiz added successfully!');
+            closeModal('addQuizModal');
+            loadQuizzes();
+        }
+
+        // Load home notices
+        function loadHomeNotices() {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const notices = data.notices.slice(0, 3); // Show only first 3
+            const container = document.getElementById('homeNotices');
+            
+            container.innerHTML = '';
+            notices.forEach(notice => {
+                const noticeEl = document.createElement('div');
+                noticeEl.className = 'notice';
+                noticeEl.onclick = () => viewNotice(notice);
+                noticeEl.innerHTML = `
+                    <div class="notice-title">${notice.title}</div>
+                    <div class="notice-date">${notice.date}</div>
+                    <div class="notice-category">${notice.category}</div>
+                    <div>${notice.content.substring(0, 100)}...</div>
+                `;
+                container.appendChild(noticeEl);
+            });
+        }
+
+        // Load notices
+        function loadNotices() {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const notices = data.notices;
+            const container = document.getElementById('noticesContainer');
+            
+            container.innerHTML = '';
+            notices.forEach(notice => {
+                const noticeEl = document.createElement('div');
+                noticeEl.className = 'notice';
+                noticeEl.onclick = () => viewNotice(notice);
+                noticeEl.innerHTML = `
+                    <div class="notice-title">${notice.title}</div>
+                    <div class="notice-date">${notice.date}</div>
+                    <div class="notice-category">${notice.category}</div>
+                    <div>${notice.content.substring(0, 100)}...</div>
+                `;
+                container.appendChild(noticeEl);
+            });
+        }
+
+        // View notice
+        function viewNotice(notice) {
+            document.getElementById('viewNoticeTitle').textContent = notice.title;
+            document.getElementById('viewNoticeCategory').textContent = notice.category;
+            document.getElementById('viewNoticeDate').textContent = notice.date;
+            document.getElementById('viewNoticeContent').textContent = notice.content;
+            document.getElementById('viewNoticeModal').style.display = 'block';
+        }
+
+        // Load recordings
+        function loadRecordings(type) {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const recordings = data.recordings[type];
+            const container = document.getElementById(`${type}Container`);
+            
+            container.innerHTML = '';
+            
+            // Group by month
+            const byMonth = {};
+            recordings.forEach(r => {
+                if (!byMonth[r.month]) byMonth[r.month] = [];
+                byMonth[r.month].push(r);
+            });
+            
+            Object.keys(byMonth).forEach(month => {
+                const monthDiv = document.createElement('div');
+                monthDiv.className = 'mb-2';
+                monthDiv.innerHTML = `<h3>${month}</h3>`;
+                
+                byMonth[month].forEach(recording => {
+                    const videoDiv = document.createElement('div');
+                    videoDiv.className = 'card';
+                    
+                    // Check if user is approved
+                    const isApproved = currentUser && currentUser.approved;
+                    
+                    if (isApproved) {
+                        videoDiv.innerHTML = `
+                            <div class="video-container">
+                                <iframe src="${recording.url}" allowfullscreen></iframe>
+                            </div>
+                            <h4>${recording.title}</h4>
+                            <p>${recording.date}</p>
+                        `;
+                    } else {
+                        videoDiv.innerHTML = `
+                            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #000;">
+                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; background: rgba(0,0,0,0.8);">
+                                    <i class="fas fa-lock" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                                    <p>Payment required to access this content</p>
+                                </div>
+                            </div>
+                            <h4>${recording.title}</h4>
+                            <p>${recording.date}</p>
+                        `;
+                    }
+                    
+                    monthDiv.appendChild(videoDiv);
+                });
+                
+                container.appendChild(monthDiv);
+            });
+        }
+
+        // Load quizzes
+        function loadQuizzes() {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const quizzes = data.quizzes;
+            const container = document.getElementById('quizzesContainer');
+            
+            container.innerHTML = '';
+            
+            const quizDiv = document.createElement('div');
+            quizDiv.className = 'quiz-container';
+            
+            // Header
+            const header = document.createElement('div');
+            header.className = 'quiz-header';
+            header.innerHTML = `
+                <h2>Korean Language Quiz</h2>
+                <div class="language-toggle">
+                    <button class="active" onclick="toggleLanguage('korean')">Korean</button>
+                    <button onclick="toggleLanguage('sinhala')">Sinhala</button>
+                </div>
+            `;
+            quizDiv.appendChild(header);
+            
+            // Questions
+            const questionsDiv = document.createElement('div');
+            questionsDiv.id = 'quizQuestions';
+            
+            quizzes.forEach((quiz, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question';
+                qDiv.innerHTML = `
+                    <div class="korean-question">
+                        <strong>${index + 1}. ${quiz.question}</strong>
+                    </div>
+                    <div class="sinhala-question hidden">
+                        <strong>${index + 1}. ${quiz.questionSin}</strong>
+                    </div>
+                    <div class="options">
+                        ${quiz.options.map((opt, i) => `
+                            <div class="option">
+                                <input type="radio" name="q${index}" value="${i}" id="q${index}_${i}">
+                                <label for="q${index}_${i}">${opt}</label>
+                                <div class="sinhala-option hidden">${quiz.optionsSin[i]}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                questionsDiv.appendChild(qDiv);
+            });
+            
+            quizDiv.appendChild(questionsDiv);
+            
+            // Actions
+            const actions = document.createElement('div');
+            actions.className = 'text-center mt-1';
+            actions.innerHTML = `
+                <button class="btn btn-outline" onclick="resetQuiz()">Reset</button>
+                <button class="btn" onclick="submitQuiz()">Submit Quiz</button>
+            `;
+            quizDiv.appendChild(actions);
+            
+            // Result
+            const result = document.createElement('div');
+            result.id = 'quizResult';
+            result.className = 'card text-center hidden';
+            result.innerHTML = '<h3>Quiz Result</h3><div id="scoreDisplay"></div>';
+            quizDiv.appendChild(result);
+            
+            container.appendChild(quizDiv);
+        }
+
+        // Toggle quiz language
+        function toggleLanguage(lang) {
+            const buttons = document.querySelectorAll('.language-toggle button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (lang === 'korean') {
+                document.querySelectorAll('.korean-question').forEach(el => el.classList.remove('hidden'));
+                document.querySelectorAll('.sinhala-question').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('.sinhala-option').forEach(el => el.classList.add('hidden'));
+            } else {
+                document.querySelectorAll('.korean-question').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('.sinhala-question').forEach(el => el.classList.remove('hidden'));
+                document.querySelectorAll('.sinhala-option').forEach(el => el.classList.remove('hidden'));
+            }
+        }
+
+        // Reset quiz
+        function resetQuiz() {
+            document.querySelectorAll('input[type="radio"]').forEach(input => input.checked = false);
+            document.getElementById('quizResult').classList.add('hidden');
+        }
+
+        // Submit quiz
+        function submitQuiz() {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const quizzes = data.quizzes;
+            let score = 0;
+            
+            quizzes.forEach((quiz, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if (selected && parseInt(selected.value) === quiz.correctAnswer) {
+                    score++;
+                }
+            });
+            
+            const percentage = Math.round((score / quizzes.length) * 100);
+            document.getElementById('scoreDisplay').innerHTML = `
+                <h2>${percentage}%</h2>
+                <p>You scored ${score} out of ${quizzes.length}</p>
+            `;
+            document.getElementById('quizResult').classList.remove('hidden');
+            
+            // Save result
+            if (currentUser) {
+                const results = data.quizResults;
+                if (!results[currentUser.username]) {
+                    results[currentUser.username] = [];
+                }
+                results[currentUser.username].push({
+                    date: new Date().toISOString().split('T')[0],
+                    score: score,
+                    total: quizzes.length,
+                    percentage: percentage
+                });
+                localStorage.setItem('koreanPro', JSON.stringify(data));
+            }
+        }
+
+        // Load dashboard
+        function loadDashboard() {
+            if (!currentUser) return;
+            
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const results = data.quizResults[currentUser.username] || [];
+            
+            const quizzesCompleted = results.length;
+            const averageScore = quizzesCompleted > 0 
+                ? Math.round(results.reduce((sum, r) => sum + r.percentage, 0) / quizzesCompleted)
+                : 0;
+            
+            document.getElementById('quizzesCompleted').textContent = quizzesCompleted;
+            document.getElementById('averageScore').textContent = averageScore + '%';
+            document.getElementById('daysActive').textContent = Math.min(quizzesCompleted, 30);
+        }
+
+        // Load admin data
+        function loadAdminData() {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const students = data.users.filter(u => u.role === 'student');
+            const approvedStudents = students.filter(s => s.approved);
+            
+            // Count recordings
+            let totalRecordings = 0;
+            Object.values(data.recordings).forEach(arr => totalRecordings += arr.length);
+            
+            document.getElementById('totalStudents').textContent = students.length;
+            document.getElementById('approvedStudents').textContent = approvedStudents.length;
+            document.getElementById('totalRecordings').textContent = totalRecordings;
+            document.getElementById('totalQuizzes').textContent = data.quizzes.length;
+            
+            // Show admin buttons if admin
+            if (currentUser && currentUser.role === 'admin') {
+                document.getElementById('adminNoticeBtn').classList.remove('hidden');
+                document.getElementById('adminRecordingBtn').classList.remove('hidden');
+                document.getElementById('adminTheoryBtn').classList.remove('hidden');
+                document.getElementById('adminPaperBtn').classList.remove('hidden');
+                document.getElementById('adminExtraBtn').classList.remove('hidden');
+                document.getElementById('adminQuizBtn').classList.remove('hidden');
+            }
+        }
+
+        // Show admin section
+        function showAdminSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(s => s.classList.add('hidden'));
+            
+            // Show selected section
+            document.getElementById(`admin-${section}`).classList.remove('hidden');
+            
+            // Update active menu
+            document.querySelectorAll('.admin-menu a').forEach(a => a.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Load section data
+            if (section === 'students') {
+                loadAdminStudents();
+            } else if (section === 'payments') {
+                loadAdminPayments();
+            } else if (section === 'recordings') {
+                loadAdminRecordings();
+            } else if (section === 'quizzes') {
+                loadAdminQuizzes();
+            } else if (section === 'notices') {
+                loadAdminNotices();
+            } else if (section === 'messages') {
+                loadAdminMessages();
+            }
+        }
+
+        // Load admin students
+        function loadAdminStudents() {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const students = data.users.filter(u => u.role === 'student');
+            const tbody = document.getElementById('studentsTableBody');
+            
+            tbody.innerHTML = '';
+            students.forEach(student => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${student.username}</td>
+                    <td>${student.email}</td>
+                    <td>${student.phone}</td>
+                    <td>${student.approved ? '<span class="badge badge-success">Approved</span>' : '<span class="badge badge-warning">Pending</span>'}</td>
+                    <td>
+                        <button class="btn btn-small" onclick="resetPassword('${student.username}')">Reset Password</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Load admin payments
+        function loadAdminPayments() {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const students = data.users.filter(u => u.role === 'student' && !u.approved);
+            const tbody = document.getElementById('paymentsTableBody');
+            
+            tbody.innerHTML = '';
+            students.forEach(student => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${student.username}</td>
+                    <td>${student.email}</td>
+                    <td>${student.phone}</td>
+                    <td><span class="badge badge-warning">Pending</span></td>
+                    <td>
+                        <button class="btn btn-small" onclick="approvePayment('${student.username}')">Approve</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Load admin recordings
+        function loadAdminRecordings() {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const tbody = document.getElementById('recordingsTableBody');
+            
+            tbody.innerHTML = '';
+            Object.entries(data.recordings).forEach(([type, recordings]) => {
+                recordings.forEach(recording => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${recording.title}</td>
+                        <td>${recording.month}</td>
+                        <td>${recording.date}</td>
+                        <td>
+                            <button class="btn btn-small" onclick="deleteRecording('${type}', ${recording.id})">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            });
+        }
+
+        // Load admin quizzes
+        function loadAdminQuizzes() {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const tbody = document.getElementById('quizzesTableBody');
+            
+            tbody.innerHTML = '';
+            data.quizzes.forEach(quiz => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${quiz.question}</td>
+                    <td>${quiz.questionSin}</td>
+                    <td>
+                        <button class="btn btn-small" onclick="deleteQuiz(${quiz.id})">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Load admin notices
+        function loadAdminNotices() {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const tbody = document.getElementById('noticesTableBody');
+            
+            tbody.innerHTML = '';
+            data.notices.forEach(notice => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${notice.title}</td>
+                    <td>${notice.category}</td>
+                    <td>${notice.date}</td>
+                    <td>
+                        <button class="btn btn-small" onclick="deleteNotice(${notice.id})">Delete</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Load admin messages
+        function loadAdminMessages() {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const tbody = document.getElementById('messagesTableBody');
+            
+            tbody.innerHTML = '';
+            data.messages.forEach(message => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${message.name}</td>
+                    <td>${message.email}</td>
+                    <td>${message.subject}</td>
+                    <td>${message.date}</td>
+                    <td>
+                        <button class="btn btn-small" onclick="viewMessage(${message.id})">View</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Approve payment
+        function approvePayment(username) {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const user = data.users.find(u => u.username === username);
+            if (user) {
+                user.approved = true;
+                localStorage.setItem('koreanPro', JSON.stringify(data));
+                alert('Payment approved successfully!');
+                loadAdminPayments();
+            }
+        }
+
+        // Reset password
+        function resetPassword(username) {
+            const newPassword = prompt('Enter new password:');
+            if (newPassword) {
+                const data = JSON.parse(localStorage.getItem('koreanPro'));
+                const user = data.users.find(u => u.username === username);
+                if (user) {
+                    user.password = newPassword;
+                    localStorage.setItem('koreanPro', JSON.stringify(data));
+                    alert('Password reset successfully!');
+                }
+            }
+        }
+
+        // Delete recording
+        function deleteRecording(type, id) {
+            if (confirm('Are you sure you want to delete this recording?')) {
+                const data = JSON.parse(localStorage.getItem('koreanPro'));
+                data.recordings[type] = data.recordings[type].filter(r => r.id !== id);
+                localStorage.setItem('koreanPro', JSON.stringify(data));
+                alert('Recording deleted successfully!');
+                loadAdminRecordings();
+            }
+        }
+
+        // Delete quiz
+        function deleteQuiz(id) {
+            if (confirm('Are you sure you want to delete this quiz?')) {
+                const data = JSON.parse(localStorage.getItem('koreanPro'));
+                data.quizzes = data.quizzes.filter(q => q.id !== id);
+                localStorage.setItem('koreanPro', JSON.stringify(data));
+                alert('Quiz deleted successfully!');
+                loadAdminQuizzes();
+            }
+        }
+
+        // Delete notice
+        function deleteNotice(id) {
+            if (confirm('Are you sure you want to delete this notice?')) {
+                const data = JSON.parse(localStorage.getItem('koreanPro'));
+                data.notices = data.notices.filter(n => n.id !== id);
+                localStorage.setItem('koreanPro', JSON.stringify(data));
+                alert('Notice deleted successfully!');
+                loadAdminNotices();
+                loadNotices();
+                loadHomeNotices();
+            }
+        }
+
+        // View message
+        function viewMessage(id) {
+            const data = JSON.parse(localStorage.getItem('koreanPro'));
+            const message = data.messages.find(m => m.id === id);
+            if (message) {
+                document.getElementById('viewMessageName').textContent = message.name;
+                document.getElementById('viewMessageEmail').textContent = message.email;
+                document.getElementById('viewMessageSubject').textContent = message.subject;
+                document.getElementById('viewMessageDate').textContent = message.date;
+                document.getElementById('viewMessageContent').textContent = message.message;
+                document.getElementById('viewMessageModal').style.display = 'block';
+            }
+        }
+
+        // Show add notice modal
+        function showAddNoticeModal() {
+            document.getElementById('addNoticeModal').style.display = 'block';
+        }
+
+        // Show add recording modal
+        function showAddRecordingModal(type) {
+            document.getElementById('recordingType').value = type;
+            document.getElementById('addRecordingModal').style.display = 'block';
+        }
+
+        // Show add quiz modal
+        function showAddQuizModal() {
+            document.getElementById('addQuizModal').style.display = 'block';
+        }
+
+        // Close modal
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
         }
 
         // Logout
         function logout() {
+            localStorage.removeItem('currentUser');
             currentUser = null;
-            showSection('home');
-            document.getElementById('username').value = '';
-            document.getElementById('password').value = '';
+            alert('Logged out successfully!');
+            showPage('home');
+            location.reload();
         }
 
-        // Load Student Dashboard
-        function loadStudentDashboard() {
-            const studentClasses = classes.filter(c => c.students.includes(currentUser.username));
-            
-            // Update stats
-            document.getElementById('enrolledCourses').textContent = studentClasses.length;
-            document.getElementById('watchedVideos').textContent = '45';
-            document.getElementById('completedCourses').textContent = Math.floor(studentClasses.length * 0.7);
-            document.getElementById('certificates').textContent = Math.floor(studentClasses.length * 0.5);
-            
-            // Load profile data
-            document.getElementById('profileName').value = currentUser.name;
-            document.getElementById('profileDistrict').value = currentUser.district;
-            document.getElementById('profileWhatsapp').value = currentUser.whatsapp;
-            document.getElementById('profileEmail').value = currentUser.email;
-            document.getElementById('profileId').value = currentUser.id;
-            document.getElementById('profileUsername').value = currentUser.username;
-            document.getElementById('profilePassword').value = currentUser.password;
-            
-            // Load videos
-            filterVideos();
-            
-            // Load enrolled classes
-            const studentClassesDiv = document.getElementById('studentClasses');
-            studentClassesDiv.innerHTML = studentClasses.map(c => `
-                <div class="bg-gradient-to-r from-purple-500 to-pink-500 text-white p-6 rounded-xl card-hover">
-                    <h4 class="text-xl font-bold mb-2">${c.name}</h4>
-                    <p class="mb-4">Year: ${c.year}</p>
-                    <div class="flex justify-between items-center">
-                        <span class="text-sm">Teacher: ${users.find(u => u.username === c.teacher).name}</span>
-                        <button onclick="viewClass(${c.id})" class="bg-white text-purple-600 px-3 py-1 rounded-lg text-sm hover:bg-gray-100 transition">
-                            View
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Update student profile
-        function updateProfile(event) {
-            event.preventDefault();
-            
-            // Update current user data
-            currentUser.name = document.getElementById('profileName').value;
-            currentUser.district = document.getElementById('profileDistrict').value;
-            currentUser.whatsapp = document.getElementById('profileWhatsapp').value;
-            currentUser.email = document.getElementById('profileEmail').value;
-            currentUser.id = document.getElementById('profileId').value;
-            currentUser.username = document.getElementById('profileUsername').value;
-            currentUser.password = document.getElementById('profilePassword').value;
-            
-            // Update in users array
-            const userIndex = users.findIndex(u => u.username === currentUser.username);
-            if (userIndex !== -1) {
-                users[userIndex] = currentUser;
-            }
-            
-            showModal('Profile updated successfully!');
-        }
-
-        // Filter videos
-        function filterVideos() {
-            const classType = document.getElementById('classType').value;
-            const month = document.getElementById('monthSelect').value;
-            
-            let filteredVideos = videos;
-            
-            if (classType !== 'all') {
-                filteredVideos = filteredVideos.filter(v => v.type === classType);
-            }
-            
-            if (month !== 'all') {
-                filteredVideos = filteredVideos.filter(v => v.month == month);
-            }
-            
-            const videoGrid = document.getElementById('videoGrid');
-            videoGrid.innerHTML = filteredVideos.map(video => `
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden card-hover">
-                    <div class="video-container">
-                        <iframe src="${video.url}" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <div class="p-4">
-                        <h4 class="font-semibold text-lg mb-2">${video.title}</h4>
-                        <p class="text-gray-600 text-sm mb-2">${video.description}</p>
-                        <div class="flex justify-between items-center text-sm">
-                            <span class="bg-${video.isPaid ? 'red' : 'green'}-100 text-${video.isPaid ? 'red' : 'green'}-800 px-2 py-1 rounded-full">
-                                ${video.isPaid ? 'Paid' : 'Free'}
-                            </span>
-                            <span class="bg-${video.type === 'theory' ? 'blue' : video.type === 'extra' ? 'purple' : video.type === 'korean' ? 'yellow' : 'orange'}-100 text-${video.type === 'theory' ? 'blue' : video.type === 'extra' ? 'purple' : video.type === 'korean' ? 'yellow' : 'orange'}-800 px-2 py-1 rounded-full">
-                                ${video.type.charAt(0).toUpperCase() + video.type.slice(1)}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Load Teacher Dashboard
-        function loadTeacherDashboard() {
-            const teacherClasses = classes.filter(c => c.teacher === currentUser.username);
-            const teacherVideos = videos.filter(v => {
-                const classObj = classes.find(c => c.id === v.classId);
-                return classObj && classObj.teacher === currentUser.username;
-            });
-            
-            // Update stats
-            document.getElementById('teachingClasses').textContent = teacherClasses.length;
-            document.getElementById('totalStudents').textContent = teacherClasses.reduce((acc, c) => acc + c.students.length, 0);
-            document.getElementById('uploadedVideos').textContent = teacherVideos.length;
-            document.getElementById('completionRate').textContent = '92%';
-            
-            // Load classes
-            const teacherClassesDiv = document.getElementById('teacherClasses');
-            teacherClassesDiv.innerHTML = teacherClasses.map(c => `
-                <div class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white p-6 rounded-xl card-hover">
-                    <h4 class="text-xl font-bold mb-2">${c.name}</h4>
-                    <p class="mb-2">Year: ${c.year}</p>
-                    <p class="mb-4">Students: ${c.students.length}</p>
-                    <div class="flex space-x-2">
-                        <button onclick="manageClass(${c.id})" class="bg-white text-blue-600 px-3 py-1 rounded-lg text-sm hover:bg-gray-100 transition">
-                            Manage
-                        </button>
-                        <button onclick="viewClassStudents(${c.id})" class="bg-white text-blue-600 px-3 py-1 rounded-lg text-sm hover:bg-gray-100 transition">
-                            Students
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Upload video
-        function uploadVideo(event) {
-            event.preventDefault();
-            showModal('Video uploaded successfully!');
-            event.target.reset();
-        }
-
-        // Load Admin Dashboard
-        function loadAdminDashboard() {
-            // Update stats
-            document.getElementById('totalUsers').textContent = users.length;
-            document.getElementById('totalVideos').textContent = videos.length;
-            document.getElementById('totalClasses').textContent = classes.length;
-            document.getElementById('totalViews').textContent = videos.reduce((acc, v) => acc + (v.views || 0), 0);
-            
-            // Load student table
-            const studentTable = document.getElementById('studentTable');
-            const students = users.filter(u => u.type === 'student');
-            studentTable.innerHTML = students.map(s => `
-                <tr class="border-b">
-                    <td class="py-3 px-4">${s.name}</td>
-                    <td class="py-3 px-4">${s.district}</td>
-                    <td class="py-3 px-4">${s.whatsapp}</td>
-                    <td class="py-3 px-4">${s.email}</td>
-                    <td class="py-3 px-4">${s.id}</td>
-                    <td class="py-3 px-4">${s.username}</td>
-                    <td class="py-3 px-4">
-                        <button onclick="editStudent('${s.username}')" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition mr-2">
-                            Edit
-                        </button>
-                        <button onclick="deleteStudent('${s.username}')" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-            
-            // Load video table
-            const videoTable = document.getElementById('videoTable');
-            videoTable.innerHTML = videos.map(v => `
-                <tr class="border-b">
-                    <td class="py-3 px-4">${v.title}</td>
-                    <td class="py-3 px-4">
-                        <span class="bg-${v.type === 'theory' ? 'blue' : v.type === 'extra' ? 'purple' : v.type === 'korean' ? 'yellow' : 'orange'}-100 text-${v.type === 'theory' ? 'blue' : v.type === 'extra' ? 'purple' : v.type === 'korean' ? 'yellow' : 'orange'}-800 px-2 py-1 rounded-full text-sm">
-                            ${v.type}
-                        </span>
-                    </td>
-                    <td class="py-3 px-4">Month ${v.month}</td>
-                    <td class="py-3 px-4">
-                        <span class="bg-${v.isPaid ? 'red' : 'green'}-100 text-${v.isPaid ? 'red' : 'green'}-800 px-2 py-1 rounded-full text-sm">
-                            ${v.isPaid ? 'Paid' : 'Free'}
-                        </span>
-                    </td>
-                    <td class="py-3 px-4">
-                        <button onclick="editVideo(${v.id})" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition mr-2">
-                            Edit
-                        </button>
-                        <button onclick="deleteVideo(${v.id})" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-            
-            // Load user table
-            const userTable = document.getElementById('userTable');
-            userTable.innerHTML = users.map(u => `
-                <tr class="border-b">
-                    <td class="py-3 px-4">${u.name} (${u.username})</td>
-                    <td class="py-3 px-4">
-                        <span class="bg-${u.type === 'admin' ? 'purple' : u.type === 'teacher' ? 'blue' : 'green'}-100 text-${u.type === 'admin' ? 'purple' : u.type === 'teacher' ? 'blue' : 'green'}-800 px-2 py-1 rounded-full text-sm">
-                            ${u.type}
-                        </span>
-                    </td>
-                    <td class="py-3 px-4">
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">Active</span>
-                    </td>
-                    <td class="py-3 px-4">
-                        <button onclick="editUser('${u.username}')" class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600 transition mr-2">
-                            Edit
-                        </button>
-                        <button onclick="deleteUser('${u.username}')" class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600 transition">
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        // Helper functions
-        function viewClass(classId) {
-            showModal(`Viewing class: ${classes.find(c => c.id === classId).name}`);
-        }
-
-        function manageClass(classId) {
-            showModal(`Managing class: ${classes.find(c => c.id === classId).name}`);
-        }
-
-        function viewClassStudents(classId) {
-            showModal(`Viewing students for: ${classes.find(c => c.id === classId).name}`);
-        }
-
-        function editStudent(username) {
-            const student = users.find(u => u.username === username);
-            showModal(`Editing student: ${student.name}`);
-        }
-
-        function deleteStudent(username) {
-            if (confirm('Are you sure you want to delete this student?')) {
-                users = users.filter(u => u.username !== username);
-                loadAdminDashboard();
-                showModal('Student deleted successfully!');
-            }
-        }
-
-        function editVideo(videoId) {
-            showModal(`Editing video: ${videos.find(v => v.id === videoId).title}`);
-        }
-
-        function deleteVideo(videoId) {
-            if (confirm('Are you sure you want to delete this video?')) {
-                videos = videos.filter(v => v.id !== videoId);
-                loadAdminDashboard();
-                showModal('Video deleted successfully!');
-            }
-        }
-
-        function editUser(username) {
-            showModal(`Editing user: ${users.find(u => u.username === username).name}`);
-        }
-
-        function deleteUser(username) {
-            if (confirm('Are you sure you want to delete this user?')) {
-                users = users.filter(u => u.username !== username);
-                loadAdminDashboard();
-                showModal('User deleted successfully!');
-            }
-        }
-
-        function showAddVideoForm() {
-            showModal('Add video form would appear here');
-        }
-
-        // Modal functions
-        function showModal(message) {
-            document.getElementById('modalMessage').textContent = message;
-            document.getElementById('successModal').classList.remove('hidden');
-            document.getElementById('successModal').classList.add('flex');
-        }
-
-        function closeModal() {
-            document.getElementById('successModal').classList.add('hidden');
-            document.getElementById('successModal').classList.remove('flex');
-        }
-
-        // Initialize
-        showSection('home');
+        // Initialize app on load
+        window.onload = initApp;
     </script>
 </body>
 </html>

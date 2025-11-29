@@ -743,7 +743,8 @@ FEATURES INCLUDED:
         id: 1,
         title: '2026 Theory Class',
         course: 'Beginner',
-        month: 'Level 1',
+        month: '11',
+        dayNo: '2',
         lessonNo: 1,
         url: 'https://www.youtube.com/embed/1QXhdmD8oos',
         type: 'youtube',
@@ -755,6 +756,7 @@ FEATURES INCLUDED:
         title: '2026 revision nov 2nd  session',
         course: 'Beginner',
         month: 'Level 1',
+        dayNo: '2',
         lessonNo: 2,
         url: 'https://www.youtube.com/embed/Y8sRfUcy6ao',
         type: 'youtube',
@@ -766,6 +768,7 @@ FEATURES INCLUDED:
         title: '2026 revision nov 2nd  session',
         course: 'EPS-TOPIK',
         month: '2',
+        dayNo: '2',
         lessonNo: 11,
         url: 'https://www.youtube.com/embed/1QXhdmD8oos',
         type: 'youtube',
@@ -1094,7 +1097,7 @@ FEATURES INCLUDED:
           html += `
             <div class="card">
               <h4>${video.title}</h4>
-              <p><strong>month:</strong> ${video.month} - Lesson ${video.lessonNo}</p>
+              <p><strong>month:</strong> ${video.month} - day ${video.dayNo} - Lesson ${video.lessonNo}</p>
               <p>${video.summary}</p>
               <button class="btn btn-primary" onclick="playVideo(${video.id})">Watch Lesson</button>
             </div>

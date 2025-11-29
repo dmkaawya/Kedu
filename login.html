@@ -1510,7 +1510,8 @@ FEATURES INCLUDED:
       if (url) {
         const title = prompt('Enter video title:');
         const course = prompt('Enter course (Beginner/EPS-TOPIK/TOPIK):');
-        const level = prompt('Enter level (e.g., Level 1):');
+        const month = prompt('Enter month (e.g., Level 1):');
+        const dayNo = prompt('Enter day (e.g., Level 1):');
         const lessonNo = parseInt(prompt('Enter lesson number:'));
         const notes = prompt('Enter lesson notes:');
         const summary = prompt('Enter lesson summary:');
@@ -1519,7 +1520,8 @@ FEATURES INCLUDED:
           id: VIDEOS.length + 1,
           title,
           course,
-          level,
+          month,
+          dayNo,
           lessonNo,
           url,
           type: url.includes('youtube') ? 'youtube' : url.endsWith('.mp4') ? 'mp4' : 'embed',
@@ -1545,7 +1547,7 @@ FEATURES INCLUDED:
     if ('serviceWorker' in navigator) {
       // Service worker registration
       const swCode = `
-        const CACHE_NAME = 'korean-pro-v1';
+        const CACHE_NAME = 'kedu-v1';
         const urlsToCache = ['/'];
         
         self.addEventListener('install', event => {
@@ -1575,8 +1577,8 @@ FEATURES INCLUDED:
 
     // Web App Manifest
     const manifest = {
-      name: 'Korean Pro',
-      short_name: 'KoreanPro',
+      name: 'KEdu',
+      short_name: 'KEdu',
       start_url: '/',
       display: 'standalone',
       background_color: '#1e40af',
